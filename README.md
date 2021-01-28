@@ -6,4 +6,4 @@ Software Eng 2 project
 | Jonathan Kuz  | right-aligned | . |
 | Cole Voelpel  | centered |   . |
 | Michael Bathie | mjbathtub |    . |
-| Christian Melendez | are neat |    . |
+| Christian Melendez | chris-mega |    . |
