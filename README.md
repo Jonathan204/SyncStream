@@ -3,7 +3,7 @@ Software Eng 2 project
 
 | Name       | Github Username           | Fill  |
 | ------------- |:-------------:| -----:|
-| Jonathan Kuz  | right-aligned | . |
+| Jonathan Kuz  | Jonathan204 | . |
 | Cole Voelpel  | ColeVoelpel |   . |
 | Michael Bathie | mjbathtub |    . |
 | Christian Melendez | chris-mega |    . |
