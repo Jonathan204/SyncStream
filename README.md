@@ -7,3 +7,7 @@ Software Eng 2 project
 | Cole Voelpel  | ColeVoelpel |   . |
 | Michael Bathie | mjbathtub |    . |
 | Christian Melendez | chris-mega |    . |
+
+---
+**Languages and Tools**  
+To be determined...
