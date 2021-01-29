@@ -1,4 +1,4 @@
-# COMP4350
+# SyncStream
 Software Eng 2 project
 
 | Name       | Github Username           | Fill  |
