@@ -9,8 +9,8 @@ Software Eng 2 project
 | Christian Melendez | chris-mega |    . |
 
 ---
-**Meeting Notes**
-The meeting notes can be found on this [wiki](https://github.com/Jonathan204/COMP4350/wiki/Meetings) page.
----
+**Meeting Notes**  
+The meeting notes can be found on this [wiki](https://github.com/Jonathan204/COMP4350/wiki/Meetings) page.  
+
 **Languages and Tools**  
 To be determined...
