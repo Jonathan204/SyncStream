@@ -2,7 +2,7 @@
 Software Eng 2 project
 
 ## Description
-SyncStream is a music sharing system which allows music lovers to find new music. It does this by having an interactive map, which shows what other users are listening to. This provides the user the ability to see what people around them are listening to and enables the opportunity to grow their music library.
+SyncStream is a music sharing system which allows music lovers to find new music. It does this by having an interactive map, which shows what other users are listening to. This provides the user the ability to see what people around them are listening to and enables the opportunity to grow their music library. The extended description with our full  project proposal can be found on this [wiki](https://github.com/Jonathan204/SyncStream/wiki/Project-Proposal) page.
 
 ## Contributors
 
