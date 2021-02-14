@@ -38,7 +38,7 @@ const App = () => {
           <Grid item xs={12} sm={4}>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
           </Grid>
-          <Map></Map>
+          <Map/>
         </Grid>
       </Grow>
     </Container>
