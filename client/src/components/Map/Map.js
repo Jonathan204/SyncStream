@@ -42,7 +42,6 @@ class Map extends Component {
           <CurrLocation
             lat={this.state.center.lat}
             lng={this.state.center.lng}
-            text="My Marker"
           />
         </GoogleMapReact>
       </div>
