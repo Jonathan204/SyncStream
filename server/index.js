@@ -7,8 +7,8 @@ import cors from "cors";
 import userRoutes from "./routes/users.js";
 
 const app = express();
-const config = dotenv.config()
-if (config.error){
+const config = dotenv.config();
+if (config.error) {
   throw config.error;
 }
 const env = config.parsed;

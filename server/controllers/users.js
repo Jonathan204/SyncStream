@@ -27,17 +27,29 @@ export const getUser = async (req, res) => {
   }
 };
 
+const getUserByFields = async (fields) => {
+  try {
+    const user = await UserSchema.find(fields);
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const createUser = async (req, res) => {
   const { username } = req.body;
-
   const newUser = new UserSchema({
-    username
+    username,
   });
 
   try {
-    await newUser.save();
-
-    res.status(201).json(newUser);
+    const userExists = await getUserByFields({ username });
+    if (!userExists || userExists.length == 0) {
+      await newUser.save();
+      res.status(201).json(newUser);
+    } else {
+      res.status(400).json({ message: "User already exists" });
+    }
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
