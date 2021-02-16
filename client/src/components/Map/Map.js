@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
- 
+import CurrLocation from './markers/currLocation';
+
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
  
 class Map extends Component {
@@ -11,7 +12,23 @@ class Map extends Component {
     },
     zoom: 16
   };
- 
+  state = {
+    lat: "",
+    lng: "",
+    center: "",
+  }
+  componentWillMount = () =>{
+    navigator.geolocation.getCurrentPosition(this.currentCoords)
+  }
+
+  currentCoords = (position) => {
+    const latitude = position.coords.latitude
+    const longitude = position.coords.longitude
+    this.setState({
+      center: {lat: latitude, lng: longitude}
+    })
+  }
+
   render() {
     return (
       // Important! Always set the container height explicitly
@@ -19,11 +36,12 @@ class Map extends Component {
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
           defaultCenter={this.props.center}
+          center={this.state.center}
           defaultZoom={this.props.zoom}
         >
-          <AnyReactComponent
-            lat={49.895138}
-            lng={-97.138374}
+          <CurrLocation
+            lat={this.state.center.lat}
+            lng={this.state.center.lng}
             text="My Marker"
           />
         </GoogleMapReact>
