@@ -17,7 +17,6 @@ const Account = () => {
     }
 
     const contextValue = {switchToSignup, switchToSignin};
-
     return (
         <AccountContext.Provider value={contextValue}>
         <Container className="border rounded">

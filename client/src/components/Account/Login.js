@@ -18,11 +18,11 @@ const Login = () => {
                     <Form.Control type="password" placeholder="Password" />
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
+                <Button className="m-2" variant="primary" type="submit">
                     Login
                 </Button>
 
-                <Button variant="primary" type="submit" onClick={switchToSignup}>
+                <Button className="m-2" variant="primary" type="submit" onClick={switchToSignup}>
                     Create an account!
                 </Button>
             </Form>

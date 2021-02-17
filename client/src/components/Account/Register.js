@@ -26,11 +26,11 @@ const Register = () => {
                     <Form.Control type="password" placeholder="Confirm Password" />
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
+                <Button className="m-2" variant="primary" type="submit">
                     Register
                 </Button>
 
-                <Button variant="primary" type="submit" onClick={switchToSignin}>
+                <Button className="m-2" variant="primary" type="submit" onClick={switchToSignin}>
                     Already have an account?
                 </Button>
             </Form>
