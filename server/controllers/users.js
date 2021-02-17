@@ -40,6 +40,7 @@ export const loginUser = async (req, res) => {
       if (isCorrect) {
         const toReturn = {
           username: user.username,
+          email: user.email,
           id: user._id,
         };
         return res
