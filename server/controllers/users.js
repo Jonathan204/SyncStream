@@ -29,24 +29,29 @@ export const getUser = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password)
-    return res.status(400).json({ message: "Username or Password missing" });
+  const { username, password, email } = req.body;
+  if (!username || !password || !email)
+    return res
+      .status(400)
+      .json({ message: "Username, Email or Password missing" });
 
   const newUser = new UserSchema({
     username,
     password,
+    email,
   });
 
   try {
     const userExists = await UserSchema.findOne({ username });
-    if (!userExists) {
-      newUser.password = await encrypt(newUser.password);
-      await newUser.save();
-      res.status(201).json({ message: "User successfully created" });
-    } else {
-      res.status(400).json({ message: "User already exists" });
-    }
+    if (userExists)
+      return res.status(400).json({ message: "User already exists" });
+    const emailExists = await UserSchema.findOne({ email });
+    if (emailExists)
+      return res.status(400).json({ message: "Email already in use" });
+
+    newUser.password = await encrypt(newUser.password);
+    await newUser.save();
+    res.status(201).json({ message: "User successfully created" });
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
