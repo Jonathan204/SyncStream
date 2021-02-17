@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import CurrLocation from './markers/currLocation';
-
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
  
 class Map extends Component {
   static defaultProps = {
@@ -13,9 +11,8 @@ class Map extends Component {
     zoom: 16
   };
   state = {
-    lat: "",
-    lng: "",
     center: "",
+    currLocation: false,
   }
   componentWillMount = () =>{
     navigator.geolocation.getCurrentPosition(this.currentCoords)
@@ -25,11 +22,15 @@ class Map extends Component {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
     this.setState({
-      center: {lat: latitude, lng: longitude}
+      center: {lat: latitude, lng: longitude},
+      currLocation: true,
     })
   }
 
   render() {
+
+    const currLat = this.state.center.lat;
+    const currLng = this.state.center.lng;
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>
@@ -39,10 +40,7 @@ class Map extends Component {
           center={this.state.center}
           defaultZoom={this.props.zoom}
         >
-          <CurrLocation
-            lat={this.state.center.lat}
-            lng={this.state.center.lng}
-          />
+        {this.state.currLocation ? <CurrLocation lat= {currLat} lng={currLng}/> : null}
         </GoogleMapReact>
       </div>
     );
