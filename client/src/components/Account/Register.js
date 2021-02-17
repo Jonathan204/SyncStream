@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Form, Container, Button } from 'react-bootstrap';
 import { AccountContext } from './AccountContext';
 
-function Register() {
+const Register = () => {
 
     const {switchToSignin} = useContext(AccountContext);
 

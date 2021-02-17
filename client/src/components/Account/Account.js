@@ -5,7 +5,7 @@ import { Container } from 'react-bootstrap';
 import { AccountContext } from './AccountContext.js';
 import Register from './Register.js';
 
-export function Account() {
+const Account = () => {
     const [activeWindow, setActiveWindow] = useState("signin");
 
     const switchToSignup = () => {
@@ -24,7 +24,6 @@ export function Account() {
 
             {activeWindow === "signin" && <Login />}
             {activeWindow === "signup" && <Register />}
-
 
         </Container>
         </AccountContext.Provider>
