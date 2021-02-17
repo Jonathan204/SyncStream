@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 
-import { encrypt } from "../utils/userUtils.js";
+import { comparePassword, encrypt } from "../utils/userUtils.js";
 import UserSchema from "../models/userSchema.js";
 
 const router = express.Router();
@@ -25,6 +25,31 @@ export const getUser = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     res.status(404).json({ message: error.message });
+  }
+};
+
+export const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password)
+    return res.status(400).json({ message: "Username or Password missing" });
+
+  try {
+    const user = await UserSchema.findOne({ username });
+    if (user) {
+      const isCorrect = await comparePassword(password, user.password);
+      if (isCorrect) {
+        const toReturn = {
+          username: user.username,
+          id: user._id,
+        };
+        return res
+          .status(201)
+          .json({ data: toReturn, message: "User successfully logged in" });
+      }
+    }
+    res.status(401).json({ message: "Username or Password is incorrect" });
+  } catch (error) {
+    res.status(409).json({ message: error.message });
   }
 };
 
