@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form, Container, Button } from 'react-bootstrap';
+import { AccountContext } from './AccountContext';
 
 function Register() {
+
+    const {switchToSignin} = useContext(AccountContext);
+
     return (
         <Container>
             <h3>Please Sign Up!</h3>
@@ -24,6 +28,10 @@ function Register() {
 
                 <Button variant="primary" type="submit">
                     Register
+                </Button>
+
+                <Button variant="primary" type="submit" onClick={switchToSignin}>
+                    Already have an account?
                 </Button>
             </Form>
         </Container>
