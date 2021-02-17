@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 
+import { encrypt } from "../utils/userUtils.js";
 import UserSchema from "../models/userSchema.js";
 
 const router = express.Router();
@@ -27,26 +28,22 @@ export const getUser = async (req, res) => {
   }
 };
 
-const getUserByFields = async (fields) => {
-  try {
-    const user = await UserSchema.find(fields);
-    return user;
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const createUser = async (req, res) => {
-  const { username } = req.body;
+  const { username, password } = req.body;
+  if (!username || !password)
+    return res.status(400).json({ message: "Username or Password missing" });
+
   const newUser = new UserSchema({
     username,
+    password,
   });
 
   try {
-    const userExists = await getUserByFields({ username });
-    if (!userExists || userExists.length == 0) {
+    const userExists = await UserSchema.findOne({ username });
+    if (!userExists) {
+      newUser.password = await encrypt(newUser.password);
       await newUser.save();
-      res.status(201).json(newUser);
+      res.status(201).json({ message: "User successfully created" });
     } else {
       res.status(400).json({ message: "User already exists" });
     }
