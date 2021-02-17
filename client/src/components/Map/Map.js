@@ -26,11 +26,15 @@ class Map extends Component {
       currLocation: true,
     })
   }
+  
+
 
   render() {
-
     const currLat = this.state.center.lat;
     const currLng = this.state.center.lng;
+
+
+
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>
@@ -40,7 +44,7 @@ class Map extends Component {
           center={this.state.center}
           defaultZoom={this.props.zoom}
         >
-        {this.state.currLocation ? <CurrLocation lat= {currLat} lng={currLng}/> : null}
+        {this.state.currLocation ? <CurrLocation  lat= {currLat} lng={currLng}/> : null}
         </GoogleMapReact>
       </div>
     );
