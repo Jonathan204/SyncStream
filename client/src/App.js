@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Container, AppBar, Typography, Grow, Grid } from "@material-ui/core";
+import { Container, AppBar, Grow, Grid } from "@material-ui/core";
+import 'bootstrap/dist/css/bootstrap.min.css'; //This is required for react bootstrap CSS styling
 import { useDispatch } from "react-redux"; //this allows us to dispatch an action
 import { getPosts } from "./actions/posts";
 import Posts from "./components/Posts/Posts";
 import Form from "./components/Form/Form";
 import Map from "./components/Map/Map";
-import logo from "./images/logo.png";
 import useStyles from "./styles";
+import NavigationBar from "./components/NavigationBar/NavigationBar"
 
 const App = () => {
   const [currentId, setCurrentId] = useState(0);
@@ -20,11 +21,8 @@ const App = () => {
   return (
     <Container maxwidth="lg">
       <AppBar className={classes.appBar} position="static" color="inherit">
-        <Typography className={classes.heading} variant="h2" align="center">
-          SyncStream
-        </Typography>
-        <img className={classes.image} src={logo} alt="logo" height="400" />
       </AppBar>
+      <NavigationBar />
       <Grow in>
         <Grid
           container
