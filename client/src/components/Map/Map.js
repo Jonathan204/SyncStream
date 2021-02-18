@@ -27,13 +27,9 @@ class Map extends Component {
     })
   }
 
-
-
   render() {
     const currLat = this.state.center.lat;
     const currLng = this.state.center.lng;
-
-
 
     return (
       // Important! Always set the container height explicitly

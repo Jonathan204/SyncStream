@@ -1,11 +1,9 @@
 import React from 'react'
-import { Image, Container, Row, Column } from 'react-bootstrap';
+import { Image, Container, Row } from 'react-bootstrap';
 import profilePicture from "../../../images/default_account.png";
 
 const InfoWindow = (props) => {
 
-  //im honestly forgot we were using bootstrap at this point and just customly made the styling
-  //we can change it later if we want, or right now just lemme know in the pr.
   const infoWindowStyle = {
     position: 'relative',
     bottom: 200,
