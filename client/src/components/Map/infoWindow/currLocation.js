@@ -48,19 +48,6 @@ class InfoWindow extends React.Component{
     clearInterval(this.interval);
   }
 
-  const infoWindowStyle = {
-    position: 'relative',
-    bottom: 200,
-    left: '-45px',
-    width: 220,
-    backgroundColor: 'white',
-    boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)',
-    padding: 10,
-    fontSize: 14,
-    zIndex: 100,
-  };
-
-
   tick() {
     if(this.state.token) {
       this.getCurrentlyPlaying(this.state.token);
