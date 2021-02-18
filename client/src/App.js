@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'; //This is required for react boot
 import { useDispatch } from "react-redux"; //this allows us to dispatch an action
 import { getPosts } from "./actions/posts";
 import Posts from "./components/Posts/Posts";
-import Account from "./components/Account/Account.js";
 import Map from "./components/Map/Map";
 import useStyles from "./styles";
 import NavigationBar from "./components/NavigationBar/NavigationBar"
@@ -35,7 +34,6 @@ const App = () => {
             <Posts setCurrentId={setCurrentId} />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Account />
           </Grid>
           <Map/>
         </Grid>

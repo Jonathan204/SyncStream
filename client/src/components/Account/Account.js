@@ -23,7 +23,7 @@ const Account = () => {
 
             {activeWindow === "signin" && <Login />}
             {activeWindow === "signup" && <Register />}
-
+    
         </Container>
         </AccountContext.Provider>
     );
