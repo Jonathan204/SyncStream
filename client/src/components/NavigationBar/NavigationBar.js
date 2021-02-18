@@ -1,12 +1,8 @@
-import React, { useContext } from 'react';
 import { Nav, Navbar, Image } from 'react-bootstrap';
 import logo from "../../images/logo.png";
 import profilePicture from "../../images/default_account.png";
-import { DisplayAccountContext } from "../Account/DisplayAccountContext";
 
 const NavigationBar = () => {
-
-    const {displayWindow} = useContext(DisplayAccountContext);
 
     return(
         <Navbar bg="dark" variant="dark">
@@ -22,7 +18,7 @@ const NavigationBar = () => {
                 SyncStream
             </Navbar.Brand>
             <Nav className="ml-auto">
-                <Nav.Link onClick={displayWindow}>
+                <Nav.Link>
                     <Image 
                         src={profilePicture}
                         width="30"
