@@ -10,3 +10,14 @@ export const encrypt = async (secret) => {
       throw err;
     });
 };
+
+export const comparePassword = async (provided, hash) => {
+  return await bcrypt
+    .compare(provided, hash)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      throw err;
+    });
+};

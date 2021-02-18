@@ -12,7 +12,6 @@ class currLocation extends React.Component {
     }
 
     handleClick() {
-        console.log("Clicked!");
         this.setState(state => ({
             showInfo: !state.showInfo
         }));

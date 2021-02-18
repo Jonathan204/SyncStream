@@ -7,8 +7,6 @@ import Player from "../../Player/Player";
 import hash from "./hash";
 class InfoWindow extends React.Component{
 
-  //im honestly forgot we were using bootstrap at this point and just customly made the styling
-  //we can change it later if we want, or right now just lemme know in the pr.
   constructor() {
     super();
     this.state = {
@@ -49,6 +47,19 @@ class InfoWindow extends React.Component{
     // clear the interval to save resources
     clearInterval(this.interval);
   }
+
+  const infoWindowStyle = {
+    position: 'relative',
+    bottom: 200,
+    left: '-45px',
+    width: 220,
+    backgroundColor: 'white',
+    boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)',
+    padding: 10,
+    fontSize: 14,
+    zIndex: 100,
+  };
+
 
   tick() {
     if(this.state.token) {
@@ -131,7 +142,7 @@ render(){
             <p>
               You need to be playing a song on Spotify, for something to appear here.
             </p>
-          )}    
+          )}
         </Row>
       </Container>
 
