@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import Login from './Login.js';
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { AccountContext } from './AccountContext.js';
 import Register from './Register.js';
 
@@ -16,14 +16,24 @@ const Account = () => {
         setActiveWindow("signin")
     }
 
+    const accountWindow = {
+        height: 550,
+        width: 300,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        borderRadius: 20,
+        boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)'
+      };
+
     const contextValue = {switchToSignup, switchToSignin};
     return (
         <AccountContext.Provider value={contextValue}>
-        <Container className="border rounded">
+        <Container className="border" style={accountWindow}>
 
-            {activeWindow === "signin" && <Login />}
-            {activeWindow === "signup" && <Register />}
-    
+                {activeWindow === "signin" && <Login />}
+                {activeWindow === "signup" && <Register />}
+
         </Container>
         </AccountContext.Provider>
     );

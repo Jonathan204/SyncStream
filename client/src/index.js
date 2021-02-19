@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { Container } from "react-bootstrap";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -20,7 +21,9 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route exact path="/">
+        <Container>
           <Account />
+        </Container>
         </Route>
         <Route path="/home">
           <App />
