@@ -43,7 +43,7 @@ const Login = () => {
                         </Button>
                     </Row>
                     <Row className='flex-column'>
-                        <p class='underline-on-hover account-swap' onClick={switchToSignup}>
+                        <p class='underline-on-hover' onClick={switchToSignup}>
                             Don't have an account? Create one!
                         </p>
                     </Row>

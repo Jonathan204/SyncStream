@@ -56,7 +56,7 @@ const Register = () => {
                     </Button>
                 </Row>
                 <Row>
-                    <p class='underline-on-hover account-swap' onClick={switchToSignin}>
+                    <p class='underline-on-hover' onClick={switchToSignin}>
                         Already have an account? Login!
                     </p>
                 </Row>
