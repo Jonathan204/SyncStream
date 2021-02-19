@@ -1,20 +1,23 @@
 import React, { useContext, useState } from 'react';
 import { Form, Container, Button, Row, Col } from 'react-bootstrap';
 import { AccountContext } from './AccountContext';
+import { useHistory } from 'react-router-dom';
 import './styles.css';
 
 const Register = () => {
     const [validated, setValidated] = useState(false);
     const {switchToSignin} = useContext(AccountContext);
+    const history = useHistory();
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-
         setValidated(true);
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            history.push("/home");
+        }
     }
 
     return (
