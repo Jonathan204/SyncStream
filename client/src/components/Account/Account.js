@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import Login from './Login.js';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { AccountContext } from './AccountContext.js';
 import Register from './Register.js';
 
@@ -23,7 +23,8 @@ const Account = () => {
         flexDirection: 'column',
         alignItems: 'center',
         borderRadius: 20,
-        boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)'
+        boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)',
+        marginTop: '250px'
       };
 
     const contextValue = {switchToSignup, switchToSignin};

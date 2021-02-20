@@ -21,9 +21,9 @@ const Register = () => {
     }
 
     return (
-        <Container>
-            <Row className='mt-3' style={{textAlign:'center'}}><Col><h3>Please Sign Up!</h3></Col></Row>
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Container class='account-height'>
+            <Row className='mt-4' style={{textAlign:'center'}}><Col><h3>Please Sign Up!</h3></Col></Row>
+            <Form className='mt-5' noValidate validated={validated} onSubmit={handleSubmit}>
                 <Row className="flex-column">
                     <Form.Group conrolId="email">
                         <Form.Control type="email" placeholder="Email" required/>
@@ -53,12 +53,12 @@ const Register = () => {
                         <Form.Control required type="password" placeholder="Confirm Password" />
                     </Form.Group>
                 </Row>
-                <Row>
+                <Row className='mt-5'>
                     <Button style={{width:'100%', borderRadius:'25px', marginLeft:'30px', marginRight: '30px', fontWeight:'bold'}} variant="primary" type="submit">
                         Register
                     </Button>
                 </Row>
-                <Row>
+                <Row className='flex-column mt-3' style={{textAlign: 'center'}}>
                     <p class='underline-on-hover' onClick={switchToSignin}>
                         Already have an account? Login!
                     </p>

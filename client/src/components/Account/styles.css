@@ -2,3 +2,7 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+.account-height {
+    height: 550px;
+}
