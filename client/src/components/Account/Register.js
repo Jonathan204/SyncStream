@@ -21,7 +21,7 @@ const Register = () => {
   };
 
   return (
-    <Container class="account-height">
+    <Container className="account-height">
       <Row className="mt-4" style={{ textAlign: "center" }}>
         <Col>
           <h3>Please Sign Up!</h3>
@@ -34,7 +34,7 @@ const Register = () => {
         onSubmit={handleSubmit}
       >
         <Row className="flex-column">
-          <Form.Group conrolId="email">
+          <Form.Group controlId="email">
             <Form.Control type="email" placeholder="Email" required />
             <Form.Control.Feedback type="invalid">
               Please input a valid email

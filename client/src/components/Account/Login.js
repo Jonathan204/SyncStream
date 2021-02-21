@@ -21,7 +21,7 @@ const Login = () => {
   };
 
   return (
-    <Container class="account-height">
+    <Container className="account-height">
       <Row className="mt-4" style={{ textAlign: "center" }}>
         <Col>
           <h3>Welcome Back!</h3>
@@ -34,7 +34,7 @@ const Login = () => {
         onSubmit={handleSubmit}
       >
         <Row className="flex-column">
-          <Form.Group conrolId="username">
+          <Form.Group controlId="username">
             <Form.Control required type="text" placeholder="Username" />
             <Form.Control.Feedback type="invalid">
               Please input a valid username
