@@ -1,6 +1,6 @@
 import React from 'react'
-import { Image, Container, Row } from 'react-bootstrap';
-import "./spotifyBtn.css";
+import { Container, Row } from 'react-bootstrap';
+import "./styles.css";
 import * as $ from "jquery";
 import { authEndpoint, clientId, redirectUri, scopes } from "./config";
 import Player from "../../Player/Player";
@@ -92,24 +92,13 @@ class InfoWindow extends React.Component{
     });
   }
 render(){
-    const infoWindowStyle = {
-        position: 'relative',
-        bottom: 200,
-        left: '100px',
-        width: 400,
-        backgroundColor: 'white',
-        boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)',
-        padding: 10,
-        fontSize: 14,
-        zIndex: 100,
-      };
   return (
-    <div style={infoWindowStyle}>
+    <div className="infoWindowStyle">
       <Container>
         <Row className="text-center">
         {!this.state.token && (
             <a
-              className="btn btn--loginApp-link"
+              className="spotify-btn spotify-btn--loginApp-link"
               href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
                 "%20"
               )}&response_type=token&show_dialog=true`}

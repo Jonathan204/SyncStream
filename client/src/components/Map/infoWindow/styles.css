@@ -1,4 +1,4 @@
-.btn {
+.spotify-btn {
     background-color: transparent;
     border-radius: 2em;
     border: 0.2em solid #1ecd97;
@@ -9,14 +9,26 @@
     text-transform: uppercase;
     transition: all 0.25s ease;
     width: 100%;
-    
+
   }
   
-  .btn:hover {
+  .spotify-btn:hover {
     background: #1ecd97;
     color: #333;
   }
   
-  .btn--login {
+  .spotify-btn--login {
     margin: 0 auto;
+  }
+
+  .infoWindowStyle {
+    position: relative;
+    bottom: 200px;
+    left: 100px;
+    width: 400px;
+    background-color: white;
+    box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    font-size: 14px;
+    z-index: 100px;
   }
