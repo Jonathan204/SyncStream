@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 
-import posts from "./posts";
+import users from "./users";
+import account from "./account";
 
-export default combineReducers({ posts }); //in here we can use all the invididual reducers that we have
+export default combineReducers({ users, account }); //in here we can use all the invididual reducers that we have
