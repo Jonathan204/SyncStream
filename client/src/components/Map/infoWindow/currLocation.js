@@ -20,10 +20,12 @@ class InfoWindow extends React.Component{
         duration_ms: 0
       },
       is_playing: "Paused",
+      is_ad: false,
       progress_ms: 0,
       no_data: false,
     };
 
+    
     this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
     this.tick = this.tick.bind(this);
   }
@@ -71,13 +73,21 @@ class InfoWindow extends React.Component{
           return;
         }
 
-        this.setState({
-          item: data.item,
-          is_playing: data.is_playing,
-          progress_ms: data.progress_ms,
-          no_data: false /* We need to "reset" the boolean, in case the
-                            user does not give F5 and has opened his Spotify. */
-        });
+        if(data.item != null){
+            this.setState({
+                item: data.item,
+                is_playing: data.is_playing,
+                progress_ms: data.progress_ms,
+                is_ad: false,
+                no_data: false /* We need to "reset" the boolean, in case the
+                                  user does not give F5 and has opened his Spotify. */                  
+              });
+        }else{
+            this.setState({
+                is_ad: true,
+                no_data: false,
+              });      
+        }
       }
     });
   }
@@ -85,8 +95,8 @@ render(){
     const infoWindowStyle = {
         position: 'relative',
         bottom: 200,
-        left: '-45px',
-        width: 220,
+        left: '100px',
+        width: 400,
         backgroundColor: 'white',
         boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)',
         padding: 10,
@@ -96,17 +106,6 @@ render(){
   return (
     <div style={infoWindowStyle}>
       <Container>
-        <Row>
-          <div>Hello user!</div>
-        </Row>
-        <Row>
-          <Image
-            src={profilePicture}
-            width="30"
-            height="30"
-            roundedCircle
-          />
-        </Row>
         <Row>
         {!this.state.token && (
             <a
@@ -118,7 +117,7 @@ render(){
               Login to Spotify
             </a>
           )}
-          {this.state.token && !this.state.no_data && (
+          {this.state.token && !this.state.no_data && !this.state.is_ad && (
             <Player
               item={this.state.item}
               is_playing={this.state.is_playing}
@@ -129,6 +128,14 @@ render(){
             <p>
               You need to be playing a song on Spotify, for something to appear here.
             </p>
+          )}
+           {this.state.is_ad && (
+             <Player
+                item={this.state.item}
+                is_playing={this.state.is_playing}
+                progress_ms={this.state.progress_ms}
+                is_ad={this.state.is_ad}
+            />
           )}
         </Row>
       </Container>

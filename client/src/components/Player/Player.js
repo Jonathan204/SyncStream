@@ -1,6 +1,7 @@
 import React from "react";
 import "./Player.css";
-
+import SpotifyLogo from "../../images/spotify-logo.png";
+import { Image, Container, Row, Col } from 'react-bootstrap';
 const Player = props => {
   const backgroundStyles = {
     backgroundImage:`url(${
@@ -13,16 +14,26 @@ const Player = props => {
   };
 
   return (
-    <div className="App">
-      <div className="main-wrapper">
-        <div className="now-playing__img">
-          <img src={props.item.album.images[0].url} alt="album" />
-        </div>
+    <Container>
+      <Row>
+        <Col>
+          <div className="now-playing__img">
+            {props.is_ad ? 
+            <img src={SpotifyLogo} alt="album" /> :
+            <img src={props.item.album.images[0].url} alt="album" />
+            }
+          </div>        
+        </Col>
+        <Col>
         <div className="now-playing__side">
-          <div className="now-playing__name">{props.item.name}</div>
-          <div className="now-playing__artist">
-            {props.item.artists[0].name}
-          </div>
+           {props.is_ad ? 
+            <div className="now-playing__name">ADVERTISEMENT</div> :
+            <div className="now-playing__name">{props.item.name}</div>
+           }
+           {props.is_ad ? 
+            <div className="now-playing__artist">SPOTIFY</div> :
+            <div className="now-playing__artist">{props.item.artists[0].name}</div>
+           }         
           <div className="now-playing__status">
             {props.is_playing ? "Playing" : "Paused"}
           </div>
@@ -30,9 +41,9 @@ const Player = props => {
             <div className="progress__bar" style={progressBarStyles} />
           </div>
         </div>
-        <div className="background" style={backgroundStyles} />{" "}
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
