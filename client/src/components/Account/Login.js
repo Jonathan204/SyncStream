@@ -30,7 +30,7 @@ const Login = () => {
 
   return (
     <Container className="account-height">
-      <Row className="mt-4" style={{ textAlign: "center" }}>
+      <Row className="mt-4 align-text-center">
         <Col>
           <h3>Welcome Back!</h3>
         </Col>
@@ -75,22 +75,12 @@ const Login = () => {
         </Row>
         {userError}
         <Row className="mt-5">
-          <Button
-            style={{
-              width: "100%",
-              borderRadius: "25px",
-              marginLeft: "30px",
-              marginRight: "30px",
-              fontWeight: "bold",
-            }}
-            variant="primary"
-            type="submit"
-          >
+          <Button className="submit-button" variant="primary" type="submit">
             Login
           </Button>
         </Row>
-        <Row className="flex-column mt-3" style={{ textAlign: "center" }}>
-          <p class="underline-on-hover" onClick={switchToSignup}>
+        <Row className="flex-column mt-3 align-text-center">
+          <p className="underline-on-hover" onClick={switchToSignup}>
             Don't have an account? Create one!
           </p>
         </Row>
