@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css"; //This is required for react boot
 import { useDispatch } from "react-redux"; //this allows us to dispatch an action
 import { getPosts } from "./actions/posts";
 import Map from "./components/Map/Map";
-import useStyles from "./styles";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import Profile from "./components/Profile/Profile";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -12,7 +11,6 @@ import Account from "./components/Account/Account";
 const App = () => {
   const [currentId] = useState(0);
   const dispatch = useDispatch(); //this is the hook
-  const classes = useStyles();
 
   useEffect(() => {
     dispatch(getPosts()); //dispatches the getpost action
