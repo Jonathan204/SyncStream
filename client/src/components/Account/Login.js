@@ -4,7 +4,6 @@ import { AccountContext } from "./AccountContext";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../actions/account";
-import "./styles.css";
 
 const Login = () => {
   const [validated, setValidated] = useState(false);

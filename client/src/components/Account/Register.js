@@ -3,7 +3,6 @@ import { Form, Container, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountContext } from "./AccountContext";
 import { createUser } from "../../actions/account";
-import "./styles.css";
 
 const Register = () => {
   const [validated, setValidated] = useState(false);
@@ -110,7 +109,7 @@ const Register = () => {
           </Button>
         </Row>
         <Row className="flex-column mt-3 align-text-center">
-          <p class="underline-on-hover" onClick={switchToSignin}>
+          <p className="underline-on-hover" onClick={switchToSignin}>
             Already have an account? Login!
           </p>
         </Row>
