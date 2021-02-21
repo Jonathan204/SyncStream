@@ -1,8 +1,8 @@
 .underline-on-hover:hover {
-    text-decoration: underline;
-    cursor: pointer;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .account-height {
-    height: 550px;
+  height: 550px;
 }
