@@ -1,6 +1,6 @@
 import React from 'react'
 import { Image, Container, Row } from 'react-bootstrap';
-import profilePicture from "../../../images/default_account.png";
+import "./spotifyBtn.css";
 import * as $ from "jquery";
 import { authEndpoint, clientId, redirectUri, scopes } from "./config";
 import Player from "../../Player/Player";
@@ -106,7 +106,7 @@ render(){
   return (
     <div style={infoWindowStyle}>
       <Container>
-        <Row>
+        <Row className="text-center">
         {!this.state.token && (
             <a
               className="btn btn--loginApp-link"
