@@ -6,3 +6,4 @@ export const DELETE = "DELETE";
 export const FETCH_ALL = "FETCH_ALL";
 export const LOGIN = "LOGIN";
 export const LOGIN_ERROR = "USER_ERROR";
+export const LOADING = "LOADING";

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Form, Container, Button, Row, Col } from "react-bootstrap";
+import { Form, Container, Button, Row, Col, Spinner } from "react-bootstrap";
 import { AccountContext } from "./AccountContext";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ const Login = () => {
     password: "",
   });
   const userError = useSelector((state) => state.account.loginError);
+  const loading = useSelector((state) => state.account.loading);
   const { switchToSignup } = useContext(AccountContext);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -74,7 +75,21 @@ const Login = () => {
         </Row>
         {userError}
         <Row className="mt-5">
-          <Button className="submit-button" variant="primary" type="submit">
+          <Button
+            className="submit-button"
+            variant="primary"
+            type="submit"
+            disabled={loading}
+          >
+            {loading && (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
             Login
           </Button>
         </Row>

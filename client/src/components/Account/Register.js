@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Form, Container, Button, Row, Col } from "react-bootstrap";
+import { Form, Container, Button, Row, Col, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountContext } from "./AccountContext";
 import { createUser } from "../../actions/account";
@@ -14,6 +14,7 @@ const Register = () => {
   });
   const userError = useSelector((state) => state.account.createError);
   const userCreated = useSelector((state) => state.account.createMessage);
+  const loading = useSelector((state) => state.account.loading);
   const { switchToSignin } = useContext(AccountContext);
   const dispatch = useDispatch();
 
@@ -104,7 +105,21 @@ const Register = () => {
         </Row>
         {userError || userCreated}
         <Row className="mt-5">
-          <Button className="submit-button" variant="primary" type="submit">
+          <Button
+            className="submit-button"
+            variant="primary"
+            type="submit"
+            disabled={loading}
+          >
+            {loading && (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
             Register
           </Button>
         </Row>
