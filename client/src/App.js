@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { AppBar, Grow, Grid } from "@material-ui/core";
 import "bootstrap/dist/css/bootstrap.min.css"; //This is required for react bootstrap CSS styling
-import { useDispatch } from "react-redux"; //this allows us to dispatch an action
-import { getPosts } from "./actions/posts";
 import Map from "./components/Map/Map";
 import useStyles from "./styles";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 
 const App = () => {
-  const [currentId] = useState(0);
-  const dispatch = useDispatch(); //this is the hook
   const classes = useStyles();
-
-  useEffect(() => {
-    dispatch(getPosts()); //dispatches the getpost action
-  }, [currentId, dispatch]);
 
   return (
     <div>

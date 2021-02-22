@@ -1,21 +1,30 @@
 import React, { useContext, useState } from "react";
 import { Form, Container, Button, Row, Col } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { AccountContext } from "./AccountContext";
-import { useHistory } from "react-router-dom";
+import { createUser } from "../../actions/account";
 
 const Register = () => {
   const [validated, setValidated] = useState(false);
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const userError = useSelector((state) => state.account.createError);
+  const userCreated = useSelector((state) => state.account.createMessage);
   const { switchToSignin } = useContext(AccountContext);
-  const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     setValidated(true);
+    event.preventDefault();
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
     } else {
-      history.push("/home");
+      dispatch(createUser(userData));
     }
   };
 
@@ -34,7 +43,15 @@ const Register = () => {
       >
         <Row className="flex-column">
           <Form.Group controlId="email">
-            <Form.Control type="email" placeholder="Email" required />
+            <Form.Control
+              name="email"
+              type="email"
+              placeholder="Email"
+              required
+              onChange={(e) =>
+                setUserData({ ...userData, email: e.target.value })
+              }
+            />
             <Form.Control.Feedback type="invalid">
               Please input a valid email
             </Form.Control.Feedback>
@@ -42,7 +59,15 @@ const Register = () => {
         </Row>
         <Row className="flex-column">
           <Form.Group controlId="username">
-            <Form.Control required type="text" placeholder="Username" />
+            <Form.Control
+              name="username"
+              required
+              type="text"
+              placeholder="Username"
+              onChange={(e) =>
+                setUserData({ ...userData, username: e.target.value })
+              }
+            />
             <Form.Control.Feedback type="invalid">
               Please input a valid username
             </Form.Control.Feedback>
@@ -50,7 +75,15 @@ const Register = () => {
         </Row>
         <Row className="flex-column">
           <Form.Group controlId="password">
-            <Form.Control required type="password" placeholder="Password" />
+            <Form.Control
+              name="password"
+              required
+              type="password"
+              placeholder="Password"
+              onChange={(e) =>
+                setUserData({ ...userData, password: e.target.value })
+              }
+            />
             <Form.Control.Feedback type="invalid">
               Please input a valid password
             </Form.Control.Feedback>
@@ -59,19 +92,24 @@ const Register = () => {
         <Row className="flex-column">
           <Form.Group controlId="confirmPassword">
             <Form.Control
+              name="password"
               required
               type="password"
               placeholder="Confirm Password"
+              onChange={(e) =>
+                setUserData({ ...userData, confirmPassword: e.target.value })
+              }
             />
           </Form.Group>
         </Row>
+        {userError || userCreated}
         <Row className="mt-5">
           <Button className="submit-button" variant="primary" type="submit">
             Register
           </Button>
         </Row>
         <Row className="flex-column mt-3 align-text-center">
-          <p class="underline-on-hover" onClick={switchToSignin}>
+          <p className="underline-on-hover" onClick={switchToSignin}>
             Already have an account? Login!
           </p>
         </Row>
