@@ -4,6 +4,7 @@ import {
   UPDATE_USER,
   CREATE_SUCCESS,
   CREATE_ERROR,
+  LOADING,
 } from "../constants/actionTypes";
 
 const defaultUser = {
@@ -26,6 +27,8 @@ export default function (user = defaultUser, action) {
       return { createMessage: payload };
     case UPDATE_USER:
       return { ...user, payload };
+    case LOADING:
+      return { loading: payload };
     default:
       return user;
   }
