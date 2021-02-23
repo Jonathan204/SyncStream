@@ -4,11 +4,13 @@ import {
   LOGIN,
   LOGIN_ERROR,
   UPDATE_USER,
+  LOADING,
 } from "../constants/actionTypes";
 
 import * as api from "../api/index.js";
 export const createUser = (user) => async (dispatch) => {
   try {
+    dispatch({ type: LOADING, payload: true });
     const { data } = await api.createUser(user);
     dispatch({ type: CREATE_SUCCESS, payload: handleResponse(data).message });
   } catch (error) {
@@ -19,7 +21,8 @@ export const createUser = (user) => async (dispatch) => {
 
 export const loginUser = (user, history) => async (dispatch) => {
   try {
-    const { data }  = await api.login(user);
+    dispatch({ type: LOADING, payload: true });
+    const { data } = await api.login(user);
     dispatch({ type: LOGIN, payload: handleResponse(data) });
     history.push("/home");
   } catch (error) {
