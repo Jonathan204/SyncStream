@@ -3,6 +3,7 @@ import { Form, Container, Button, Row, Col, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountContext } from "./AccountContext";
 import { createUser } from "../../actions/account";
+import LoaderButton from "../Button/LoadingButton";
 
 const Register = () => {
   const [validated, setValidated] = useState(false);
@@ -105,23 +106,13 @@ const Register = () => {
         </Row>
         {userError || userCreated}
         <Row className="mt-5">
-          <Button
+          <LoaderButton
             className="submit-button"
-            variant="primary"
             type="submit"
-            disabled={loading}
+            loading={loading}
           >
-            {loading && (
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-            )}
             Register
-          </Button>
+          </LoaderButton>
         </Row>
         <Row className="flex-column mt-3 align-text-center">
           <p className="underline-on-hover" onClick={switchToSignin}>

@@ -4,6 +4,7 @@ import { AccountContext } from "./AccountContext";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../actions/account";
+import LoaderButton from "../Button/LoadingButton";
 
 const Login = () => {
   const [validated, setValidated] = useState(false);
@@ -75,23 +76,13 @@ const Login = () => {
         </Row>
         {userError}
         <Row className="mt-5">
-          <Button
+          <LoaderButton
             className="submit-button"
-            variant="primary"
             type="submit"
-            disabled={loading}
+            loading={loading}
           >
-            {loading && (
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-            )}
             Login
-          </Button>
+          </LoaderButton>
         </Row>
         <Row className="flex-column mt-3 align-text-center">
           <p className="underline-on-hover" onClick={switchToSignup}>
