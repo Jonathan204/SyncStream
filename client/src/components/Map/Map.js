@@ -1,7 +1,7 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 import CurrLocation from "./markers/currLocation";
-import { useDispatch, useSelector, connect } from "react-redux";
+import { connect } from "react-redux";
 import hash from "../../hash";
 import { updateUser } from "../../actions/account";
 import * as $ from "jquery";
@@ -41,9 +41,6 @@ class Map extends Component {
       });
       this.getUserId(_token);
     }
-
-    // set interval for polling every 5 seconds
-    
   };
 
   getUserId(token){
@@ -62,12 +59,15 @@ class Map extends Component {
         }
 
         this.setState({
-          user_spotify_id: data
+          user_spotify_id: data.id
         });
 
-        console.log(data.id);
-        console.log(this.props);
-        this.props.updateUser(this.props.user.id, this.state.user_spotify_id);
+        const userData  = 
+        {
+          spotifyUserId: data.id,
+        };
+        const userId = localStorage.getItem('userId');
+        this.props.updateUser(userId, userData);
       }
     });
   }
