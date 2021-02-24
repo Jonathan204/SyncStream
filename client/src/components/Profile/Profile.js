@@ -58,7 +58,7 @@ const Profile = () => {
 							<Row className="bottom-margin">
 								<Col>
 									<Card.Title>Password</Card.Title>
-									<Card.Text>***************</Card.Text>
+									<Card.Text>**************</Card.Text>
 								</Col>
 							</Row>
 							<Row>
