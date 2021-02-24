@@ -14,7 +14,7 @@ const defaultUser = {
   spotifyId: "",
 };
 
-export default function (user = defaultUser, action) {
+export default function account(user = defaultUser, action) {
   const { payload } = action;
   switch (action.type) {
     case LOGIN:
