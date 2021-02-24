@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Form,
-  Image,
-  Row,
-  Col,
-  Card,
-  Button,
-  Container,
-} from "react-bootstrap";
+import { Image, Row, Col, Card } from "react-bootstrap";
 import profilePicture from "../../images/default_account.png";
 import "./styles.css";
 
@@ -18,140 +10,55 @@ const Profile = () => {
         <Col md="8">
           <Card>
             <Card.Header>
-              <Card.Title as="h4">Edit Profile</Card.Title>
+              <Card.Title as="h4">User Profile</Card.Title>
             </Card.Header>
             <Card.Body>
-              <Form>
-                <Row>
-                  <Col className="pr-1" md="6">
-                    <Form.Group>
-                      <label>Username</label>
-                      <Form.Control
-                        placeholder="Username"
-                        type="text"
-                      ></Form.Control>
-                    </Form.Group>
-                  </Col>
-                  <Col className="pl-1" md="6">
-                    <Form.Group>
-                      <label htmlFor="exampleInputEmail1">Email address</label>
-                      <Form.Control
-                        placeholder="Email"
-                        type="email"
-                      ></Form.Control>
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className="pr-1" md="4">
-                    <Form.Group>
-                      <label>First Name</label>
-                      <Form.Control
-                        placeholder="First Name"
-                        type="text"
-                      ></Form.Control>
-                    </Form.Group>
-                  </Col>
-                  <Col className="pl-1" md="4">
-                    <Form.Group>
-                      <label>Last Name</label>
-                      <Form.Control
-                        placeholder="Last Name"
-                        type="text"
-                      ></Form.Control>
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className="pr-1" md="5">
-                    <Form.Group>
-                      <label>City</label>
-                      <Form.Control
-                        placeholder="City"
-                        type="text"
-                      ></Form.Control>
-                    </Form.Group>
-                  </Col>
-                  <Col className="px-1" md="5">
-                    <Form.Group>
-                      <label>Country</label>
-                      <Form.Control
-                        placeholder="Country"
-                        type="text"
-                      ></Form.Control>
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md="12">
-                    <Form.Group>
-                      <label>About Me</label>
-                      <Form.Control
-                        cols="80"
-                        rows="4"
-                        as="textarea"
-                      ></Form.Control>
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <Button
-                  className="btn-fill pull-right"
-                  type="submit"
-                  variant="info"
-                >
-                  Update Profile
-                </Button>
-                <div className="clearfix"></div>
-              </Form>
+              <Row className="bottom-margin">
+                <Col className="pr-1" md="6">
+                  <Card.Title>Username</Card.Title>
+                  <Card.Text> Sync Streamer</Card.Text>
+                </Col>
+                <Col className="pl-1" md="6">
+                  <Card.Title>Email address</Card.Title>
+                  <Card.Text>Sync.Streamer@example.com</Card.Text>
+                </Col>
+              </Row>
+              <Row className="bottom-margin">
+                <Col>
+                  <Card.Title>Password</Card.Title>
+                  <Card.Text>************</Card.Text>
+                </Col>
+              </Row>
+              <Row>
+                <Col md="6">
+                  <Card.Title>Spotify Information</Card.Title>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs="2">
+                  <Card.Text className="bold-title">Username:</Card.Text>
+                </Col>
+                <Col>
+                  <Card.Text>SpotifyLover2</Card.Text>
+                </Col>
+              </Row>
             </Card.Body>
           </Card>
         </Col>
         <Col md="4">
           <Card className="card-user">
-            <div className="card-image"></div>
             <Card.Body>
-              <div className="author">
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  <Image
-                    src={profilePicture}
-                    width="20%"
-                    height="20%"
-                    alt="logo"
-                    className="d-inline-block align-top"
-                    roundedCircle
-                  />
-                  <h5 className="title">Mike Andrew</h5>
-                </a>
-                <p className="description">mikemike</p>
-              </div>
+              <Image
+                src={profilePicture}
+                width="20%"
+                height="20%"
+                alt="logo"
+                className="d-inline-block align-top"
+                roundedCircle
+              />
+              <Card.Title>Sync Streamer</Card.Title>
+              <Card.Text>Sync.Streamer@example.com</Card.Text>
             </Card.Body>
-            <hr></hr>
-            <div className="button-container mr-auto ml-auto">
-              <Button
-                className="btn-simple btn-icon"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-                variant="link"
-              >
-                <i className="fab fa-facebook-square"></i>
-              </Button>
-              <Button
-                className="btn-simple btn-icon"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-                variant="link"
-              >
-                <i className="fab fa-twitter"></i>
-              </Button>
-              <Button
-                className="btn-simple btn-icon"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-                variant="link"
-              >
-                <i className="fab fa-google-plus-square"></i>
-              </Button>
-            </div>
           </Card>
         </Col>
       </Row>
