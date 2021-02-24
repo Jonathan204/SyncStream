@@ -8,6 +8,7 @@ import {
 } from "../constants/actionTypes";
 
 import * as api from "../api/index.js";
+
 export const createUser = (user) => async (dispatch) => {
   try {
     dispatch({ type: LOADING, payload: true });
