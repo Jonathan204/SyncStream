@@ -85,12 +85,12 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { title, message, creator, selectedFile, tags } = req.body;
+  const { username, email } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No user with id: ${id}`);
 
-  const updatedUser = { creator, title, message, tags, selectedFile, _id: id };
+  const updatedUser = { username, email, _id: id };
 
   await UserSchema.findByIdAndUpdate(id, updatedUser, { new: true });
 

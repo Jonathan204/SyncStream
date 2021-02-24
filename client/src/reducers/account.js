@@ -5,6 +5,7 @@ import {
   CREATE_SUCCESS,
   CREATE_ERROR,
   LOADING,
+  GET_USER,
 } from "../constants/actionTypes";
 
 const defaultUser = {
@@ -17,6 +18,8 @@ const defaultUser = {
 export default function account(user = defaultUser, action) {
   const { payload } = action;
   switch (action.type) {
+    case GET_USER:
+      return action.payload;
     case LOGIN:
       return payload;
     case LOGIN_ERROR:

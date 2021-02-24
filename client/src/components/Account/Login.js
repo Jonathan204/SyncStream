@@ -14,8 +14,8 @@ const Login = () => {
     password: "",
   });
   const [errors, setErrors] = useState({});
-  const userError = useSelector((state) => state.account.loginError);
-  const loading = useSelector((state) => state.account.loading);
+  const { userError, loading, id } = useSelector((state) => state.account);
+  localStorage.setItem("id", id);
   const { switchToSignup } = useContext(AccountContext);
   const history = useHistory();
   const dispatch = useDispatch();
