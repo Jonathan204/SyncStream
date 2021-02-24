@@ -1,13 +1,8 @@
 import React from "react";
 import "./Player.css";
 import SpotifyLogo from "../../images/spotify-logo.png";
-import { Image, Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 const Player = props => {
-  const backgroundStyles = {
-    backgroundImage:`url(${
-      props.item.album.images[0].url
-    })`,
-  };
 
   const progressBarStyles = {
     width: (props.progress_ms * 100 / props.item.duration_ms) + '%'

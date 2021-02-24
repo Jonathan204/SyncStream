@@ -4,7 +4,7 @@ import "./styles.css";
 import * as $ from "jquery";
 import { authEndpoint, clientId, redirectUri, scopes } from "./config";
 import Player from "../../Player/Player";
-import hash from "./hash";
+import hash from "../../../hash";
 class InfoWindow extends React.Component{
 
   constructor() {
@@ -25,7 +25,6 @@ class InfoWindow extends React.Component{
       no_data: false,
     };
 
-    
     this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
     this.tick = this.tick.bind(this);
   }
@@ -45,6 +44,7 @@ class InfoWindow extends React.Component{
     // set interval for polling every 5 seconds
     this.interval = setInterval(() => this.tick(), 5000);
   }
+
   componentWillUnmount() {
     // clear the interval to save resources
     clearInterval(this.interval);
@@ -72,7 +72,7 @@ class InfoWindow extends React.Component{
           });
           return;
         }
-
+      
         if(data.item != null){
             this.setState({
                 item: data.item,
@@ -91,6 +91,7 @@ class InfoWindow extends React.Component{
       }
     });
   }
+
 render(){
   return (
     <div className="infoWindowStyle">
