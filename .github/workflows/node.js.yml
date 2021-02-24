@@ -27,6 +27,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies, and test
         run: |
-          cd ../../client
+          cd client
           npm ci
           npm test
