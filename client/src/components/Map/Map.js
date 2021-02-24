@@ -1,17 +1,19 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import CurrLocation from "./markers/currLocation";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import hash from "../../hash";
-import { updateUser, getUser } from "../../actions/account";
+import { updateUser } from "../../actions/account";
 import * as $ from "jquery";
+
+
 
 class Map extends Component {
   constructor() {
     super();
     this.state = {
       token: null,
-      user_id: null,
+      user_spotify_id: null,
       no_data: false,
       center: "",
       currLocation: false,
@@ -30,7 +32,18 @@ class Map extends Component {
 
   componentDidMount = () => {
     navigator.geolocation.getCurrentPosition(this.currentCoords);
+    let _token = hash.access_token;
 
+    if (_token) {
+      // Set token
+      this.setState({
+        token: _token
+      });
+      this.getUserId(_token);
+    }
+
+    // set interval for polling every 5 seconds
+    
   };
 
   getUserId(token){
@@ -48,15 +61,18 @@ class Map extends Component {
           return;
         }
 
-        this.updateUser(data.id);
+        this.setState({
+          user_spotify_id: data
+        });
+
+        console.log(data.id);
+        console.log(this.props);
+        this.props.updateUser(this.props.user.id, this.state.user_spotify_id);
       }
     });
   }
 
-  updateUser(id){
-    const dispatch = useDispatch();
-  }
-
+  
   currentCoords = (position) => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
@@ -70,7 +86,7 @@ class Map extends Component {
     const { center, currLocation } = this.state;
     const currLat = center.lat;
     const currLng = center.lng;
-
+    
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%" }}>
@@ -82,9 +98,22 @@ class Map extends Component {
         >
           {currLocation ? <CurrLocation lat={currLat} lng={currLng} /> : null}
         </GoogleMapReact>
+        
       </div>
     );
   }
 }
 
-export default Map;
+const mapStateToProps = (state) => {
+  return {
+    user: state.account
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+    updateUser
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps())(Map);
