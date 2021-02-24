@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
-import { Form, Container, Button, Row, Col, Spinner } from "react-bootstrap";
+import { Form, Container, Row, Col, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountContext } from "./AccountContext";
 import { createUser } from "../../actions/account";
+import LoaderButton from "../Button/LoadingButton";
+import validate from "./validation";
 
 const Register = () => {
   const [validated, setValidated] = useState(false);
@@ -12,6 +14,7 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
+  const [errors, setErrors] = useState({});
   const userError = useSelector((state) => state.account.createError);
   const userCreated = useSelector((state) => state.account.createMessage);
   const loading = useSelector((state) => state.account.loading);
@@ -19,12 +22,14 @@ const Register = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
-    const form = event.currentTarget;
     setValidated(true);
     event.preventDefault();
-    if (form.checkValidity() === false) {
+    const formErrors = validate(userData);
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
       event.stopPropagation();
     } else {
+      setErrors({});
       dispatch(createUser(userData));
     }
   };
@@ -36,12 +41,7 @@ const Register = () => {
           <h3>Please Sign Up!</h3>
         </Col>
       </Row>
-      <Form
-        className="mt-5"
-        noValidate
-        validated={validated}
-        onSubmit={handleSubmit}
-      >
+      <Form className="mt-5" noValidate onSubmit={handleSubmit}>
         <Row className="flex-column">
           <Form.Group controlId="email">
             <Form.Control
@@ -49,12 +49,14 @@ const Register = () => {
               type="email"
               placeholder="Email"
               required
+              isValid={validated && !errors.email}
+              isInvalid={!!errors.email || !!userError}
               onChange={(e) =>
                 setUserData({ ...userData, email: e.target.value })
               }
             />
             <Form.Control.Feedback type="invalid">
-              Please input a valid email
+              {errors.email}
             </Form.Control.Feedback>
           </Form.Group>
         </Row>
@@ -65,12 +67,14 @@ const Register = () => {
               required
               type="text"
               placeholder="Username"
+              isValid={validated && !errors.username}
+              isInvalid={!!errors.username || !!userError}
               onChange={(e) =>
                 setUserData({ ...userData, username: e.target.value })
               }
             />
             <Form.Control.Feedback type="invalid">
-              Please input a valid username
+              {errors.username}
             </Form.Control.Feedback>
           </Form.Group>
         </Row>
@@ -81,12 +85,14 @@ const Register = () => {
               required
               type="password"
               placeholder="Password"
+              isValid={validated && !errors.password}
+              isInvalid={!!errors.password || !!userError}
               onChange={(e) =>
                 setUserData({ ...userData, password: e.target.value })
               }
             />
             <Form.Control.Feedback type="invalid">
-              Please input a valid password
+              {errors.password}
             </Form.Control.Feedback>
           </Form.Group>
         </Row>
@@ -97,31 +103,31 @@ const Register = () => {
               required
               type="password"
               placeholder="Confirm Password"
+              isValid={validated && !errors.confirmPassword}
+              isInvalid={!!errors.confirmPassword || !!userError}
               onChange={(e) =>
                 setUserData({ ...userData, confirmPassword: e.target.value })
               }
             />
+            <Form.Control.Feedback type="invalid">
+              {errors.confirmPassword}
+            </Form.Control.Feedback>
           </Form.Group>
         </Row>
-        {userError || userCreated}
+        {(userError || userCreated) && (
+          <Alert variant={userError ? "danger" : "success"}>
+            {userError || userCreated}
+          </Alert>
+        )}
+
         <Row className="mt-5">
-          <Button
+          <LoaderButton
             className="submit-button"
-            variant="primary"
             type="submit"
-            disabled={loading}
+            loading={loading}
           >
-            {loading && (
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-            )}
             Register
-          </Button>
+          </LoaderButton>
         </Row>
         <Row className="flex-column mt-3 align-text-center">
           <p className="underline-on-hover" onClick={switchToSignin}>
