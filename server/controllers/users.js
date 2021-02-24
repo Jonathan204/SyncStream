@@ -91,7 +91,6 @@ export const updateUser = async (req, res) => {
     return res.status(404).send(`No user with id: ${id}`);
   
   const updatedUser = { spotifyUserId: spotifyUserId, _id: id };
-  console.log(updatedUser);
   await UserSchema.findByIdAndUpdate(id, updatedUser, { new: true });
 
   res.json(updatedUser);
