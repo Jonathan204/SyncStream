@@ -89,7 +89,10 @@ const Profile = () => {
 					</Card>
 				</Col>
 				<Col md="4">
-					<Card className="card-user">
+					<Card>
+						<Card.Header>
+							<Card.Title as="h4">How Your Profile Looks</Card.Title>
+						</Card.Header>
 						<Card.Body>
 							<Image
 								src={profilePicture}
@@ -100,7 +103,6 @@ const Profile = () => {
 								roundedCircle
 							/>
 							<Card.Title>Sync Streamer</Card.Title>
-							<Card.Text>Sync.Streamer@example.com</Card.Text>
 						</Card.Body>
 					</Card>
 				</Col>
