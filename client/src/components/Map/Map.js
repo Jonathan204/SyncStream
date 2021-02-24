@@ -6,8 +6,6 @@ import hash from "../../hash";
 import { updateUser } from "../../actions/account";
 import * as $ from "jquery";
 
-
-
 class Map extends Component {
   constructor() {
     super();
@@ -44,7 +42,6 @@ class Map extends Component {
   };
 
   getUserId(token){
-
     $.ajax({
       url: "https://api.spotify.com/v1/me/",
       type: "GET",
@@ -72,7 +69,6 @@ class Map extends Component {
     });
   }
 
-  
   currentCoords = (position) => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
