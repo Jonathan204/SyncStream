@@ -1,8 +1,25 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 import CurrLocation from "./markers/currLocation";
+import { useDispatch, useSelector } from "react-redux";
+import hash from "../../hash";
+import { updateUser, getUser } from "../../actions/account";
+import * as $ from "jquery";
 
 class Map extends Component {
+  constructor() {
+    super();
+    this.state = {
+      token: null,
+      user_id: null,
+      no_data: false,
+      center: "",
+      currLocation: false,
+    };
+
+    this.getUserId = this.getUserId.bind(this);
+  }
+  
   static defaultProps = {
     center: {
       lat: 49.895138,
@@ -10,13 +27,35 @@ class Map extends Component {
     },
     zoom: 16,
   };
-  state = {
-    center: "",
-    currLocation: false,
-  };
+
   componentDidMount = () => {
     navigator.geolocation.getCurrentPosition(this.currentCoords);
+
   };
+
+  getUserId(token){
+
+    $.ajax({
+      url: "https://api.spotify.com/v1/me/",
+      type: "GET",
+      beforeSend: xhr => {
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
+      },
+      success: data => {
+        // Checks if the data is not empty
+        if(!data) {
+          console.log("No data!");
+          return;
+        }
+
+        this.updateUser(data.id);
+      }
+    });
+  }
+
+  updateUser(id){
+    const dispatch = useDispatch();
+  }
 
   currentCoords = (position) => {
     const latitude = position.coords.latitude;
