@@ -1,17 +1,11 @@
 import { Nav, Navbar, Image } from "react-bootstrap";
 import logo from "../../images/logo.png";
 import profilePicture from "../../images/default_account.png";
-
-const sticky = {
-  position: "fixed",
-  top: "0",
-  width: "100%",
-  zIndex: "1 ",
-};
+import "./styles.css";
 
 const NavigationBar = () => {
   return (
-    <Navbar bg="dark" variant="dark" style={sticky}>
+    <Navbar bg="dark" variant="dark" className="sticky">
       <Navbar.Brand href="/home">
         <Image
           src={logo}
