@@ -1,6 +1,6 @@
 import { FETCH_ALL, UPDATE_ALL } from "../constants/actionTypes";
 
-export default function (users = [], action) {
+export default function user(users = [], action) {
   switch (action.type) {
     case FETCH_ALL:
       return action.payload;
