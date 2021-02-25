@@ -9,11 +9,12 @@ import {
 
 import * as api from "../api/index.js";
 
-export const createUser = (user) => async (dispatch) => {
+export const createUser = (user, history) => async (dispatch) => {
   try {
     dispatch({ type: LOADING, payload: true });
     const { data } = await api.createUser(user);
     dispatch({ type: CREATE_SUCCESS, payload: handleResponse(data).message });
+    history.push("/home");
   } catch (error) {
     const { message } = handleError(error);
     dispatch({ type: CREATE_ERROR, payload: message });
