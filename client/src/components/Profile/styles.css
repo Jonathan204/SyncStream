@@ -1,15 +1,19 @@
 .margin-box {
-	margin: 10%;
+  margin: 10%;
 }
 
 .big-text {
-	font-size: 20px;
+  font-size: 20px;
 }
 
 .bottom-margin {
-	margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .bold-title {
-	font-weight: 600;
+  font-weight: 600;
+}
+
+.card-style {
+  box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
 }
