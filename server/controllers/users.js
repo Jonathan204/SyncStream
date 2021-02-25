@@ -6,6 +6,16 @@ import UserSchema from "../models/userSchema.js";
 
 const router = express.Router();
 
+const userResponse = (user) => {
+  const { username, email, _id, spotifyUserId } = user;
+  return {
+    username,
+    email,
+    spotifyUserId,
+    id: _id,
+  };
+};
+
 export const getUsers = async (req, res) => {
   try {
     const users = await UserSchema.find();
@@ -21,7 +31,8 @@ export const getUser = async (req, res) => {
 
   try {
     const user = await UserSchema.findById(id);
-    res.status(200).json(user);
+    const toReturn = userResponse(user);
+    res.status(200).json(toReturn);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -37,11 +48,7 @@ export const loginUser = async (req, res) => {
     if (user) {
       const isCorrect = await comparePassword(password, user.password);
       if (isCorrect) {
-        const toReturn = {
-          username: user.username,
-          email: user.email,
-          id: user._id,
-        };
+        const toReturn = userResponse(user);
         return res
           .status(201)
           .json({ data: toReturn, message: "User successfully logged in" });
@@ -84,14 +91,22 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { username, email, spotifyUserId} = req.body;
+  const { username, email, spotifyUserId } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No user with id: ${id}`);
 
-  const updatedUser = { username, email, spotifyUserId: spotifyUserId, _id: id };
-  
-  await UserSchema.findByIdAndUpdate(id, updatedUser, { new: true, omitUndefined: true });
+  const updatedUser = {
+    username,
+    email,
+    spotifyUserId: spotifyUserId,
+    _id: id,
+  };
+
+  await UserSchema.findByIdAndUpdate(id, updatedUser, {
+    new: true,
+    omitUndefined: true,
+  });
 
   res.json(updatedUser);
 };

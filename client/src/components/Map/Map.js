@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import hash from "../../hash";
 import { updateUser } from "../../actions/account";
 import * as $ from "jquery";
-
+import { Spinner } from "react-bootstrap";
 class Map extends Component {
   constructor() {
     super();
@@ -15,11 +15,12 @@ class Map extends Component {
       no_data: false,
       center: "",
       currLocation: false,
+      loadComplete: false,
     };
 
     this.getUserId = this.getUserId.bind(this);
   }
-  
+
   static defaultProps = {
     center: {
       lat: 49.895138,
@@ -29,43 +30,47 @@ class Map extends Component {
   };
 
   componentDidMount = () => {
-    navigator.geolocation.getCurrentPosition(this.currentCoords);
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        this.currentCoords,
+        this.handleLocationError
+      );
+    }
     let _token = hash.access_token;
 
     if (_token) {
       // Set token
       this.setState({
-        token: _token
+        token: _token,
       });
       this.getUserId(_token);
     }
   };
 
-  getUserId(token){
+  getUserId(token) {
     $.ajax({
       url: "https://api.spotify.com/v1/me/",
       type: "GET",
-      beforeSend: xhr => {
+      beforeSend: (xhr) => {
         xhr.setRequestHeader("Authorization", "Bearer " + token);
       },
-      success: data => {
+      success: (data) => {
         // Checks if the data is not empty
-        if(!data) {
+        if (!data) {
           console.log("No data!");
           return;
         }
 
         this.setState({
-          user_spotify_id: data.id
+          user_spotify_id: data.id,
         });
 
-        const userData  = 
-        {
+        const userData = {
           spotifyUserId: data.id,
         };
-        const userId = localStorage.getItem('userId');
+        const userId = localStorage.getItem("userId");
         this.props.updateUser(userId, userData);
-      }
+      },
     });
   }
 
@@ -75,26 +80,36 @@ class Map extends Component {
     this.setState({
       center: { lat: latitude, lng: longitude },
       currLocation: true,
+      loadComplete: true,
     });
   };
 
+  handleLocationError = () => {
+    this.setState({ loadComplete: true });
+  };
+
   render() {
-    const { center, currLocation } = this.state;
+    const { center, currLocation, loadComplete } = this.state;
     const currLat = center.lat;
     const currLng = center.lng;
-    
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%" }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
-          defaultCenter={this.props.center}
-          center={center ? center : this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-          {currLocation ? <CurrLocation lat={currLat} lng={currLng} /> : null}
-        </GoogleMapReact>
-        
+        {loadComplete ? (
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
+            defaultCenter={this.props.center}
+            center={center ? center : this.props.center}
+            defaultZoom={this.props.zoom}
+          >
+            {currLocation ? <CurrLocation lat={currLat} lng={currLng} /> : null}
+          </GoogleMapReact>
+        ) : (
+          <Spinner
+            animation="border"
+            style={{ position: "fixed", top: "50%", left: "50%" }}
+          />
+        )}
       </div>
     );
   }
@@ -102,14 +117,14 @@ class Map extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.account
-  }
-}
+    user: state.account,
+  };
+};
 
 const mapDispatchToProps = () => {
   return {
-    updateUser
-  }
-}
+    updateUser,
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps())(Map);

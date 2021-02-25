@@ -6,6 +6,7 @@ import {
   CREATE_ERROR,
   LOADING,
   GET_USER,
+  LOGOUT,
 } from "../constants/actionTypes";
 
 const defaultUser = {
@@ -32,6 +33,8 @@ export default function account(user = defaultUser, action) {
       return { ...user, payload };
     case LOADING:
       return { loading: payload };
+    case LOGOUT:
+      return defaultUser;
     default:
       return user;
   }

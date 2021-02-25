@@ -3,13 +3,16 @@ import { Image, Row, Col, Card, Button } from "react-bootstrap";
 import profilePicture from "../../images/default_account.png";
 import { connect } from "react-redux";
 import { getUser } from "../../actions/users";
-import { updateUser } from "../../actions/account";
+import { updateUser, logout } from "../../actions/account";
+import { withRouter } from "react-router-dom";
+
 import "./styles.css";
 
 class Profile extends Component {
   state = {
     username: "",
     email: "",
+    spotifyUserId: "",
     editing: false,
   };
 
@@ -18,6 +21,7 @@ class Profile extends Component {
     this.setState({
       username: this.props.account.username,
       email: this.props.account.email,
+      spotifyUserId: this.props.account.spotifyUserId,
     });
   };
 
@@ -44,15 +48,22 @@ class Profile extends Component {
     });
   };
 
+  handleLogout = () => {
+    localStorage.clear();
+    this.props.logoutUser();
+    this.props.history.push("/");
+  };
+
   render() {
     const username = this.state.username;
     const email = this.state.email;
+    const spotifyUserId = this.state.spotifyUserId;
     const editing = this.state.editing;
     return (
       <div className="margin-box">
         <Row>
           <Col md="8">
-            <Card>
+            <Card className="card-style">
               <Card.Header>
                 <Card.Title as="h4">User Profile</Card.Title>
               </Card.Header>
@@ -107,6 +118,13 @@ class Profile extends Component {
                         Edit Profile
                       </Button>
                     )}
+                    <Button
+                      className="ml-3"
+                      type="submit"
+                      onClick={this.handleLogout}
+                    >
+                      Logout
+                    </Button>
                   </Col>
                 </Row>
                 <Row>
@@ -114,14 +132,14 @@ class Profile extends Component {
                     <Card.Text className="bold-title">Username:</Card.Text>
                   </Col>
                   <Col>
-                    <Card.Text>SpotifyLover2</Card.Text>
+                    <Card.Text>{spotifyUserId}</Card.Text>
                   </Col>
                 </Row>
               </Card.Body>
             </Card>
           </Col>
           <Col md="4">
-            <Card>
+            <Card className="card-style">
               <Card.Body>
                 <Image
                   src={profilePicture}
@@ -151,6 +169,11 @@ const mapDispatchToProps = (dispatch) => ({
   updateUser: (id, user) => {
     dispatch(updateUser(id, user));
   },
+  logoutUser: () => {
+    dispatch(logout());
+  },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Profile)
+);

@@ -4,9 +4,17 @@ import "bootstrap/dist/css/bootstrap.min.css"; //This is required for react boot
 import Map from "./components/Map/Map";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import Profile from "./components/Profile/Profile";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+} from "react-router-dom";
 import Account from "./components/Account/Account";
+
 const App = () => {
+  const history = useHistory();
+
   return (
     <div>
       <Router>
@@ -22,7 +30,7 @@ const App = () => {
           </Route>
           <Route path="/profile/">
             <NavigationBar />
-            <Profile />
+            <Profile history={history} />
           </Route>
         </Switch>
       </Router>

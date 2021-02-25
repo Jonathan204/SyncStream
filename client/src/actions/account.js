@@ -5,6 +5,7 @@ import {
   LOGIN_ERROR,
   UPDATE_USER,
   LOADING,
+  LOGOUT,
 } from "../constants/actionTypes";
 
 import * as api from "../api/index.js";
@@ -40,6 +41,10 @@ export const updateUser = (id, user) => async (dispatch) => {
   } catch (error) {
     console.log(error.message);
   }
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT, payload: null });
 };
 
 function handleError(error) {
