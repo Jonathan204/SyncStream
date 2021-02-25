@@ -14,7 +14,7 @@ class Profile extends Component {
   };
 
   componentDidMount = () => {
-    this.props.getUser(localStorage.getItem("id"));
+    this.props.getUser(localStorage.getItem("userId"));
     this.setState({
       username: this.props.account.username,
       email: this.props.account.email,
@@ -34,7 +34,7 @@ class Profile extends Component {
       editing: false,
     });
     const user = { username: this.state.username, email: this.state.email };
-    this.props.updateUser(localStorage.getItem("id"), user);
+    this.props.updateUser(localStorage.getItem("userId"), user);
   };
 
   handleEditProfile = (event) => {
