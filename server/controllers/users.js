@@ -21,7 +21,6 @@ export const getUser = async (req, res) => {
 
   try {
     const user = await UserSchema.findById(id);
-
     res.status(200).json(user);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -91,8 +90,8 @@ export const updateUser = async (req, res) => {
     return res.status(404).send(`No user with id: ${id}`);
 
   const updatedUser = { username, email, spotifyUserId: spotifyUserId, _id: id };
-
-  await UserSchema.findByIdAndUpdate(id, updatedUser, { new: true });
+  
+  await UserSchema.findByIdAndUpdate(id, updatedUser, { new: true, omitUndefined: true });
 
   res.json(updatedUser);
 };
