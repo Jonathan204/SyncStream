@@ -105,7 +105,10 @@ class Map extends Component {
             {currLocation ? <CurrLocation lat={currLat} lng={currLng} /> : null}
           </GoogleMapReact>
         ) : (
-          <Spinner animation="border" size="sm" />
+          <Spinner
+            animation="border"
+            style={{ position: "fixed", top: "50%", left: "50%" }}
+          />
         )}
       </div>
     );
