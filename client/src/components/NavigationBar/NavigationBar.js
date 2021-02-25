@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 const NavigationBar = () => {
   return (
     <Navbar bg="dark" variant="dark" className="sticky">
-      <NavLink to="/home">
+      <NavLink to="/home/">
         <Navbar.Text>
           <Image
             src={logo}

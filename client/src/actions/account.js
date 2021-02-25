@@ -25,7 +25,7 @@ export const loginUser = (user, history) => async (dispatch) => {
     dispatch({ type: LOADING, payload: true });
     const { data } = await api.login(user);
     dispatch({ type: LOGIN, payload: handleResponse(data) });
-    history.push("/home");
+    history.push("/home/");
   } catch (error) {
     const { message } = handleError(error);
     dispatch({ type: LOGIN_ERROR, payload: message });

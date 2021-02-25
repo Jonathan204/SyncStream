@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Row } from 'react-bootstrap';
 import "./styles.css";
 import * as $ from "jquery";
 import { authEndpoint, clientId, redirectUri, scopes } from "./config";
-import Player from "../../Player/Player";
-import hash from "../../../hash";
+import { SpotifyAuth, Scopes } from 'react-spotify-auth';
+import Cookies from 'js-cookie'
+import { SpotifyApiContext } from 'react-spotify-api'
+import Player from "../../../Player/Player";
+import hash from "../../../../hash";
 class InfoWindow extends React.Component{
+
 
   constructor() {
     super();
@@ -93,45 +97,50 @@ class InfoWindow extends React.Component{
   }
 
 render(){
+  const token = Cookies.get('spotifyAuthToken');
+  console.log(token);
   return (
     <div className="infoWindowStyle">
       <Container>
         <Row className="text-center">
         {!this.state.token && (
-            <a
-              className="spotify-btn spotify-btn--loginApp-link"
-              href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
-                "%20"
-              )}&response_type=token&show_dialog=true`}
-            >
-              Login to Spotify
-            </a>
+          <SpotifyAuth
+          redirectUri='http://localhost:3000/home'
+          clientID='bebeb728633e467d92f913fc90610698'
+          scopes={[Scopes.userTopRead, Scopes.userReadCurrentlyPlaying, Scopes.userReadPlaybackState]}
+        />
           )}
           {this.state.token && !this.state.no_data && !this.state.is_ad && (
+            <SpotifyApiContext.Provider value={token}>
             <Player
               item={this.state.item}
               is_playing={this.state.is_playing}
               progress_ms={this.state.progress_ms}
             />
+            </SpotifyApiContext.Provider>
           )}
           {this.state.no_data && (
+            <SpotifyApiContext.Provider value={token}>
             <p>
               You need to be playing a song on Spotify, for something to appear here.
             </p>
+            </SpotifyApiContext.Provider>
           )}
            {this.state.is_ad && (
+             <SpotifyApiContext.Provider value={token}>
              <Player
                 item={this.state.item}
                 is_playing={this.state.is_playing}
                 progress_ms={this.state.progress_ms}
                 is_ad={this.state.is_ad}
             />
+            </SpotifyApiContext.Provider>
           )}
         </Row>
       </Container>
 
     </div>
   )}
-};
+ };
 
 export default InfoWindow;

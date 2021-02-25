@@ -1,6 +1,6 @@
 import React from 'react'
 import { PersonCircle } from 'react-bootstrap-icons';
-import UserInfo from '../infoWindow/currLocation.js'
+import UserInfo from './infoWindow/currLocation'
 
 class currLocation extends React.Component {
     constructor(props) {
@@ -11,7 +11,8 @@ class currLocation extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick() {
+    handleClick(e) {
+        e.preventDefault();
         this.setState(state => ({
             showInfo: !state.showInfo
         }));

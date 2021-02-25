@@ -16,11 +16,11 @@ const App = () => {
               <Account />
             </Container>
           </Route>
-          <Route path="/home">
+          <Route path="/home/">
             <NavigationBar />
             <Map />
           </Route>
-          <Route path="/profile">
+          <Route path="/profile/">
             <NavigationBar />
             <Profile />
           </Route>
