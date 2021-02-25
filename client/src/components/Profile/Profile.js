@@ -10,6 +10,7 @@ class Profile extends Component {
   state = {
     username: "",
     email: "",
+    spotifyUserId: "",
     editing: false,
   };
 
@@ -18,6 +19,7 @@ class Profile extends Component {
     this.setState({
       username: this.props.account.username,
       email: this.props.account.email,
+      spotifyUserId: this.props.account.spotifyUserId,
     });
   };
 
@@ -47,6 +49,7 @@ class Profile extends Component {
   render() {
     const username = this.state.username;
     const email = this.state.email;
+    const spotifyUserId = this.state.spotifyUserId;
     const editing = this.state.editing;
     return (
       <div className="margin-box">
@@ -110,11 +113,12 @@ class Profile extends Component {
                   </Col>
                 </Row>
                 <Row>
+                  
                   <Col xs="2">
                     <Card.Text className="bold-title">Username:</Card.Text>
                   </Col>
                   <Col>
-                    <Card.Text>SpotifyLover2</Card.Text>
+                    <Card.Text>{spotifyUserId}</Card.Text>
                   </Col>
                 </Row>
               </Card.Body>
