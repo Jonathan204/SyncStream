@@ -6,21 +6,26 @@ import UserSchema from "../models/userSchema.js";
 
 const router = express.Router();
 
-const userResponse = (user) => {
+const userResponse = (user, withId = true) => {
   const { username, email, _id, spotifyUserId } = user;
-  return {
+  var toReturn = {
     username,
     email,
     spotifyUserId,
-    id: _id,
   };
+  if (withId) toReturn.id = _id;
+  return toReturn;
 };
 
 export const getUsers = async (req, res) => {
   try {
     const users = await UserSchema.find();
+    var toReturn = [];
+    for (var user of users) {
+      toReturn.push(userResponse(user, false));
+    }
 
-    res.status(200).json(users);
+    res.status(200).json(toReturn);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -82,8 +87,11 @@ export const createUser = async (req, res) => {
       return res.status(400).json({ message: "Email already in use" });
 
     newUser.password = await encrypt(newUser.password);
-    await newUser.save();
-    res.status(201).json({ message: "User successfully created" });
+    const resp = await newUser.save();
+    const toReturn = userResponse(resp);
+    res
+      .status(201)
+      .json({ data: toReturn, message: "User successfully created" });
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
