@@ -30,3 +30,8 @@ jobs:
           cd client
           npm ci
           npm test
+      - name: Test backend
+        run: |
+          cd server
+          npm ci
+          npm test
