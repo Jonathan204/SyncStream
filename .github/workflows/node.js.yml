@@ -31,6 +31,8 @@ jobs:
           npm ci
           npm test
       - name: Test backend
+        env:
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
         run: |
           cd server
           npm ci
