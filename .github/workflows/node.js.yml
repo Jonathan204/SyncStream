@@ -30,3 +30,12 @@ jobs:
           cd client
           npm ci
           npm test
+      - name: Test backend
+        env:
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+        run: |
+          cd server
+          touch .env
+          echo DB_CONNECTION=${{ env.DB_CONNECTION }} >> .env
+          npm ci
+          npm test
