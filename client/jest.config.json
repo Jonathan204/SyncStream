@@ -1,3 +1,15 @@
 {
-  "testRegex": "((\\.|/*.)(test))\\.js?$"
+  "testRegex": "((\\.|/*.)(test))\\.js?$",
+  "moduleNameMapper": {
+    "\\.(jpg|jpeg|png|gif)$":
+      "<rootDir>/__mock__/fileMock.js",
+    "\\.(css|less)$'": "<rootDir>/__mock__/styleMock.js"
+  },
+  "transform": {
+    ".+\\.(css|sass)$": "jest-transform-stub",
+    "^.+\\.jsx?$": "babel-jest"
+  },
+  "setupFilesAfterEnv": [
+    "./src/setupTests.js"
+  ]
 }

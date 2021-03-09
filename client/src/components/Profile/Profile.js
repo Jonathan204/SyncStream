@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 
 import "./styles.css";
 
-class Profile extends Component {
+export class Profile extends Component {
   state = {
     username: "",
     email: "",
