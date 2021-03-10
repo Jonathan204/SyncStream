@@ -7,11 +7,13 @@ import UserSchema from "../models/userSchema.js";
 const router = express.Router();
 
 const userResponse = (user, withId = true) => {
-  const { username, email, _id, spotifyUserId } = user;
+  const { username, email, _id, spotifyUserId, lat, lng } = user;
   var toReturn = {
     username,
     email,
     spotifyUserId,
+    lat,
+    lng
   };
   if (withId) toReturn.id = _id;
   return toReturn;
