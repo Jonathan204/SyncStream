@@ -99,7 +99,7 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { username, email, spotifyUserId } = req.body;
+  const { username, email, spotifyUserId, lat, lng } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No user with id: ${id}`);
@@ -108,6 +108,8 @@ export const updateUser = async (req, res) => {
     username,
     email,
     spotifyUserId: spotifyUserId,
+    lat: lat,
+    lng: lng,
     _id: id,
   };
 
