@@ -98,3 +98,25 @@ describe("POST /login", () => {
     await request.delete(`/users/${mockUser.id}`);
   });
 });
+
+describe("GET /", () => {
+  let mockUser;
+  beforeAll(async () => {
+    const resp = await request.post("/users/").send(testUser);
+    mockUser = resp.body.data;
+  });
+
+  it("Returns at least the created user inside a list", async () => {
+    const resp = await request.get("/users/");
+    const data = getData(resp.body);
+    const expected = {
+      username: testUser.username,
+      email: testUser.email,
+    };
+    expect(data).toEqual(expect.arrayContaining([expected]));
+  });
+
+  afterAll(async () => {
+    await request.delete(`/users/${mockUser.id}`);
+  });
+});
