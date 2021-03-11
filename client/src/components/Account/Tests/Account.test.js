@@ -5,11 +5,15 @@ import Login from "../Login";
 import Register from "../Register";
 
 import { Provider } from "react-redux"; //keeps track of the store which is the global state which allows us to access the store from anywhere within the app.
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import reducers from "../../../reducers";
+import configureStore from "redux-mock-store";
 
-const mockStore = createStore(reducers, applyMiddleware(thunk));
+const middleware = [];
+const mockStore = configureStore(middleware);
+const initialState = {
+  account: {
+    loginError: "placeholder state",
+  },
+};
 
 describe("<Account />", () => {
   it("should render without crashing", () => {
@@ -28,7 +32,7 @@ describe("<Account />", () => {
 
   it("should render <Register /> after state change", () => {
     const wrapper = mount(
-      <Provider store={mockStore}>
+      <Provider store={mockStore(initialState)}>
         <Account />
       </Provider>
     );
@@ -38,7 +42,7 @@ describe("<Account />", () => {
 
   it("should render <Register /> then render <Login />", () => {
     const wrapper = mount(
-      <Provider store={mockStore}>
+      <Provider store={mockStore(initialState)}>
         <Account />
       </Provider>
     );
