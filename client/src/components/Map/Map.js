@@ -64,9 +64,10 @@ class Map extends Component {
         this.setState({
           user_spotify_id: data.id,
         });
-
         const userData = {
           spotifyUserId: data.id,
+          lat: this.state.center.lat,
+          lng: this.state.center.lng
         };
         const userId = localStorage.getItem("userId");
         this.props.updateUser(userId, userData);
