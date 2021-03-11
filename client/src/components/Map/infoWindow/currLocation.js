@@ -2,9 +2,10 @@ import React from 'react'
 import { Container, Row } from 'react-bootstrap';
 import "./styles.css";
 import * as $ from "jquery";
+import { connect } from "react-redux";
 import { authEndpoint, clientId, redirectUri, scopes } from "./config";
 import Player from "../../Player/Player";
-import hash from "../../../hash";
+import { hash } from "../../../hash";
 class InfoWindow extends React.Component{
 
   constructor() {
@@ -31,7 +32,7 @@ class InfoWindow extends React.Component{
 
   componentDidMount() {
     // Set token
-    let _token = hash.access_token;
+    let _token = hash().access_token;
 
     if (_token) {
       // Set token
@@ -102,7 +103,7 @@ render(){
               className="spotify-btn spotify-btn--loginApp-link"
               href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
                 "%20"
-              )}&response_type=token&show_dialog=true`}
+              )}&response_type=code&show_dialog=true`}
             >
               Login to Spotify
             </a>
@@ -133,5 +134,9 @@ render(){
     </div>
   )}
 };
-
-export default InfoWindow;
+const mapStateToProps = (state) => {
+  return {
+    user: state.account,
+  };
+};
+export default connect(mapStateToProps)(InfoWindow);
