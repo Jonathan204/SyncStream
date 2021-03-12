@@ -5,7 +5,6 @@ import * as $ from "jquery";
 import { connect } from "react-redux";
 import { authEndpoint, clientId, redirectUri, scopes } from "./config";
 import Player from "../../Player/Player";
-import { hash } from "../../../hash";
 class InfoWindow extends React.Component {
   constructor() {
     super();

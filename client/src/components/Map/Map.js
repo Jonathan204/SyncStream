@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 import CurrLocation from "./markers/currLocation";
 import { connect } from "react-redux";
-import { authorize, hash } from "../../hash";
+import { authorize } from "../../hash";
 import {
   tokenEndpoint,
   clientId,
