@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
   currentSongName: String,
   currentSongLink: String,
   spotifyUserId: String,
-  spotifyRefreshToken: String,
+  spotifyRefresh: String,
   createdAt: {
     type: Date,
     default: new Date(),

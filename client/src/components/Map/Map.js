@@ -45,37 +45,35 @@ class Map extends Component {
       );
     }
 
-    let _token;
-    const code = authorize();
-    if (code) {
-      const response = await axios({
-        url: tokenEndpoint,
-        method: "post",
-        data: qs.stringify({
-          grant_type: "authorization_code",
-          code,
-          redirect_uri: redirectUri,
-        }),
-        headers: {
-          Authorization: "Basic " + btoa(clientId + ":" + secretId),
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      });
-      const { data } = response;
-      const authData = {
-        spotifyAccessToken: data.access_token,
-        spotifyRefreshToken: data.refresh_token,
-      };
-      _token = data.access_token;
-      this.props.updateSpotifyInfo(this.props.user.id, authData);
-    }
-
-    if (_token) {
-      // Set token
+    const { spotifyAccess, spotifyUserId, id } = this.props.user;
+    if (spotifyAccess) {
       this.setState({
-        token: _token,
+        token: spotifyAccess,
       });
-      this.getUserId(_token);
+      if (!spotifyUserId) this.getUserId(spotifyAccess);
+    } else {
+      const code = authorize();
+      if (code) {
+        const response = await axios({
+          url: tokenEndpoint,
+          method: "post",
+          data: qs.stringify({
+            grant_type: "authorization_code",
+            code,
+            redirect_uri: redirectUri,
+          }),
+          headers: {
+            Authorization: "Basic " + btoa(clientId + ":" + secretId),
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        });
+        const { data } = response;
+        const authData = {
+          spotifyAccess: data.access_token,
+          spotifyRefresh: data.refresh_token,
+        };
+        this.props.updateSpotifyInfo(id, authData);
+      }
     }
   };
 

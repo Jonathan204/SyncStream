@@ -45,10 +45,10 @@ export const updateUser = (id, user) => async (dispatch) => {
 
 export const updateSpotifyInfo = (id, user) => async (dispatch) => {
   try {
-    const { spotifyAccessToken, spotifyRefreshToken } = user;
-    await api.updateUser(id, { spotifyRefreshToken });
+    const { spotifyAccess, spotifyRefresh } = user;
+    await api.updateUser(id, { spotifyRefresh });
 
-    dispatch({ type: UPDATE_USER, payload: { spotifyAccessToken } });
+    dispatch({ type: UPDATE_USER, payload: { spotifyAccess } });
   } catch (error) {
     console.log(error.message);
   }
