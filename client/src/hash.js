@@ -7,7 +7,7 @@ export const authorize = () => {
 };
 
 export const hash = () => {
-  const h = window.location.hash
+  const hashed = window.location.hash
     .substring(1)
     .split("&")
     .reduce(function (initial, item) {
@@ -18,5 +18,5 @@ export const hash = () => {
       return initial;
     }, {});
   window.location.hash = "";
-  return h;
+  return hashed;
 };

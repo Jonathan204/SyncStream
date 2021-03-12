@@ -66,12 +66,10 @@ export const loginUser = async (req, res) => {
           }
         }
         const toReturn = userResponse(user);
-        return res
-          .status(201)
-          .json({
-            data: { ...toReturn, spotifyAccess },
-            message: "User successfully logged in",
-          });
+        return res.status(201).json({
+          data: { ...toReturn, spotifyAccess },
+          message: "User successfully logged in",
+        });
       }
     }
     res.status(401).json({ message: "Username or Password is incorrect" });
@@ -124,8 +122,8 @@ export const updateUser = async (req, res) => {
     email,
     spotifyUserId,
     spotifyRefresh,
-    lat: lat,
-    lng: lng,
+    lat,
+    lng,
     _id: id,
   };
 
@@ -138,11 +136,9 @@ export const updateUser = async (req, res) => {
     res.status(200).json(userResponse(updated));
   } catch (error) {
     console.error(error.message);
-    res
-      .status(409)
-      .json({
-        message: "Couldn't update user, make sure it exists or try again later",
-      });
+    res.status(409).json({
+      message: "Couldn't update user, make sure it exists or try again later",
+    });
   }
 };
 
