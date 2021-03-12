@@ -117,7 +117,7 @@ export const updateUser = async (req, res) => {
   const { username, email, spotifyUserId, lat, lng, spotifyRefresh } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No user with id: ${id}`);
+    return res.status(404).json({ message: `No user with id: ${id}` });
 
   const updatedUser = {
     username,
@@ -129,12 +129,21 @@ export const updateUser = async (req, res) => {
     _id: id,
   };
 
-  await UserSchema.findByIdAndUpdate(id, updatedUser, {
-    new: true,
-    omitUndefined: true,
-  });
+  try {
+    const updated = await UserSchema.findByIdAndUpdate(id, updatedUser, {
+      new: true,
+      omitUndefined: true,
+    });
 
-  res.json(updatedUser);
+    res.status(200).json(userResponse(updated));
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(409)
+      .json({
+        message: "Couldn't update user, make sure it exists or try again later",
+      });
+  }
 };
 
 export const deleteUser = async (req, res) => {
