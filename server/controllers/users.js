@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 
 import { comparePassword, encrypt } from "../utils/userUtils.js";
+import { refreshToken } from "../utils/spotifyUtils.js";
 import UserSchema from "../models/userSchema.js";
 
 const router = express.Router();
@@ -13,7 +14,7 @@ const userResponse = (user, withId = true) => {
     email,
     spotifyUserId,
     lat,
-    lng
+    lng,
   };
   if (withId) toReturn.id = _id;
   return toReturn;
@@ -55,10 +56,20 @@ export const loginUser = async (req, res) => {
     if (user) {
       const isCorrect = await comparePassword(password, user.password);
       if (isCorrect) {
+        var spotifyAccess;
+        if (user.spotifyRefresh) {
+          try {
+            const refreshed = await refreshToken(user.spotifyRefresh);
+            spotifyAccess = refreshed.access_token;
+          } catch (error) {
+            console.error(error);
+          }
+        }
         const toReturn = userResponse(user);
-        return res
-          .status(201)
-          .json({ data: toReturn, message: "User successfully logged in" });
+        return res.status(201).json({
+          data: { ...toReturn, spotifyAccess },
+          message: "User successfully logged in",
+        });
       }
     }
     res.status(401).json({ message: "Username or Password is incorrect" });
@@ -101,7 +112,7 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { username, email, spotifyUserId, lat, lng } = req.body;
+  const { username, email, spotifyUserId, lat, lng, spotifyRefresh } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ message: `No user with id: ${id}` });
@@ -109,9 +120,10 @@ export const updateUser = async (req, res) => {
   const updatedUser = {
     username,
     email,
-    spotifyUserId: spotifyUserId,
-    lat: lat,
-    lng: lng,
+    spotifyUserId,
+    spotifyRefresh,
+    lat,
+    lng,
     _id: id,
   };
 
@@ -124,11 +136,9 @@ export const updateUser = async (req, res) => {
     res.status(200).json(userResponse(updated));
   } catch (error) {
     console.error(error.message);
-    res
-      .status(409)
-      .json({
-        message: "Couldn't update user, make sure it exists or try again later",
-      });
+    res.status(409).json({
+      message: "Couldn't update user, make sure it exists or try again later",
+    });
   }
 };
 
