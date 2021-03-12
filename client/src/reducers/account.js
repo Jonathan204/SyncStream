@@ -30,7 +30,7 @@ export default function account(user = defaultUser, action) {
     case CREATE_SUCCESS:
       return { createMessage: payload };
     case UPDATE_USER:
-      return { ...user, payload };
+      return { ...user, ...payload };
     case LOADING:
       return { loading: payload };
     case LOGOUT:
