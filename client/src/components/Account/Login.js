@@ -32,7 +32,6 @@ const Login = () => {
     } else {
       setErrors({});
       dispatch(loginUser(userData, history));
-
     }
   };
 
@@ -40,7 +39,7 @@ const Login = () => {
     <Container className="account-height">
       <Row className="mt-4 align-text-center">
         <Col>
-          <h3>Welcome Back!</h3>
+          <h3 id="title-header">Welcome Back!</h3>
         </Col>
       </Row>
       <Form className="mt-5" noValidate onSubmit={handleSubmit}>
@@ -82,11 +81,7 @@ const Login = () => {
         </Row>
         {userError && <Alert variant="danger">{userError}</Alert>}
         <Row className="mt-5">
-          <LoaderButton
-            className="submit-button"
-            type="submit"
-            loading={loading}
-          >
+          <LoaderButton className="submit-button" type="submit" loading={loading}>
             Login
           </LoaderButton>
         </Row>

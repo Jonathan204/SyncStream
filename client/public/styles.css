@@ -1,0 +1,34 @@
+#login-background {
+  width: 50%;
+  height: 500%;
+  position: absolute;
+  background-color: black;
+}
+
+#login-background-right {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+}
+
+#welcome {
+  width: 50px;
+  position: absolute;
+  margin: 0;
+  top: 50%;
+  left: 25%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+#welcome-message {
+  font-size: 100px;
+  color: black;
+}
+
+#login-logo {
+  width: 600px;
+  height: 550px;
+}
