@@ -30,6 +30,10 @@ describe("<Login />", () => {
     );
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should render without crashing", () => {
     shallow(
       <Provider store={mockStore(initialState)}>

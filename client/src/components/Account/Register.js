@@ -22,6 +22,7 @@ const Register = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
+    dispatch(createUser(userData));
     setValidated(true);
     event.preventDefault();
     const formErrors = validate(userData);
@@ -30,7 +31,6 @@ const Register = () => {
       event.stopPropagation();
     } else {
       setErrors({});
-      dispatch(createUser(userData));
     }
   };
 
@@ -119,7 +119,12 @@ const Register = () => {
         )}
 
         <Row className="mt-5">
-          <LoaderButton className="submit-button" type="submit" loading={loading}>
+          <LoaderButton
+            id="yoo"
+            className="submit-button"
+            type="submit"
+            loading={loading}
+          >
             Register
           </LoaderButton>
         </Row>
