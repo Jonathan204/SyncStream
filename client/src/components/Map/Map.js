@@ -2,10 +2,18 @@ import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 import CurrLocation from "./markers/currLocation";
 import { connect } from "react-redux";
-import hash from "../../hash";
-import { updateUser } from "../../actions/account";
+import { authorize } from "../../hash";
+import {
+  tokenEndpoint,
+  clientId,
+  redirectUri,
+  secretId,
+} from "./infoWindow/config";
+import { updateUser, updateSpotifyInfo } from "../../actions/account";
 import * as $ from "jquery";
 import { Spinner } from "react-bootstrap";
+import axios from "axios";
+import qs from "querystring";
 class Map extends Component {
   constructor() {
     super();
@@ -29,21 +37,43 @@ class Map extends Component {
     zoom: 16,
   };
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         this.currentCoords,
         this.handleLocationError
       );
     }
-    let _token = hash.access_token;
 
-    if (_token) {
-      // Set token
+    const { spotifyAccess, spotifyUserId, id } = this.props.user;
+    if (spotifyAccess) {
       this.setState({
-        token: _token,
+        token: spotifyAccess,
       });
-      this.getUserId(_token);
+      if (!spotifyUserId) this.getUserId(spotifyAccess);
+    } else {
+      const code = authorize();
+      if (code) {
+        const response = await axios({
+          url: tokenEndpoint,
+          method: "post",
+          data: qs.stringify({
+            grant_type: "authorization_code",
+            code,
+            redirect_uri: redirectUri,
+          }),
+          headers: {
+            Authorization: "Basic " + btoa(clientId + ":" + secretId),
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        });
+        const { data } = response;
+        const authData = {
+          spotifyAccess: data.access_token,
+          spotifyRefresh: data.refresh_token,
+        };
+        this.props.updateSpotifyInfo(id, authData);
+      }
     }
   };
 
@@ -67,7 +97,7 @@ class Map extends Component {
         const userData = {
           spotifyUserId: data.id,
           lat: this.state.center.lat,
-          lng: this.state.center.lng
+          lng: this.state.center.lng,
         };
         const userId = localStorage.getItem("userId");
         this.props.updateUser(userId, userData);
@@ -125,6 +155,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     updateUser,
+    updateSpotifyInfo,
   };
 };
 
