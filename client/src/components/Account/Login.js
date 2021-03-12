@@ -32,7 +32,6 @@ const Login = () => {
     } else {
       setErrors({});
       dispatch(loginUser(userData, history));
-
     }
   };
 
@@ -82,11 +81,7 @@ const Login = () => {
         </Row>
         {userError && <Alert variant="danger">{userError}</Alert>}
         <Row className="mt-5">
-          <LoaderButton
-            className="submit-button"
-            type="submit"
-            loading={loading}
-          >
+          <LoaderButton className="submit-button" type="submit" loading={loading}>
             Login
           </LoaderButton>
         </Row>

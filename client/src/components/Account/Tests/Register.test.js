@@ -7,13 +7,18 @@ import configureStore from "redux-mock-store";
 
 const middleware = [];
 const mockStore = configureStore(middleware);
-const initialState = {
-  account: {
-    loginError: "placeholder state",
-  },
-};
 
 describe("<Register />", () => {
+  let initialState;
+
+  beforeEach(() => {
+    initialState = {
+      account: {
+        loginError: "",
+      },
+    };
+  });
+
   it("should render without crashing", () => {
     shallow(
       <Provider store={mockStore(initialState)}>
