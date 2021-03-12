@@ -72,7 +72,8 @@ class Map extends Component {
           spotifyAccess: data.access_token,
           spotifyRefresh: data.refresh_token,
         };
-        this.props.updateSpotifyInfo(id, authData);
+        await this.props.updateSpotifyInfo(id, authData);
+        this.getUserId(authData.spotifyAccess);
       }
     }
   };
