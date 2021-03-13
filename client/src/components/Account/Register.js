@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Form, Container, Row, Col, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountContext } from "./AccountContext";
@@ -7,14 +7,14 @@ import LoaderButton from "../Button/LoadingButton";
 import validate from "./validation";
 
 const Register = () => {
-  const [validated, setValidated] = useState(false);
-  const [userData, setUserData] = useState({
+  const [validated, setValidated] = React.useState(false);
+  const [userData, setUserData] = React.useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = React.useState({});
   const userError = useSelector((state) => state.account.createError);
   const userCreated = useSelector((state) => state.account.createMessage);
   const loading = useSelector((state) => state.account.loading);

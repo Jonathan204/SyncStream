@@ -13,6 +13,9 @@ describe("<Register />", () => {
   let initialState;
   let switchToSignin;
   let wrapper;
+  const setState = jest.fn();
+  const useStateSpy = jest.spyOn(React, "useState");
+  useStateSpy.mockImplementation((init) => [init, setState]);
 
   beforeEach(() => {
     initialState = {
@@ -45,5 +48,69 @@ describe("<Register />", () => {
   it("should call context once when clicked", () => {
     wrapper.find("p").simulate("click");
     expect(switchToSignin).toHaveBeenCalledTimes(1);
+  });
+
+  it("should contain new input information after change", () => {
+    wrapper.find("#username").instance().textContent = "mjbathtub";
+    expect(wrapper.find("#username").instance().textContent).toBe("mjbathtub");
+    wrapper.find("#password").instance().textContent = "password";
+    expect(wrapper.find("#password").instance().textContent).toBe("password");
+    wrapper.find("#email").instance().textContent = "myemail@email.com";
+    expect(wrapper.find("#email").instance().textContent).toBe("myemail@email.com");
+    wrapper.find("#confirmPassword").instance().textContent = "confirmpassword";
+    expect(wrapper.find("#confirmPassword").instance().textContent).toBe(
+      "confirmpassword"
+    );
+  });
+
+  it("should trigger state change", () => {
+    wrapper
+      .find("#email")
+      .props()
+      .onChange({ target: { value: "yo" } });
+    expect(setState).toHaveBeenCalled();
+  });
+
+  it("should call state change with correct value", () => {
+    wrapper
+      .find("#email")
+      .props()
+      .onChange({ target: { value: "email@email.com" } });
+    expect(setState).toHaveBeenCalledWith({
+      email: "email@email.com",
+      username: "",
+      password: "",
+      confirmPassword: "",
+    });
+    wrapper
+      .find("#username")
+      .props()
+      .onChange({ target: { value: "mjbathtub" } });
+    expect(setState).toHaveBeenCalledWith({
+      email: "",
+      username: "mjbathtub",
+      password: "",
+      confirmPassword: "",
+    });
+    wrapper
+      .find("#password")
+      .props()
+      .onChange({ target: { value: "password" } });
+    expect(setState).toHaveBeenCalledWith({
+      email: "",
+      username: "",
+      password: "password",
+      confirmPassword: "",
+    });
+    wrapper
+      .find("#confirmPassword")
+      .props()
+      .onChange({ target: { value: "confirmpassword" } });
+    expect(setState).toHaveBeenCalledWith({
+      email: "",
+      username: "",
+      password: "",
+      confirmPassword: "confirmpassword",
+    });
   });
 });
