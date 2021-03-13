@@ -3,16 +3,20 @@ import { shallow, mount } from "enzyme";
 import Login from "../Login";
 
 import { AccountContext } from "../AccountContext";
-import * as redux from "react-redux"; //keeps track of the store which is the global state which allows us to access the store from anywhere within the app.
+import { Provider } from "react-redux"; //keeps track of the store which is the global state which allows us to access the store from anywhere within the app.
 import configureStore from "redux-mock-store";
+import thunk from "redux-thunk";
+import { Form } from "react-bootstrap";
+import * as Actions from "../../../actions/account";
 
-const middleware = [];
+const middleware = [thunk];
 const mockStore = configureStore(middleware);
 
 describe("<Login />", () => {
   let initialState;
   let switchToSignup;
   let wrapper;
+
   const setState = jest.fn();
   const useStateSpy = jest.spyOn(React, "useState");
   useStateSpy.mockImplementation((init) => [init, setState]);
@@ -25,11 +29,11 @@ describe("<Login />", () => {
     };
     switchToSignup = jest.fn();
     wrapper = mount(
-      <redux.Provider store={mockStore(initialState)}>
+      <Provider store={mockStore(initialState)}>
         <AccountContext.Provider value={{ switchToSignup }}>
           <Login />
         </AccountContext.Provider>
-      </redux.Provider>
+      </Provider>
     );
   });
 
@@ -39,9 +43,9 @@ describe("<Login />", () => {
 
   it("should render without crashing", () => {
     shallow(
-      <redux.Provider store={mockStore(initialState)}>
+      <Provider store={mockStore(initialState)}>
         <Login />
-      </redux.Provider>
+      </Provider>
     );
   });
 
@@ -81,15 +85,13 @@ describe("<Login />", () => {
     });
   });
 
-  //  it("should call dispatch on submit", () => {
-  //    const dispatch = jest.fn();
-  //    const useDispatchSpy = jest.spyOn(redux, "useDispatch");
-  //    useDispatchSpy.mockReturnValue(dispatch);
-  //
-  //    wrapper
-  //      .find(Form)
-  //      .props()
-  //      .onSubmit({ preventDefault: () => {}, stopPropagation: () => {} });
-  //    expect(dispatch).toHaveBeenCalled();
-  //  });
+  it("should call dispatch on submit", () => {
+    jest.spyOn(Actions, "loginUser");
+
+    wrapper
+      .find(Form)
+      .props()
+      .onSubmit({ preventDefault: () => {}, stopPropagation: () => {} });
+    expect(Actions.loginUser).toHaveBeenCalled();
+  });
 });
