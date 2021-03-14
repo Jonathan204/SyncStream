@@ -8,13 +8,14 @@ import UserSchema from "../models/userSchema.js";
 const router = express.Router();
 
 const userResponse = (user, withId = true) => {
-  const { username, email, _id, spotifyUserId, lat, lng } = user;
+  const { username, email, _id, spotifyUserId, lat, lng, songInfo } = user;
   var toReturn = {
     username,
     email,
     spotifyUserId,
     lat,
     lng,
+    songInfo,
   };
   if (withId) toReturn.id = _id;
   return toReturn;
@@ -112,7 +113,15 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { username, email, spotifyUserId, lat, lng, spotifyRefresh } = req.body;
+  const {
+    username,
+    email,
+    spotifyUserId,
+    lat,
+    lng,
+    spotifyRefresh,
+    songInfo,
+  } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ message: `No user with id: ${id}` });
@@ -124,6 +133,7 @@ export const updateUser = async (req, res) => {
     spotifyRefresh,
     lat,
     lng,
+    songInfo,
     _id: id,
   };
 
