@@ -101,7 +101,7 @@ class Map extends Component {
             defaultZoom={this.props.zoom}
           >
             {currLocation && (
-              <CurrLocation lat={currLat} lng={currLng} self={true} />
+              <CurrLocation lat={currLat} lng={currLng} myself={true} />
             )}
           </GoogleMapReact>
         ) : (

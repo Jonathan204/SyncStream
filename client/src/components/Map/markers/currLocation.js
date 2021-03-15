@@ -20,7 +20,7 @@ class currLocation extends React.Component {
     return (
       <div>
         <PersonCircle onClick={this.handleClick} color="royalblue" size={50} />
-        {this.state.showInfo && <UserInfo self={this.props.self}></UserInfo>}
+        {this.state.showInfo && <UserInfo myself={this.props.myself}></UserInfo>}
       </div>
     );
   }

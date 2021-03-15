@@ -30,7 +30,7 @@ class InfoWindow extends React.Component {
 
   componentDidMount() {
     // Set token
-    if (this.props.self) {
+    if (this.props.myself) {
       let _token = this.props.user.spotifyAccess;
       if (_token) {
         this.setState({
@@ -55,14 +55,14 @@ class InfoWindow extends React.Component {
     }
   }
 
-  async getSongInfo(data) {
+  getSongInfo(data) {
     var newState = {};
-    if (!data) {
+    if (!data || !data.currently_playing_type) {
       newState = {
         no_data: true,
       };
     } else {
-      if (data.item != null) {
+      if (data.currently_playing_type === "track") {
         newState = {
           item: data.item,
           is_playing: data.is_playing,
@@ -84,8 +84,9 @@ class InfoWindow extends React.Component {
   async getSong(token) {
     var data;
     try {
-      if (this.props.self && token) {
+      if (this.props.myself && token) {
         data = await getCurrentlyPlaying(token);
+        data = this.getSongInfo(data);
         const songInfo = {
           ...data,
           lastPlayed: new Date(), // key to let other users know if this user is active
@@ -123,7 +124,7 @@ class InfoWindow extends React.Component {
             )}
             {this.state.no_data && (
               <p>
-                {this.props.self
+                {this.props.myself
                   ? "You need to be playing a song on Spotify, for something to appear here."
                   : "User isn't playing anything currently"}
               </p>
