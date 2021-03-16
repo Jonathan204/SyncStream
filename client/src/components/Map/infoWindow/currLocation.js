@@ -1,9 +1,10 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
 import "./styles.css";
-import * as $ from "jquery";
 import { connect } from "react-redux";
-import { authEndpoint, clientId, redirectUri, scopes } from "./config";
+import { authorizationUrl } from "../../../utils/spotifyUtils";
+import { getCurrentlyPlaying } from "../../../utils/spotifyUtils";
+import { updateUser } from "../../../actions/account";
 import Player from "../../Player/Player";
 class InfoWindow extends React.Component {
   constructor() {
@@ -24,20 +25,19 @@ class InfoWindow extends React.Component {
       no_data: false,
     };
 
-    this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
     this.tick = this.tick.bind(this);
   }
 
   componentDidMount() {
     // Set token
-    let _token = this.props.user.spotifyAccess;
-
-    if (_token) {
-      // Set token
-      this.setState({
-        token: _token,
-      });
-      this.getCurrentlyPlaying(_token);
+    if (this.props.myself) {
+      let _token = this.props.user.spotifyAccess;
+      if (_token) {
+        this.setState({
+          token: _token,
+        });
+        this.getSong(_token);
+      }
     }
 
     // set interval for polling every 5 seconds
@@ -51,44 +51,54 @@ class InfoWindow extends React.Component {
 
   tick() {
     if (this.state.token) {
-      this.getCurrentlyPlaying(this.state.token);
+      this.getSong(this.state.token);
     }
   }
 
-  getCurrentlyPlaying(token) {
-    // Make a call using the token
-    $.ajax({
-      url: "https://api.spotify.com/v1/me/player",
-      type: "GET",
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader("Authorization", "Bearer " + token);
-      },
-      success: (data) => {
-        // Checks if the data is not empty
-        if (!data) {
-          this.setState({
-            no_data: true,
-          });
-          return;
-        }
+  getSongInfo(data) {
+    var newState = {};
+    if (!data || !data.currently_playing_type) {
+      newState = {
+        no_data: true,
+      };
+    } else {
+      if (data.currently_playing_type === "track") {
+        newState = {
+          item: data.item,
+          is_playing: data.is_playing,
+          progress_ms: data.progress_ms,
+          is_ad: false,
+          no_data: false /* We need to "reset" the boolean, in case the
+                                user does not give F5 and has opened his Spotify. */,
+        };
+      } else {
+        newState = {
+          is_ad: true,
+          no_data: false,
+        };
+      }
+    }
+    return newState;
+  }
 
-        if (data.item != null) {
-          this.setState({
-            item: data.item,
-            is_playing: data.is_playing,
-            progress_ms: data.progress_ms,
-            is_ad: false,
-            no_data: false /* We need to "reset" the boolean, in case the
-                                  user does not give F5 and has opened his Spotify. */,
-          });
-        } else {
-          this.setState({
-            is_ad: true,
-            no_data: false,
-          });
-        }
-      },
-    });
+  async getSong(token) {
+    var data;
+    try {
+      if (this.props.myself && token) {
+        data = await getCurrentlyPlaying(token);
+        data = this.getSongInfo(data);
+        const songInfo = {
+          ...data,
+          lastPlayed: new Date(), // key to let other users know if this user is active
+        };
+        this.props.updateUser(this.props.user.id, { songInfo });
+      } else {
+        // TODO: call backend for other user
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    this.setState(data);
   }
 
   render() {
@@ -99,33 +109,25 @@ class InfoWindow extends React.Component {
             {!this.state.token && (
               <a
                 className="spotify-btn spotify-btn--loginApp-link"
-                href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
-                  "%20"
-                )}&response_type=code&show_dialog=true`}
+                href={authorizationUrl}
               >
                 Login to Spotify
               </a>
             )}
-            {this.state.token && !this.state.no_data && !this.state.is_ad && (
-              <Player
-                item={this.state.item}
-                is_playing={this.state.is_playing}
-                progress_ms={this.state.progress_ms}
-              />
-            )}
-            {this.state.no_data && (
-              <p>
-                You need to be playing a song on Spotify, for something to
-                appear here.
-              </p>
-            )}
-            {this.state.is_ad && (
+            {this.state.token && !this.state.no_data && (
               <Player
                 item={this.state.item}
                 is_playing={this.state.is_playing}
                 progress_ms={this.state.progress_ms}
                 is_ad={this.state.is_ad}
               />
+            )}
+            {this.state.no_data && (
+              <p>
+                {this.props.myself
+                  ? "You need to be playing a song on Spotify, for something to appear here."
+                  : "User isn't playing anything currently"}
+              </p>
             )}
           </Row>
         </Container>
@@ -138,4 +140,10 @@ const mapStateToProps = (state) => {
     user: state.account,
   };
 };
-export default connect(mapStateToProps)(InfoWindow);
+
+const mapDispatchToProps = () => {
+  return {
+    updateUser,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps())(InfoWindow);

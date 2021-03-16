@@ -3,17 +3,10 @@ import GoogleMapReact from "google-map-react";
 import CurrLocation from "./markers/currLocation";
 import { connect } from "react-redux";
 import { authorize } from "../../hash";
-import {
-  tokenEndpoint,
-  clientId,
-  redirectUri,
-  secretId,
-} from "./infoWindow/config";
+import { getTokens, getUserId } from "../../utils/spotifyUtils";
 import { updateUser, updateSpotifyInfo } from "../../actions/account";
-import * as $ from "jquery";
 import { Spinner } from "react-bootstrap";
-import axios from "axios";
-import qs from "querystring";
+
 class Map extends Component {
   constructor() {
     super();
@@ -26,7 +19,7 @@ class Map extends Component {
       loadComplete: false,
     };
 
-    this.getUserId = this.getUserId.bind(this);
+    this.saveUserId = this.saveUserId.bind(this);
   }
 
   static defaultProps = {
@@ -50,60 +43,33 @@ class Map extends Component {
       this.setState({
         token: spotifyAccess,
       });
-      if (!spotifyUserId) this.getUserId(spotifyAccess);
+      if (!spotifyUserId) await this.saveUserId(spotifyAccess);
     } else {
       const code = authorize();
       if (code) {
-        const response = await axios({
-          url: tokenEndpoint,
-          method: "post",
-          data: qs.stringify({
-            grant_type: "authorization_code",
-            code,
-            redirect_uri: redirectUri,
-          }),
-          headers: {
-            Authorization: "Basic " + btoa(clientId + ":" + secretId),
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        });
-        const { data } = response;
-        const authData = {
-          spotifyAccess: data.access_token,
-          spotifyRefresh: data.refresh_token,
-        };
-        await this.props.updateSpotifyInfo(id, authData);
-        this.getUserId(authData.spotifyAccess);
+        try {
+          const authData = await getTokens(code);
+          await this.props.updateSpotifyInfo(id, authData);
+          await this.saveUserId(authData.spotifyAccess);
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };
 
-  getUserId(token) {
-    $.ajax({
-      url: "https://api.spotify.com/v1/me/",
-      type: "GET",
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader("Authorization", "Bearer " + token);
-      },
-      success: (data) => {
-        // Checks if the data is not empty
-        if (!data) {
-          console.log("No data!");
-          return;
-        }
-
-        this.setState({
-          user_spotify_id: data.id,
-        });
-        const userData = {
-          spotifyUserId: data.id,
-          lat: this.state.center.lat,
-          lng: this.state.center.lng,
-        };
-        const userId = localStorage.getItem("userId");
-        this.props.updateUser(userId, userData);
-      },
+  async saveUserId(token) {
+    const data = await getUserId(token);
+    this.setState({
+      user_spotify_id: data.id,
     });
+    const userData = {
+      spotifyUserId: data.id,
+      lat: this.state.center.lat,
+      lng: this.state.center.lng,
+    };
+    const userId = localStorage.getItem("userId");
+    this.props.updateUser(userId, userData);
   }
 
   currentCoords = (position) => {
@@ -134,7 +100,9 @@ class Map extends Component {
             center={center ? center : this.props.center}
             defaultZoom={this.props.zoom}
           >
-            {currLocation ? <CurrLocation lat={currLat} lng={currLng} /> : null}
+            {currLocation && (
+              <CurrLocation lat={currLat} lng={currLng} myself={true} />
+            )}
           </GoogleMapReact>
         ) : (
           <Spinner
