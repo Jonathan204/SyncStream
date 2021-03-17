@@ -11,6 +11,7 @@ const userResponse = (user, withId = true) => {
   var toReturn = {
     username,
     email,
+    _id,
     spotifyUserId,
     lat,
     lng
@@ -21,12 +22,13 @@ const userResponse = (user, withId = true) => {
 
 export const getUsers = async (req, res) => {
   try {
+    
     const users = await UserSchema.find();
+
     var toReturn = [];
     for (var user of users) {
       toReturn.push(userResponse(user, false));
     }
-
     res.status(200).json(toReturn);
   } catch (error) {
     res.status(404).json({ message: error.message });
