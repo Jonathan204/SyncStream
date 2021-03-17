@@ -6,9 +6,9 @@ const userSchema = mongoose.Schema({
   email: String,
   lat: String,
   lng: String,
-  currentSongName: String,
-  currentSongLink: String,
+  songInfo: mongoose.Schema.Types.Mixed,
   spotifyUserId: String,
+  spotifyRefresh: String,
   createdAt: {
     type: Date,
     default: new Date(),

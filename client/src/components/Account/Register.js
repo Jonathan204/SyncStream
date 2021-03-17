@@ -51,9 +51,7 @@ const Register = () => {
               required
               isValid={validated && !errors.email}
               isInvalid={!!errors.email || !!userError}
-              onChange={(e) =>
-                setUserData({ ...userData, email: e.target.value })
-              }
+              onChange={(e) => setUserData({ ...userData, email: e.target.value })}
             />
             <Form.Control.Feedback type="invalid">
               {errors.email}
@@ -121,11 +119,7 @@ const Register = () => {
         )}
 
         <Row className="mt-5">
-          <LoaderButton
-            className="submit-button"
-            type="submit"
-            loading={loading}
-          >
+          <LoaderButton className="submit-button" type="submit" loading={loading}>
             Register
           </LoaderButton>
         </Row>
