@@ -11,6 +11,7 @@ const userResponse = (user, withId = true) => {
   var toReturn = {
     username,
     email,
+    _id,
     spotifyUserId,
     lat,
     lng
