@@ -4,7 +4,7 @@ import CurrLocation from "./markers/currLocation";
 import OthersLocation from "./markers/othersLocation";
 import { connect } from "react-redux";
 import hash from "../../hash";
-import { updateUser, updateSpotifyInfo } from "../../actions/account";
+import { updateUser } from "../../actions/account";
 import { getUsers } from "../../actions/users";
 import * as $ from "jquery";
 import { Spinner } from "react-bootstrap";
@@ -23,7 +23,6 @@ class Map extends Component {
       users: null,
     };
     this.getUserId = this.getUserId.bind(this);
-    this.saveUserId = this.saveUserId.bind(this);
   }
 
   static defaultProps = {
@@ -34,31 +33,21 @@ class Map extends Component {
     zoom: 16,
   };
 
-  componentDidMount = async () => {
+  componentDidMount = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         this.currentCoords,
         this.handleLocationError
       );
     }
+    let _token = hash.access_token;
 
-    const { spotifyAccess, spotifyUserId, id } = this.props.user;
-    if (spotifyAccess) {
+    if (_token) {
+      // Set token
       this.setState({
-        token: spotifyAccess,
+        token: _token,
       });
-      if (!spotifyUserId) await this.saveUserId(spotifyAccess);
-    } else {
-      const code = authorize();
-      if (code) {
-        try {
-          const authData = await getTokens(code);
-          await this.props.updateSpotifyInfo(id, authData);
-          await this.saveUserId(authData.spotifyAccess);
-        } catch (error) {
-          console.log(error);
-        }
-      }
+      this.getUserId(_token);
     }
 
   };
@@ -91,21 +80,7 @@ class Map extends Component {
 
       },
     });
-}
-async saveUserId(token) {
-  const data = await getUserId(token);
-  this.setState({
-    user_spotify_id: data.id,
-  });
-  const userData = {
-    spotifyUserId: data.id,
-    lat: this.state.center.lat,
-    lng: this.state.center.lng,
-  };
-  const userId = localStorage.getItem("userId");
-  this.props.updateUser(userId, userData);
->>>>>>> main
-}
+
   }
 
   currentCoords = (position) => {
@@ -119,7 +94,7 @@ async saveUserId(token) {
       loadComplete: true,
       users: this.props.users,
     });
-
+    
 
   };
 
@@ -141,6 +116,7 @@ async saveUserId(token) {
             center={center ? center : this.props.center}
             defaultZoom={this.props.zoom}
           >
+        
             {users.map((user) => {
               if(user._id === currUserId){
                 return <CurrLocation key={user._id} lat={user.lat} lng={user.lng} isUser={true} />
@@ -176,9 +152,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   updateUser: (id, user) => {
     dispatch(updateUser(id, user));
-  },
-  updateSpotifyInfo: () => {
-    dispatch(updateSpotifyInfo(id, userData));
   },
 });
 

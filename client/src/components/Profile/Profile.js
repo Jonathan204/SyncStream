@@ -17,6 +17,7 @@ export class Profile extends Component {
   };
 
   componentDidMount = () => {
+    this.props.getUser(localStorage.getItem("userId"));
     this.setState({
       username: this.props.account.username,
       email: this.props.account.email,
