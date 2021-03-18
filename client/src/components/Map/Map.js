@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
-import CurrLocation from "./markers/currLocation";
-import OthersLocation from "./markers/othersLocation";
+import MarkerLocation from "./markers/markerLocation";
 import { connect } from "react-redux";
 import { authorize } from "../../hash";
 import { getTokens, getUserId } from "../../utils/spotifyUtils";
-import { updateUser, updateSpotifyInfo } from "../../actions/account";
+import { updateUser } from "../../actions/account";
 import { getUsers } from "../../actions/users";
 import { Spinner } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
@@ -107,10 +106,10 @@ class Map extends Component {
           >
             {users.map((user) => {
               if(user.username === currUsername){
-                return <CurrLocation key={user.username} lat={user.lat} lng={user.lng} isUser={true} />
+                return <MarkerLocation key={user.username} lat={user.lat} lng={user.lng} isUser={true} />
               }else {
                 if(user.lat && user.lng){
-                  return <OthersLocation key={user.username} lat={user.lat} lng={user.lng} isUser={false}/>
+                  return <MarkerLocation key={user.username} lat={user.lat} lng={user.lng} isUser={false}/>
                 }
               }
               return null;
