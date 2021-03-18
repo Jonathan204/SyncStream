@@ -111,7 +111,6 @@ describe("GET /", () => {
     const data = getData(resp.body);
     const expected = {
       username: testUser.username,
-      email: testUser.email,
     };
     expect(data).toEqual(expect.arrayContaining([expected]));
   });
@@ -128,7 +127,7 @@ describe("PATCH /:id", () => {
   let mockUser;
   beforeAll(async () => {
     const resp = await request.post("/users/").send(testUser);
-    mockUser = resp.body.data;
+    mockUser = getData(resp.body);
   });
 
   it("Successfully updates user", async () => {

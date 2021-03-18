@@ -15,7 +15,6 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "google-map-react": "^2.1.9",
     "jest-transform-stub": "^2.0.0",
-    "jquery": "^3.5.1",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
