@@ -6,8 +6,6 @@ import { AccountContext } from "../AccountContext";
 import { Provider } from "react-redux"; //keeps track of the store which is the global state which allows us to access the store from anywhere within the app.
 import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import { Form } from "react-bootstrap";
-import * as Actions from "../../../actions/account";
 
 const middleware = [thunk];
 const mockStore = configureStore(middleware);
@@ -83,15 +81,5 @@ describe("<Login />", () => {
       username: "",
       password: "password",
     });
-  });
-
-  it("should call dispatch on submit", () => {
-    jest.spyOn(Actions, "loginUser");
-
-    wrapper
-      .find(Form)
-      .props()
-      .onSubmit({ preventDefault: () => {}, stopPropagation: () => {} });
-    expect(Actions.loginUser).toHaveBeenCalled();
   });
 });
