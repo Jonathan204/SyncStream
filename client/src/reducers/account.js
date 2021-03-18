@@ -14,6 +14,8 @@ const defaultUser = {
   email: "",
   id: "",
   spotifyId: "",
+  lat: "",
+  lng: "",
 };
 
 export default function account(user = defaultUser, action) {
