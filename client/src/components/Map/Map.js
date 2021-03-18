@@ -6,7 +6,7 @@ import hash from "../../hash";
 import { updateUser } from "../../actions/account";
 import * as $ from "jquery";
 import { Spinner } from "react-bootstrap";
-class Map extends Component {
+export class Map extends Component {
   constructor() {
     super();
     this.state = {
@@ -67,7 +67,7 @@ class Map extends Component {
         const userData = {
           spotifyUserId: data.id,
           lat: this.state.center.lat,
-          lng: this.state.center.lng
+          lng: this.state.center.lng,
         };
         const userId = localStorage.getItem("userId");
         this.props.updateUser(userId, userData);
@@ -128,4 +128,4 @@ const mapDispatchToProps = () => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps())(Map);
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
