@@ -94,7 +94,7 @@ class Map extends Component {
 
   render() {
     const { center, loadComplete, users } = this.state;
-    const currUserId = this.props.user.id;
+    const currUsername = this.props.user.username;
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%" }}>
@@ -106,7 +106,7 @@ class Map extends Component {
             defaultZoom={this.props.zoom}
           >
             {users.map((user) => {
-              if(user._id === currUserId){
+              if(user.username === currUsername){
                 return <CurrLocation key={user._id} lat={user.lat} lng={user.lng} isUser={true} />
               }else {
                 if(user.lat && user.lng){
