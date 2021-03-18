@@ -76,15 +76,18 @@ class Map extends Component {
   }
 
   currentCoords = (position) => {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
+    const center = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    };
     this.props.getUsers();
     this.setState({
-      center: { lat: latitude, lng: longitude },
+      center,
       currLocation: true,
       loadComplete: true,
       users: this.props.users,
     });
+    this.props.updateUser(this.props.user.id, center);
   };
 
   handleLocationError = () => {
@@ -105,11 +108,25 @@ class Map extends Component {
             defaultZoom={this.props.zoom}
           >
             {users.map((user) => {
-              if(user.username === currUsername){
-                return <MarkerLocation key={user.username} lat={user.lat} lng={user.lng} isUser={true} />
-              }else {
-                if(user.lat && user.lng){
-                  return <MarkerLocation key={user.username} lat={user.lat} lng={user.lng} isUser={false}/>
+              if (user.username === currUsername) {
+                return (
+                  <MarkerLocation
+                    key={user.username}
+                    lat={user.lat}
+                    lng={user.lng}
+                    isUser={true}
+                  />
+                );
+              } else {
+                if (user.lat && user.lng) {
+                  return (
+                    <MarkerLocation
+                      key={user.username}
+                      lat={user.lat}
+                      lng={user.lng}
+                      isUser={false}
+                    />
+                  );
                 }
               }
               return null;
@@ -133,8 +150,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-
-
 const mapDispatchToProps = (dispatch) => ({
   getUsers: () => {
     dispatch(getUsers());
@@ -147,6 +162,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Map)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Map));
