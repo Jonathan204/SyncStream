@@ -22,7 +22,6 @@ const Register = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
-    dispatch(createUser(userData));
     setValidated(true);
     event.preventDefault();
     const formErrors = validate(userData);
@@ -31,6 +30,7 @@ const Register = () => {
       event.stopPropagation();
     } else {
       setErrors({});
+      dispatch(createUser(userData));
     }
   };
 
