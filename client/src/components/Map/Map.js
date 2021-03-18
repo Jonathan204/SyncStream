@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
-import CurrLocation from "./markers/currLocation";
+import MarkerLocation from "./markers/markerLocation";
 import { connect } from "react-redux";
 import { authorize } from "../../hash";
 import { getTokens, getUserId } from "../../utils/spotifyUtils";
-import { updateUser, updateSpotifyInfo } from "../../actions/account";
+import { updateUser } from "../../actions/account";
+import { getUsers } from "../../actions/users";
 import { Spinner } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 
 class Map extends Component {
   constructor() {
@@ -17,6 +19,7 @@ class Map extends Component {
       center: "",
       currLocation: false,
       loadComplete: false,
+      users: null,
     };
 
     this.saveUserId = this.saveUserId.bind(this);
@@ -75,10 +78,12 @@ class Map extends Component {
   currentCoords = (position) => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
+    this.props.getUsers();
     this.setState({
       center: { lat: latitude, lng: longitude },
       currLocation: true,
       loadComplete: true,
+      users: this.props.users,
     });
   };
 
@@ -87,9 +92,8 @@ class Map extends Component {
   };
 
   render() {
-    const { center, currLocation, loadComplete } = this.state;
-    const currLat = center.lat;
-    const currLng = center.lng;
+    const { center, loadComplete, users } = this.state;
+    const currUsername = this.props.user.username;
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%" }}>
@@ -100,9 +104,16 @@ class Map extends Component {
             center={center ? center : this.props.center}
             defaultZoom={this.props.zoom}
           >
-            {currLocation && (
-              <CurrLocation lat={currLat} lng={currLng} myself={true} />
-            )}
+            {users.map((user) => {
+              if(user.username === currUsername){
+                return <MarkerLocation key={user.username} lat={user.lat} lng={user.lng} isUser={true} />
+              }else {
+                if(user.lat && user.lng){
+                  return <MarkerLocation key={user.username} lat={user.lat} lng={user.lng} isUser={false}/>
+                }
+              }
+              return null;
+            })}
           </GoogleMapReact>
         ) : (
           <Spinner
@@ -118,14 +129,24 @@ class Map extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.account,
+    users: state.users,
   };
 };
 
-const mapDispatchToProps = () => {
-  return {
-    updateUser,
-    updateSpotifyInfo,
-  };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps())(Map);
+
+const mapDispatchToProps = (dispatch) => ({
+  getUsers: () => {
+    dispatch(getUsers());
+  },
+  updateUser: (id, user) => {
+    dispatch(updateUser(id, user));
+  },
+  updateSpotifyInfo: (id, authData) => {
+    dispatch(updateUser(id, authData));
+  },
+});
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Map)
+);
