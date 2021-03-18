@@ -1,4 +1,4 @@
-import { FETCH_ALL, GET_USER } from "../constants/actionTypes";
+import { FETCH_ALL, GET_USER, GET_USER_SPOTIFY} from "../constants/actionTypes";
 
 import * as api from "../api/index.js";
 
@@ -14,8 +14,16 @@ export const getUser = (id) => async (dispatch) => {
 export const getUsers = () => async (dispatch) => {
   try {
     const { data } = await api.fetchUsers();
-
     dispatch({ type: FETCH_ALL, payload: data });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const getUsersSpotify = (id) => async (dispatch) => {
+  try {
+    const { data } = await api.getUserSpotify(id);
+    return data;
   } catch (error) {
     console.log(error.message);
   }

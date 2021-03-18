@@ -39,7 +39,19 @@ const Player = (props) => {
             <div className="progress">
               <div className="progress__bar" style={progressBarStyles} />
             </div>
+            {!props.is_me && (
+              <div>
+            <a
+              className="listen-btn listen-btn--loginApp-link"
+              href=""
+            >
+              Listen in!
+            </a>
+            </div>
+
+          )}
           </div>
+
         </Col>
       </Row>
     </Container>

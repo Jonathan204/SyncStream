@@ -112,6 +112,7 @@ class Map extends Component {
                 return (
                   <MarkerLocation
                     key={user.username}
+                    userName={user.spotifyUserId}
                     lat={user.lat}
                     lng={user.lng}
                     isUser={true}
@@ -122,6 +123,7 @@ class Map extends Component {
                   return (
                     <MarkerLocation
                       key={user.username}
+                      userName={user.spotifyUserId}
                       lat={user.lat}
                       lng={user.lng}
                       isUser={false}
