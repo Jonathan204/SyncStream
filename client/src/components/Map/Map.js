@@ -119,10 +119,15 @@ class Map extends Component {
                 );
               } else {
                 if (user.lat && user.lng) {
+                  var theLat = parseFloat(user.lat);
+                  if(user.lat === this.props.user.lat){
+                    theLat = (theLat+.0005).toString();
+                    
+                  }
                   return (
                     <MarkerLocation
                       key={user.username}
-                      lat={user.lat}
+                      lat={theLat}
                       lng={user.lng}
                       isUser={false}
                     />
