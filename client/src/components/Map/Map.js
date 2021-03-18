@@ -107,10 +107,10 @@ class Map extends Component {
           >
             {users.map((user) => {
               if(user.username === currUsername){
-                return <CurrLocation key={user._id} lat={user.lat} lng={user.lng} isUser={true} />
+                return <CurrLocation key={user.username} lat={user.lat} lng={user.lng} isUser={true} />
               }else {
                 if(user.lat && user.lng){
-                  return <OthersLocation key={user._id} lat={user.lat} lng={user.lng} isUser={false}/>
+                  return <OthersLocation key={user.username} lat={user.lat} lng={user.lng} isUser={false}/>
                 }
               }
               return null;
