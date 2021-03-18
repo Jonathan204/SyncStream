@@ -30,7 +30,7 @@ class InfoWindow extends React.Component {
 
   componentDidMount() {
     // Set token
-    if (this.props.myself) {
+    if (this.props.isUser) {
       let _token = this.props.user.spotifyAccess;
       if (_token) {
         this.setState({
@@ -84,7 +84,7 @@ class InfoWindow extends React.Component {
   async getSong(token) {
     var data;
     try {
-      if (this.props.myself && token) {
+      if (this.props.isUser && token) {
         data = await getCurrentlyPlaying(token);
         data = this.getSongInfo(data);
         const songInfo = {
@@ -124,7 +124,7 @@ class InfoWindow extends React.Component {
             )}
             {this.state.no_data && (
               <p>
-                {this.props.myself
+                {this.props.isUser
                   ? "You need to be playing a song on Spotify, for something to appear here."
                   : "User isn't playing anything currently"}
               </p>

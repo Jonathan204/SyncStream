@@ -25,7 +25,7 @@ class markerLocation extends React.Component {
         {this.state.isUser ? (
             <div>
             <PersonCircle onClick={this.handleClick} color="royalblue" size={50} />
-            {this.state.showInfo && <UserInfo myself={this.props.myself}></UserInfo>} 
+            {this.state.showInfo && <UserInfo isUser={this.state.isUser}></UserInfo>} 
             </div>
         ) : 
         <PersonCircle color="red" size={50} />
