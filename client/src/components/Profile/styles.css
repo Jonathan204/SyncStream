@@ -17,3 +17,25 @@
 .card-style {
   box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
 }
+
+.profile-submit-button {
+  background-color: rgb(0, 0, 0);
+  border-color: black;
+}
+
+.profile-submit-button:hover {
+  background-color: rgb(50, 50, 50);
+  border-color: rgb(50, 50, 50);
+}
+
+.profile-submit-button:focus:hover {
+  background-color: rgb(50, 50, 50) !important;
+  border-color: rgb(50, 50, 50) !important;
+  box-shadow: 0 2px 7px 1px rgba(5, 5, 5, 0.5) !important;
+}
+
+.profile-submit-button:focus {
+  background-color: black !important;
+  border-color: black !important;
+  box-shadow: none !important;
+}

@@ -109,16 +109,24 @@ export class Profile extends Component {
                   </Col>
                   <Col>
                     {editing ? (
-                      <Button type="submit" onClick={this.handleSubmitProfile}>
+                      <Button
+                        className="profile-submit-button"
+                        type="submit"
+                        onClick={this.handleSubmitProfile}
+                      >
                         Submit
                       </Button>
                     ) : (
-                      <Button type="submit" onClick={this.handleEditProfile}>
+                      <Button
+                        className="profile-submit-button"
+                        type="submit"
+                        onClick={this.handleEditProfile}
+                      >
                         Edit Profile
                       </Button>
                     )}
                     <Button
-                      className="ml-3"
+                      className="ml-3 profile-submit-button"
                       type="submit"
                       onClick={this.handleLogout}
                     >
@@ -173,6 +181,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Profile)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
