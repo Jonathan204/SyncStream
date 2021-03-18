@@ -2,20 +2,24 @@ import express from "express";
 import mongoose from "mongoose";
 
 import { comparePassword, encrypt } from "../utils/userUtils.js";
+import { refreshToken } from "../utils/spotifyUtils.js";
 import UserSchema from "../models/userSchema.js";
 
 const router = express.Router();
 
 const userResponse = (user, withId = true) => {
-  const { username, email, _id, spotifyUserId, lat, lng } = user;
+  const { username, email, _id, spotifyUserId, lat, lng, songInfo } = user;
   var toReturn = {
     username,
-    email,
     spotifyUserId,
     lat,
-    lng
+    lng,
+    songInfo,
   };
-  if (withId) toReturn.id = _id;
+  if (withId) {
+    toReturn.id = _id;
+    toReturn.email = email;
+  }
   return toReturn;
 };
 
@@ -45,6 +49,23 @@ export const getUser = async (req, res) => {
   }
 };
 
+export const getUserSpotify = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await UserSchema.findOne({ spotifyUserId: id });
+    if (user) {
+      const toReturn = userResponse(user, false);
+      res.status(200).json(toReturn);
+    } else
+      res
+        .status(404)
+        .json({ message: `User with spotify id ${id} doesn't exist` });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 export const loginUser = async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password)
@@ -55,10 +76,20 @@ export const loginUser = async (req, res) => {
     if (user) {
       const isCorrect = await comparePassword(password, user.password);
       if (isCorrect) {
+        var spotifyAccess;
+        if (user.spotifyRefresh) {
+          try {
+            const refreshed = await refreshToken(user.spotifyRefresh);
+            spotifyAccess = refreshed.access_token;
+          } catch (error) {
+            console.error(error);
+          }
+        }
         const toReturn = userResponse(user);
-        return res
-          .status(201)
-          .json({ data: toReturn, message: "User successfully logged in" });
+        return res.status(201).json({
+          data: { ...toReturn, spotifyAccess },
+          message: "User successfully logged in",
+        });
       }
     }
     res.status(401).json({ message: "Username or Password is incorrect" });
@@ -101,7 +132,15 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { username, email, spotifyUserId, lat, lng } = req.body;
+  const {
+    username,
+    email,
+    spotifyUserId,
+    lat,
+    lng,
+    spotifyRefresh,
+    songInfo,
+  } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ message: `No user with id: ${id}` });
@@ -109,9 +148,11 @@ export const updateUser = async (req, res) => {
   const updatedUser = {
     username,
     email,
-    spotifyUserId: spotifyUserId,
-    lat: lat,
-    lng: lng,
+    spotifyUserId,
+    spotifyRefresh,
+    lat,
+    lng,
+    songInfo,
     _id: id,
   };
 
@@ -124,11 +165,9 @@ export const updateUser = async (req, res) => {
     res.status(200).json(userResponse(updated));
   } catch (error) {
     console.error(error.message);
-    res
-      .status(409)
-      .json({
-        message: "Couldn't update user, make sure it exists or try again later",
-      });
+    res.status(409).json({
+      message: "Couldn't update user, make sure it exists or try again later",
+    });
   }
 };
 
