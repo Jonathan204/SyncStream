@@ -1,19 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Form, Container, Row, Col, Alert } from "react-bootstrap";
 import { AccountContext } from "./AccountContext";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../actions/account";
 import LoaderButton from "../Button/LoadingButton";
 import validate from "./validation";
 
 const Login = () => {
-  const [validated, setValidated] = useState(false);
-  const [userData, setUserData] = useState({
+  const [validated, setValidated] = React.useState(false);
+  const [userData, setUserData] = React.useState({
     username: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = React.useState({});
   const userError = useSelector((state) => state.account.loginError);
   const id = useSelector((state) => state.account.id);
   localStorage.setItem("userId", id);
@@ -32,7 +32,6 @@ const Login = () => {
     } else {
       setErrors({});
       dispatch(loginUser(userData, history));
-
     }
   };
 
@@ -82,11 +81,7 @@ const Login = () => {
         </Row>
         {userError && <Alert variant="danger">{userError}</Alert>}
         <Row className="mt-5">
-          <LoaderButton
-            className="submit-button"
-            type="submit"
-            loading={loading}
-          >
+          <LoaderButton className="submit-button" type="submit" loading={loading}>
             Login
           </LoaderButton>
         </Row>

@@ -11,7 +11,7 @@ const middleware = [];
 const mockStore = configureStore(middleware);
 const initialState = {
   account: {
-    loginError: "placeholder state",
+    loginError: "",
   },
 };
 
