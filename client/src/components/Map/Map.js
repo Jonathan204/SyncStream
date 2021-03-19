@@ -107,6 +107,7 @@ export class Map extends Component {
           return (
             <MarkerLocation
               key={user.username}
+              userName={user.spotifyUserId}
               lat={user.lat}
               lng={user.lng}
               isUser={true}
@@ -114,16 +115,22 @@ export class Map extends Component {
           );
         } else {
           if (user.lat && user.lng) {
+            var theLat = parseFloat(user.lat);
+            if(user.lat === this.props.user.lat){
+              theLat = (theLat+.0007).toString();
+            }
             return (
               <MarkerLocation
                 key={user.username}
-                lat={user.lat}
+                userName={user.spotifyUserId}
+                lat={theLat}
                 lng={user.lng}
                 isUser={false}
               />
             );
           }
         }
+        return null;
       });
     }
     return (
@@ -137,36 +144,7 @@ export class Map extends Component {
             defaultZoom={this.props.zoom}
             options={{ styles: mapStyles.map }}
           >
-            {users.map((user) => {
-              if (user.username === currUsername) {
-                return (
-                  <MarkerLocation
-                    key={user.username}
-                    userName={user.spotifyUserId}
-                    lat={user.lat}
-                    lng={user.lng}
-                    isUser={true}
-                  />
-                );
-              } else {
-                if (user.lat && user.lng) {
-                  var theLat = parseFloat(user.lat);
-                  if(user.lat === this.props.user.lat){
-                    theLat = (theLat+.0007).toString();
-                  }
-                  return (
-                    <MarkerLocation
-                      key={user.username}
-                      userName={user.spotifyUserId}
-                      lat={theLat}
-                      lng={user.lng}
-                      isUser={false}
-                    />
-                  );
-                }
-              }
-              return null;
-            })}
+            {userList}
           </GoogleMapReact>
         ) : (
           <Spinner
