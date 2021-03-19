@@ -31,6 +31,7 @@ const Register = () => {
     } else {
       setErrors({});
       dispatch(createUser(userData));
+      switchToSignin();
     }
   };
 
