@@ -7,12 +7,16 @@ describe("<Map>", () => {
   let props;
   beforeEach(() => {
     props = {
+      getUsers: jest.fn(),
       updateUser: jest.fn(),
       account: {
         username: "Joe Testman",
         email: "Joe@testmail.com",
         spotifyUserId: "JoeMusic",
         id: "1",
+      },
+      user: {
+        username: "Joe Testman",
       },
     };
     state = {
@@ -22,6 +26,10 @@ describe("<Map>", () => {
       center: { lat: 0, lng: 0 },
       currLocation: false,
       loadComplete: false,
+      users: [
+        { lat: 49.895138, lng: -97.138374, username: "johntest" },
+        { lat: 49.895138, lng: -97.138374, username: "johntest2" },
+      ],
     };
   });
 
