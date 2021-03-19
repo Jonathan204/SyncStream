@@ -44,7 +44,7 @@ export class Map extends Component {
     }
 
     const { spotifyAccess, spotifyUserId, id } = this.props.user;
-    console.log(this.props.user);
+
     if (spotifyAccess) {
       this.setState({
         token: spotifyAccess,

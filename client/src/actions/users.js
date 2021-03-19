@@ -23,7 +23,6 @@ export const getUsers = () => async (dispatch) => {
 export const getUsersSpotify = (id) => async (dispatch) => {
   try {
     const { data } = await api.getUserSpotify(id);
-    console.log(data);
     dispatch({ type: GET_USER_SPOTIFY, payload: data });
   } catch (error) {
     console.log(error.message);

@@ -113,6 +113,18 @@ class InfoWindow extends React.Component {
   }
 
   render() {
+    var userPlayer = false;
+    var otherPlayer = false;
+    var nothingPlaying = false;
+    if(this.state.token && !this.state.no_data){
+      userPlayer = true;
+    }else if(!this.state.token && 
+      this.state.item &&
+      this.state.progress_ms){
+        otherPlayer = true;
+    } else{
+      nothingPlaying = true;
+    }   
     return (
       <div
         className={
@@ -129,7 +141,7 @@ class InfoWindow extends React.Component {
                 Login to Spotify
               </a>
             )}
-            {this.state.token && !this.state.no_data && (
+            {userPlayer && (
               <Player
                 item={this.state.item}
                 is_playing={this.state.is_playing}
@@ -138,14 +150,7 @@ class InfoWindow extends React.Component {
                 is_me={true}
               />
             )}
-            {this.state.no_data && (
-              <p>
-                {this.props.isUser
-                  ? "You need to be playing a song on Spotify, for something to appear here."
-                  : "User isn't playing anything currently"}
-              </p>
-            )}
-            {!this.props.isUser && (
+            {otherPlayer && (
               <Player
                 item={this.state.item}
                 is_playing={this.state.is_playing}
@@ -154,6 +159,14 @@ class InfoWindow extends React.Component {
                 is_me={false}
               />
             )}
+            {nothingPlaying && (
+              <p>
+                {this.props.isUser
+                  ? "You need to be playing a song on Spotify, for something to appear here."
+                  : "User isn't playing anything currently"}
+              </p>
+            )}
+
           </Row>
         </Container>
       </div>
