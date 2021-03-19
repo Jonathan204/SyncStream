@@ -4,7 +4,7 @@
 }
 
 .account-height {
-  height: 550px;
+  height: 600px;
 }
 
 .align-text-center {
@@ -44,7 +44,7 @@
 }
 
 .account-window {
-  height: 500px;
+  height: 575px;
   width: 350px;
   display: flex;
   flex-direction: column;
