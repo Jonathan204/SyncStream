@@ -6,6 +6,7 @@ import {
   CREATE_ERROR,
   LOADING,
   GET_USER,
+  LOGOUT,
 } from "../constants/actionTypes";
 
 const defaultUser = {
@@ -13,6 +14,8 @@ const defaultUser = {
   email: "",
   id: "",
   spotifyId: "",
+  lat: "",
+  lng: "",
 };
 
 export default function account(user = defaultUser, action) {
@@ -29,9 +32,11 @@ export default function account(user = defaultUser, action) {
     case CREATE_SUCCESS:
       return { createMessage: payload };
     case UPDATE_USER:
-      return { ...user, payload };
+      return { ...user, ...payload };
     case LOADING:
       return { loading: payload };
+    case LOGOUT:
+      return defaultUser;
     default:
       return user;
   }

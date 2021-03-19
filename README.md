@@ -17,6 +17,9 @@ SyncStream is a music sharing system which allows music lovers to find new music
   </tr>
 </table>
 
+## Setup  
+Documentation regarding the setup can be found on this [wiki](https://github.com/Jonathan204/SyncStream/wiki/Setup) page.
+
 ## Core Features
 Documentation regarding features can be found on this [wiki](https://github.com/Jonathan204/SyncStream/wiki/Core-Features) page.
 

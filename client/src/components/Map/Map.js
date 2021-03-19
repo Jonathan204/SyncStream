@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
-import CurrLocation from "./markers/currLocation";
+import MarkerLocation from "./markers/markerLocation";
 import { connect } from "react-redux";
-import hash from "../../hash";
+import { authorize } from "../../hash";
+import { getTokens, getUserId } from "../../utils/spotifyUtils";
 import { updateUser } from "../../actions/account";
-import * as $ from "jquery";
+import { getUsers } from "../../actions/users";
 import { Spinner } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+
 class Map extends Component {
   constructor() {
     super();
@@ -16,9 +19,10 @@ class Map extends Component {
       center: "",
       currLocation: false,
       loadComplete: false,
+      users: null,
     };
 
-    this.getUserId = this.getUserId.bind(this);
+    this.saveUserId = this.saveUserId.bind(this);
   }
 
   static defaultProps = {
@@ -29,59 +33,61 @@ class Map extends Component {
     zoom: 16,
   };
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         this.currentCoords,
         this.handleLocationError
       );
     }
-    let _token = hash.access_token;
 
-    if (_token) {
-      // Set token
+    const { spotifyAccess, spotifyUserId, id } = this.props.user;
+    if (spotifyAccess) {
       this.setState({
-        token: _token,
+        token: spotifyAccess,
       });
-      this.getUserId(_token);
+      if (!spotifyUserId) await this.saveUserId(spotifyAccess);
+    } else {
+      const code = authorize();
+      if (code) {
+        try {
+          const authData = await getTokens(code);
+          await this.props.updateSpotifyInfo(id, authData);
+          await this.saveUserId(authData.spotifyAccess);
+        } catch (error) {
+          console.log(error);
+        }
+      }
     }
   };
 
-  getUserId(token) {
-    $.ajax({
-      url: "https://api.spotify.com/v1/me/",
-      type: "GET",
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader("Authorization", "Bearer " + token);
-      },
-      success: (data) => {
-        // Checks if the data is not empty
-        if (!data) {
-          console.log("No data!");
-          return;
-        }
-
-        this.setState({
-          user_spotify_id: data.id,
-        });
-
-        const userData = {
-          spotifyUserId: data.id,
-        };
-        const userId = localStorage.getItem("userId");
-        this.props.updateUser(userId, userData);
-      },
+  async saveUserId(token) {
+    const data = await getUserId(token);
+    this.setState({
+      user_spotify_id: data.id,
     });
+    const userData = {
+      spotifyUserId: data.id,
+      lat: this.state.center.lat,
+      lng: this.state.center.lng,
+    };
+    const userId = localStorage.getItem("userId");
+    this.props.updateUser(userId, userData);
   }
 
   currentCoords = (position) => {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
+    const center = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    };
+    this.props.getUsers();
     this.setState({
-      center: { lat: latitude, lng: longitude },
+      center,
       currLocation: true,
       loadComplete: true,
+      users: this.props.users,
     });
+    this.props.updateUser(this.props.user.id, center);
   };
 
   handleLocationError = () => {
@@ -89,9 +95,8 @@ class Map extends Component {
   };
 
   render() {
-    const { center, currLocation, loadComplete } = this.state;
-    const currLat = center.lat;
-    const currLng = center.lng;
+    const { center, loadComplete, users } = this.state;
+    const currUsername = this.props.user.username;
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%" }}>
@@ -102,10 +107,36 @@ class Map extends Component {
             center={center ? center : this.props.center}
             defaultZoom={this.props.zoom}
           >
-            {currLocation ? <CurrLocation lat={currLat} lng={currLng} /> : null}
+            {users.map((user) => {
+              if (user.username === currUsername) {
+                return (
+                  <MarkerLocation
+                    key={user.username}
+                    lat={user.lat}
+                    lng={user.lng}
+                    isUser={true}
+                  />
+                );
+              } else {
+                if (user.lat && user.lng) {
+                  return (
+                    <MarkerLocation
+                      key={user.username}
+                      lat={user.lat}
+                      lng={user.lng}
+                      isUser={false}
+                    />
+                  );
+                }
+              }
+              return null;
+            })}
           </GoogleMapReact>
         ) : (
-          <Spinner animation="border" size="sm" />
+          <Spinner
+            animation="border"
+            style={{ position: "fixed", top: "50%", left: "50%" }}
+          />
         )}
       </div>
     );
@@ -115,13 +146,20 @@ class Map extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.account,
+    users: state.users,
   };
 };
 
-const mapDispatchToProps = () => {
-  return {
-    updateUser,
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  getUsers: () => {
+    dispatch(getUsers());
+  },
+  updateUser: (id, user) => {
+    dispatch(updateUser(id, user));
+  },
+  updateSpotifyInfo: (id, authData) => {
+    dispatch(updateUser(id, authData));
+  },
+});
 
-export default connect(mapStateToProps, mapDispatchToProps())(Map);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Map));

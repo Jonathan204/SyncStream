@@ -5,6 +5,7 @@ import {
   LOGIN_ERROR,
   UPDATE_USER,
   LOADING,
+  LOGOUT,
 } from "../constants/actionTypes";
 
 import * as api from "../api/index.js";
@@ -41,6 +42,21 @@ export const updateUser = (id, user) => async (dispatch) => {
   } catch (error) {
     console.log(error.message);
   }
+};
+
+export const updateSpotifyInfo = (id, user) => async (dispatch) => {
+  try {
+    const { spotifyAccess, spotifyRefresh } = user;
+    await api.updateUser(id, { spotifyRefresh });
+
+    dispatch({ type: UPDATE_USER, payload: { spotifyAccess } });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT, payload: null });
 };
 
 function handleError(error) {

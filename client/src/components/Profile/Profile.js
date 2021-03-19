@@ -3,10 +3,12 @@ import { Image, Row, Col, Card, Button } from "react-bootstrap";
 import profilePicture from "../../images/default_account.png";
 import { connect } from "react-redux";
 import { getUser } from "../../actions/users";
-import { updateUser } from "../../actions/account";
+import { updateUser, logout } from "../../actions/account";
+import { withRouter } from "react-router-dom";
+
 import "./styles.css";
 
-class Profile extends Component {
+export class Profile extends Component {
   state = {
     username: "",
     email: "",
@@ -15,7 +17,6 @@ class Profile extends Component {
   };
 
   componentDidMount = () => {
-    this.props.getUser(localStorage.getItem("userId"));
     this.setState({
       username: this.props.account.username,
       email: this.props.account.email,
@@ -46,6 +47,12 @@ class Profile extends Component {
     });
   };
 
+  handleLogout = () => {
+    localStorage.clear();
+    this.props.logoutUser();
+    this.props.history.push("/");
+  };
+
   render() {
     const username = this.state.username;
     const email = this.state.email;
@@ -55,7 +62,7 @@ class Profile extends Component {
       <div className="margin-box">
         <Row>
           <Col md="8">
-            <Card>
+            <Card className="card-style">
               <Card.Header>
                 <Card.Title as="h4">User Profile</Card.Title>
               </Card.Header>
@@ -110,10 +117,16 @@ class Profile extends Component {
                         Edit Profile
                       </Button>
                     )}
+                    <Button
+                      className="ml-3"
+                      type="submit"
+                      onClick={this.handleLogout}
+                    >
+                      Logout
+                    </Button>
                   </Col>
                 </Row>
                 <Row>
-                  
                   <Col xs="2">
                     <Card.Text className="bold-title">Username:</Card.Text>
                   </Col>
@@ -125,7 +138,7 @@ class Profile extends Component {
             </Card>
           </Col>
           <Col md="4">
-            <Card>
+            <Card className="card-style">
               <Card.Body>
                 <Image
                   src={profilePicture}
@@ -155,6 +168,11 @@ const mapDispatchToProps = (dispatch) => ({
   updateUser: (id, user) => {
     dispatch(updateUser(id, user));
   },
+  logoutUser: () => {
+    dispatch(logout());
+  },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Profile)
+);

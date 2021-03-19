@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Form, Container, Row, Col, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountContext } from "./AccountContext";
@@ -8,14 +8,14 @@ import validate from "./validation";
 import { useHistory } from "react-router";
 
 const Register = () => {
-  const [validated, setValidated] = useState(false);
-  const [userData, setUserData] = useState({
+  const [validated, setValidated] = React.useState(false);
+  const [userData, setUserData] = React.useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = React.useState({});
   const userError = useSelector((state) => state.account.createError);
   const userCreated = useSelector((state) => state.account.createMessage);
   const loading = useSelector((state) => state.account.loading);
@@ -53,9 +53,7 @@ const Register = () => {
               required
               isValid={validated && !errors.email}
               isInvalid={!!errors.email || !!userError}
-              onChange={(e) =>
-                setUserData({ ...userData, email: e.target.value })
-              }
+              onChange={(e) => setUserData({ ...userData, email: e.target.value })}
             />
             <Form.Control.Feedback type="invalid">
               {errors.email}
@@ -124,6 +122,7 @@ const Register = () => {
 
         <Row className="mt-5">
           <LoaderButton
+            id="yoo"
             className="submit-button"
             type="submit"
             loading={loading}
