@@ -9,6 +9,8 @@ import { getUsers } from "../../actions/users";
 import { Spinner } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
+import mapStyles from "./mapStyles";
+
 export class Map extends Component {
   constructor() {
     super();
@@ -132,6 +134,7 @@ export class Map extends Component {
             defaultCenter={this.props.center}
             center={center ? center : this.props.center}
             defaultZoom={this.props.zoom}
+            options={{ styles: mapStyles.map }}
           >
             {userList}
           </GoogleMapReact>

@@ -4,7 +4,7 @@
 }
 
 .account-height {
-  height: 550px;
+  height: 600px;
 }
 
 .align-text-center {
@@ -17,15 +17,50 @@
   margin-left: 30px;
   margin-right: 30px;
   font-weight: bold;
+  background-color: black;
+  border-color: black;
+}
+
+.submit-button:hover {
+  background-color: rgb(50, 50, 50);
+  border-color: rgb(50, 50, 50);
+}
+
+.submit-button:focus:hover {
+  background-color: rgb(50, 50, 50) !important;
+  border-color: rgb(50, 50, 50) !important;
+  box-shadow: 0 2px 7px 1px rgba(5, 5, 5, 0.5) !important;
+}
+
+.submit-button:disabled {
+  background-color: rgb(0, 0, 0);
+  border-color: black;
+}
+
+.submit-button:focus {
+  background-color: black !important;
+  border-color: black !important;
+  box-shadow: 0 2px 7px 1px rgba(5, 5, 5, 0.5) !important;
 }
 
 .account-window {
-  height: 550px;
-  width: 300px;
+  height: 575px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 20px;
-  box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
-  margin-top: 150px;
+  box-shadow: 0 2px 7px 1px rgba(5, 5, 5, 0.5);
+  background-color: rgb(255, 255, 255);
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+#title-header {
+  font-size: 30px;
+  font-weight: bold;
 }

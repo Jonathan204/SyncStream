@@ -1,0 +1,15 @@
+#login-background {
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+}
+
+#welcome {
+  width: 50px;
+  position: absolute;
+  margin: 0;
+  top: 50%;
+  left: 25%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
