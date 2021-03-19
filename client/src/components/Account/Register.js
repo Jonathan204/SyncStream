@@ -5,7 +5,6 @@ import { AccountContext } from "./AccountContext";
 import { createUser } from "../../actions/account";
 import LoaderButton from "../Button/LoadingButton";
 import validate from "./validation";
-import { useHistory } from "react-router";
 
 const Register = () => {
   const [validated, setValidated] = React.useState(false);
@@ -20,7 +19,6 @@ const Register = () => {
   const userCreated = useSelector((state) => state.account.createMessage);
   const loading = useSelector((state) => state.account.loading);
   const { switchToSignin } = useContext(AccountContext);
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
@@ -32,7 +30,8 @@ const Register = () => {
       event.stopPropagation();
     } else {
       setErrors({});
-      dispatch(createUser(userData, history));
+      dispatch(createUser(userData));
+      switchToSignin();
     }
   };
 
