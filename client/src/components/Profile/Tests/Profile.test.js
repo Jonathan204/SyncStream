@@ -106,7 +106,7 @@ describe("<Profile>", () => {
     const event = {
       preventDefault: props.preventDefault,
     };
-    let newState = {
+    const newState = {
       username: "newTestName",
       email: "newTestName@testmail.com",
       editing: true,
