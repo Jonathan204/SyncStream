@@ -2,27 +2,67 @@ import React, { Component } from "react";
 import { Image, Row, Col, Card, Button } from "react-bootstrap";
 import profilePicture from "../../images/default_account.png";
 import { connect } from "react-redux";
-import { getUser } from "../../actions/users";
+import { getUser, getUsers } from "../../actions/users";
+import { authorize } from "../../hash";
+import { getTokens, getUserId } from "../../utils/spotifyUtils";
 import { updateUser, logout } from "../../actions/account";
 import { withRouter } from "react-router-dom";
+import InfoWindow from "../Map/infoWindow/currLocation.js";
 
 import "./styles.css";
-
 export class Profile extends Component {
-  state = {
-    username: "",
-    email: "",
-    spotifyUserId: "",
-    editing: false,
-  };
+  constructor() {
+    super();
+    this.state = {
+      token: null,
+      user_spotify_id: null,
+      username: "",
+      email: "",
+      spotifyUserId: "",
+      editing: false,
+      isUser: true,
+      users: null,
+    };
+  }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     this.setState({
       username: this.props.account.username,
       email: this.props.account.email,
       spotifyUserId: this.props.account.spotifyUserId,
     });
+
+    const { spotifyAccess, spotifyUserId, id } = this.props.user;
+    if (spotifyAccess) {
+      this.setState({
+        token: spotifyAccess,
+      });
+      if (!spotifyUserId) await this.saveUserId(spotifyAccess);
+    } else {
+      const code = authorize();
+      if (code) {
+        try {
+          const authData = await getTokens(code);
+          await this.props.updateSpotifyInfo(id, authData);
+          await this.saveUserId(authData.spotifyAccess);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
   };
+
+  async saveUserId(token) {
+    const data = await getUserId(token);
+    this.setState({
+      user_spotify_id: data.id,
+    });
+    const userData = {
+      spotifyUserId: data.id,
+    };
+    const userId = localStorage.getItem("userId");
+    this.props.updateUser(userId, userData);
+  }
 
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -109,16 +149,24 @@ export class Profile extends Component {
                   </Col>
                   <Col>
                     {editing ? (
-                      <Button type="submit" onClick={this.handleSubmitProfile}>
+                      <Button
+                        className="profile-submit-button"
+                        type="submit"
+                        onClick={this.handleSubmitProfile}
+                      >
                         Submit
                       </Button>
                     ) : (
-                      <Button type="submit" onClick={this.handleEditProfile}>
+                      <Button
+                        className="profile-submit-button"
+                        type="submit"
+                        onClick={this.handleEditProfile}
+                      >
                         Edit Profile
                       </Button>
                     )}
                     <Button
-                      className="ml-3"
+                      className="ml-3 profile-submit-button"
                       type="submit"
                       onClick={this.handleLogout}
                     >
@@ -149,6 +197,10 @@ export class Profile extends Component {
                   roundedCircle
                 />
                 <Card.Title>{username}</Card.Title>
+                <InfoWindow
+                  className="profile-info-window"
+                  isUser={this.state.isUser}
+                />
               </Card.Body>
             </Card>
           </Col>
@@ -159,11 +211,16 @@ export class Profile extends Component {
 }
 const mapStateToProps = (state) => ({
   account: state.account,
+  user: state.account,
+  users: state.users,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getUser: (id) => {
     dispatch(getUser(id));
+  },
+  getUsers: () => {
+    dispatch(getUsers());
   },
   updateUser: (id, user) => {
     dispatch(updateUser(id, user));
@@ -171,8 +228,9 @@ const mapDispatchToProps = (dispatch) => ({
   logoutUser: () => {
     dispatch(logout());
   },
+  updateSpotifyInfo: (id, authData) => {
+    dispatch(updateUser(id, authData));
+  },
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Profile)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));

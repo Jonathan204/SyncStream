@@ -114,7 +114,11 @@ class InfoWindow extends React.Component {
 
   render() {
     return (
-      <div className="infoWindowStyle">
+      <div
+        className={
+          this.props.render ? "info-window-style-map" : "info-window-style-profile"
+        }
+      >
         <Container>
           <Row className="text-center">
             {(!this.state.token && this.props.isUser)&&  (

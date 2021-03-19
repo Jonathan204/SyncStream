@@ -1,4 +1,4 @@
-const regEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+const regEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const regUser = /^[a-z0-9_-]{3,16}$/i;
 
 function validate(values) {
@@ -20,8 +20,7 @@ function validate(values) {
   }
 
   if (values.confirmPassword !== undefined) {
-    if (!values.confirmPassword)
-      errors.confirmPassword = "Please confirm password";
+    if (!values.confirmPassword) errors.confirmPassword = "Please confirm password";
     else if (values.password !== values.confirmPassword)
       errors.confirmPassword = "Password doesn't match";
   }

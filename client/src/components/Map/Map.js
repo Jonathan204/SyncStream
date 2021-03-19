@@ -9,7 +9,9 @@ import { getUsers } from "../../actions/users";
 import { Spinner } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
-class Map extends Component {
+import mapStyles from "./mapStyles";
+
+export class Map extends Component {
   constructor() {
     super();
     this.state = {
@@ -98,6 +100,32 @@ class Map extends Component {
   render() {
     const { center, loadComplete, users } = this.state;
     const currUsername = this.props.user.username;
+    let userList;
+    if (users) {
+      userList = users.map((user) => {
+        if (user.username === currUsername) {
+          return (
+            <MarkerLocation
+              key={user.username}
+              lat={user.lat}
+              lng={user.lng}
+              isUser={true}
+            />
+          );
+        } else {
+          if (user.lat && user.lng) {
+            return (
+              <MarkerLocation
+                key={user.username}
+                lat={user.lat}
+                lng={user.lng}
+                isUser={false}
+              />
+            );
+          }
+        }
+      });
+    }
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%" }}>
@@ -107,6 +135,7 @@ class Map extends Component {
             defaultCenter={this.props.center}
             center={center ? center : this.props.center}
             defaultZoom={this.props.zoom}
+            options={{ styles: mapStyles.map }}
           >
             {users.map((user) => {
               if (user.username === currUsername) {
