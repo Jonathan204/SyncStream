@@ -39,3 +39,8 @@
   border-color: black !important;
   box-shadow: none !important;
 }
+
+.profile-info-window {
+  position: relative !important;
+  z-index: 0px !important;
+}
