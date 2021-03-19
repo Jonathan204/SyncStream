@@ -53,19 +53,21 @@ class InfoWindow extends React.Component {
   }
 
   tick() {
-    if (this.state.token) {
+    if (this.props.isUser) {
       this.getSong(this.state.token);
+    }else{
+      this.getSong(null);
     }
   }
 
   getSongInfo(data) {
     var newState = {};
-    if (!data || !data.currently_playing_type) {
+    if (!data || (this.props.isUser && !data.currently_playing_type)) {
       newState = {
         no_data: true,
       };
     } else {
-      if (data.currently_playing_type === "track") {
+      if (!this.props.isUser || data.currently_playing_type === "track") {
         newState = {
           item: data.item,
           is_playing: data.is_playing,
@@ -89,32 +91,20 @@ class InfoWindow extends React.Component {
     try {
       if (this.props.isUser && token) {
         data = await getCurrentlyPlaying(token);
-        console.log(data);
         data = this.getSongInfo(data);
+        
         const songInfo = {
           ...data,
           lastPlayed: new Date(), // key to let other users know if this user is active
         };
         this.props.updateUser(this.props.user.id, { songInfo });
       } else {
-        data = await this.props.getUsersSpotify(this.props.userId);
-        this.setState({
-          token: null,
-          item: {
-            album: {
-              images: data.songInfo.item.album.images,
-            },
-            name: data.songInfo.item.name,
-            artists: data.songInfo.item.artists,
-            duration_ms: data.songInfo.item.duration_ms,
-          },
-          is_playing: data.songInfo.is_playing,
-          is_ad: false,
-          progress_ms: data.songInfo.progress_ms,
-          no_data: false,
+        await this.props.getUsersSpotify(this.props.userId);
+        this.props.users.map((user) => {
+          if(user.spotifyUserId === this.props.userId){         
+            data = this.getSongInfo(user.songInfo); 
+          }
         });
-
-        console.log(data);
       }
     } catch (error) {
       console.log(error);
