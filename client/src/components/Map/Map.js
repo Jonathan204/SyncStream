@@ -44,6 +44,7 @@ export class Map extends Component {
     }
 
     const { spotifyAccess, spotifyUserId, id } = this.props.user;
+
     if (spotifyAccess) {
       this.setState({
         token: spotifyAccess,
@@ -106,6 +107,7 @@ export class Map extends Component {
           return (
             <MarkerLocation
               key={user.username}
+              userName={user.spotifyUserId}
               lat={user.lat}
               lng={user.lng}
               isUser={true}
@@ -113,16 +115,22 @@ export class Map extends Component {
           );
         } else {
           if (user.lat && user.lng) {
+            var theLat = parseFloat(user.lat);
+            if(user.lat === this.props.user.lat){
+              theLat = (theLat+.0007).toString();
+            }
             return (
               <MarkerLocation
                 key={user.username}
-                lat={user.lat}
+                userName={user.spotifyUserId}
+                lat={theLat}
                 lng={user.lng}
                 isUser={false}
               />
             );
           }
         }
+        return null;
       });
     }
     return (

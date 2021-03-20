@@ -13,7 +13,7 @@ class markerLocation extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  handleClick = () => {
     this.setState((state) => ({
       showInfo: !state.showInfo,
     }));
@@ -25,13 +25,16 @@ class markerLocation extends React.Component {
         {this.state.isUser ? (
           <div>
             <PersonCircle onClick={this.handleClick} color="royalblue" size={50} />
-            {this.state.showInfo && (
-              <UserInfo isUser={this.state.isUser} render="map"></UserInfo>
-            )}
-          </div>
+            {this.state.showInfo && <UserInfo isUser={this.state.isUser} userId={this.props.userName} render></UserInfo>}
+            </div>
         ) : (
-          <PersonCircle color="red" size={50} />
-        )}
+          <div>
+            <PersonCircle onClick={this.handleClick} color="red" size={50} />
+            {this.state.showInfo && <UserInfo isUser={this.state.isUser} userId={this.props.userName} render></UserInfo>}
+          </div>
+          )
+        }
+
       </div>
     );
   }
