@@ -8,4 +8,5 @@ export const LOGIN = "LOGIN";
 export const LOGIN_ERROR = "USER_ERROR";
 export const LOADING = "LOADING";
 export const GET_USER = "GET_USER";
+export const GET_USER_SPOTIFY = "GET_USER_SPOTIFY";
 export const LOGOUT = "LOGOUT";

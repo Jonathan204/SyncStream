@@ -39,7 +39,7 @@ const Login = () => {
     <Container className="account-height">
       <Row className="mt-4 align-text-center">
         <Col>
-          <h3>Welcome Back!</h3>
+          <h3 id="title-header">Welcome Back!</h3>
         </Col>
       </Row>
       <Form className="mt-5" noValidate onSubmit={handleSubmit}>

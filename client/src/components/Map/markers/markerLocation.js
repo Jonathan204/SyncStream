@@ -5,15 +5,15 @@ import UserInfo from "../infoWindow/currLocation.js";
 class markerLocation extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-        showInfo: false,
-        isUser: this.props.isUser,    
+    this.state = {
+      showInfo: false,
+      isUser: this.props.isUser,
     };
     // This binding is necessary to make `this` work in the callback
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  handleClick = () => {
     this.setState((state) => ({
       showInfo: !state.showInfo,
     }));
@@ -23,13 +23,16 @@ class markerLocation extends React.Component {
     return (
       <div>
         {this.state.isUser ? (
-            <div>
+          <div>
             <PersonCircle onClick={this.handleClick} color="royalblue" size={50} />
-            {this.state.showInfo && <UserInfo isUser={this.state.isUser}></UserInfo>} 
+            {this.state.showInfo && <UserInfo isUser={this.state.isUser} userId={this.props.userName} render></UserInfo>}
             </div>
-        ) : 
-        <PersonCircle color="red" size={50} />
-        
+        ) : (
+          <div>
+            <PersonCircle onClick={this.handleClick} color="red" size={50} />
+            {this.state.showInfo && <UserInfo isUser={this.state.isUser} userId={this.props.userName} render></UserInfo>}
+          </div>
+          )
         }
 
       </div>
