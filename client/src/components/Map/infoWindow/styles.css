@@ -23,8 +23,7 @@
 .info-window-style-map {
   position: absolute;
   bottom: 0px;
-  left: 40px;
-  width: 400px;
+  left: 100px;
   background-color: white;
   box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
   padding: 10px;

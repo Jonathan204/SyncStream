@@ -6,9 +6,8 @@ import { authorizationUrl } from "../../../utils/spotifyUtils";
 import { getCurrentlyPlaying } from "../../../utils/spotifyUtils";
 import { updateUser } from "../../../actions/account";
 import { getUsersSpotify } from "../../../actions/users";
-import SpotifyPlayer from 'react-spotify-web-playback';
-//import SpotifyPlayer from 'react-spotify-player';
-import Player from "../../Player/Player";
+import SpotifyPlayer from 'react-spotify-player';
+
 class InfoWindow extends React.Component {
   constructor() {
     super();
@@ -118,8 +117,8 @@ class InfoWindow extends React.Component {
     var userPlayer = false;
     var otherPlayer = false;
     var nothingPlaying = false;
-    var uri = this.state.item.artists[0].uri;
-    console.log(this.state.token);
+    var uri = this.state.item.uri;
+
     if (this.state.token && !this.state.no_data) {
       userPlayer = true;
     } else if (!this.state.token &&
@@ -146,34 +145,22 @@ class InfoWindow extends React.Component {
               </a>
             )}
             {userPlayer && (
-
-              <div>
-                <Player
-                  item={this.state.item}
-                  is_playing={this.state.is_playing}
-                  progress_ms={this.state.progress_ms}
-                  is_ad={this.state.is_ad}
-                  is_me={true}
-                />
-                <SpotifyPlayer
-                  token={this.state.token}
-                  uris={['spotify:artist:1Xyo4u8uXC1ZmMpatF05PJ']}
-                />;
-              </div>
-
-
-
-            )}
-            {otherPlayer && (
-              <Player
-                item={this.state.item}
-                is_playing={this.state.is_playing}
-                progress_ms={this.state.progress_ms}
-                is_ad={this.state.is_ad}
-                is_me={false}
+              <SpotifyPlayer
+                uri={uri}
+                size="large"
+                view="coverart"
+                theme="black"
               />
             )}
-            {nothingPlaying && (
+            {otherPlayer && (
+              <SpotifyPlayer
+                uri={uri}
+                size="large"
+                view="coverart"
+                theme="black"
+              />
+            )}
+            {nothingPlaying && this.state.token && (
               <p>
                 {this.props.isUser
                   ? "You need to be playing a song on Spotify, for something to appear here."
