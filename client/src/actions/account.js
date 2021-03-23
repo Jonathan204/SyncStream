@@ -6,6 +6,7 @@ import {
   UPDATE_USER,
   LOADING,
   LOGOUT,
+  REFRESH_SPOTIFY,
 } from "../constants/actionTypes";
 
 import * as api from "../api/index.js";
@@ -51,6 +52,16 @@ export const updateSpotifyInfo = (id, user) => async (dispatch) => {
     dispatch({ type: UPDATE_USER, payload: { spotifyAccess } });
   } catch (error) {
     console.log(error.message);
+  }
+};
+
+export const refreshSpotify = (id) => async (dispatch) => {
+  try {
+    const { data } = await api.refreshSpotify(id);
+    dispatch({ type: REFRESH_SPOTIFY, payload: handleResponse(data) });
+  } catch (error) {
+    console.log(error.message);
+    dispatch({ type: UPDATE_USER, payload: { spotifyAccess: null } });
   }
 };
 

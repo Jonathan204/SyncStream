@@ -2,10 +2,12 @@ import React from "react";
 import { Container, Row } from "react-bootstrap";
 import "./styles.css";
 import { connect } from "react-redux";
-import { authorizationUrl } from "../../../utils/spotifyUtils";
-import { getCurrentlyPlaying } from "../../../utils/spotifyUtils";
-import { updateUser} from "../../../actions/account";
-import { getUsersSpotify} from "../../../actions/users";
+import {
+  authorizationUrl,
+  getCurrentlyPlaying,
+} from "../../../utils/spotifyUtils";
+import { updateUser, refreshSpotify } from "../../../actions/account";
+import { getUsersSpotify } from "../../../actions/users";
 import Player from "../../Player/Player";
 class InfoWindow extends React.Component {
   constructor() {
@@ -34,14 +36,10 @@ class InfoWindow extends React.Component {
     if (this.props.isUser) {
       let _token = this.props.user.spotifyAccess;
       if (_token) {
-        this.setState({
-          token: _token,
-        });
+        this.setState({ token: _token });
         this.getSong(_token);
       }
-    }else{
-      this.getSong(null);
-    }
+    } else this.getSong(null);
 
     // set interval for polling every 5 seconds
     this.interval = setInterval(() => this.tick(), 5000);
@@ -53,11 +51,7 @@ class InfoWindow extends React.Component {
   }
 
   tick() {
-    if (this.props.isUser) {
-      this.getSong(this.state.token);
-    }else{
-      this.getSong(null);
-    }
+    this.getSong(this.state.token);
   }
 
   getSongInfo(data) {
@@ -92,7 +86,6 @@ class InfoWindow extends React.Component {
       if (this.props.isUser && token) {
         data = await getCurrentlyPlaying(token);
         data = this.getSongInfo(data);
-        
         const songInfo = {
           ...data,
           lastPlayed: new Date(), // key to let other users know if this user is active
@@ -101,13 +94,20 @@ class InfoWindow extends React.Component {
       } else {
         await this.props.getUsersSpotify(this.props.userId);
         this.props.users.map((user) => {
-          if(user.spotifyUserId === this.props.userId){         
-            data = this.getSongInfo(user.songInfo); 
+          if (user.spotifyUserId === this.props.userId) {
+            data = this.getSongInfo(user.songInfo);
           }
         });
       }
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 401) {
+        await this.props.refreshSpotify(this.props.user.id);
+        const newToken = this.props.user.spotifyAccess;
+        if (newToken && newToken !== token) {
+          this.setState({ token: newToken });
+          this.getSong(newToken);
+        }
+      }
     }
     this.setState(data);
   }
@@ -116,24 +116,24 @@ class InfoWindow extends React.Component {
     var userPlayer = false;
     var otherPlayer = false;
     var nothingPlaying = false;
-    if(this.state.token && !this.state.no_data){
+    if (this.state.token && !this.state.no_data) {
       userPlayer = true;
-    }else if(!this.state.token && 
-      this.state.item &&
-      this.state.progress_ms){
-        otherPlayer = true;
-    } else{
+    } else if (!this.state.token && this.state.item && this.state.progress_ms) {
+      otherPlayer = true;
+    } else {
       nothingPlaying = true;
-    }   
+    }
     return (
       <div
         className={
-          this.props.render ? "info-window-style-map" : "info-window-style-profile"
+          this.props.render
+            ? "info-window-style-map"
+            : "info-window-style-profile"
         }
       >
         <Container>
           <Row className="text-center">
-            {(!this.state.token && this.props.isUser)&&  (
+            {!this.state.token && this.props.isUser && (
               <a
                 className="spotify-btn spotify-btn--loginApp-link"
                 href={authorizationUrl}
@@ -166,7 +166,6 @@ class InfoWindow extends React.Component {
                   : "User isn't playing anything currently"}
               </p>
             )}
-
           </Row>
         </Container>
       </div>
@@ -182,7 +181,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = () => {
   return {
-    updateUser, getUsersSpotify
+    updateUser,
+    getUsersSpotify,
+    refreshSpotify,
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps())(InfoWindow);
