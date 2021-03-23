@@ -6,8 +6,8 @@ import { authorizationUrl } from "../../../utils/spotifyUtils";
 import { getCurrentlyPlaying } from "../../../utils/spotifyUtils";
 import { updateUser } from "../../../actions/account";
 import { getUsersSpotify } from "../../../actions/users";
-import SpotifyPlayer from 'react-spotify-player';
 
+import Player from "../../Player/Player";
 class InfoWindow extends React.Component {
   constructor() {
     super();
@@ -86,6 +86,12 @@ class InfoWindow extends React.Component {
     }
     return newState;
   }
+  
+  millisToMinutesAndSeconds(millis) {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+  }
 
   async getSong(token) {
     var data;
@@ -118,6 +124,15 @@ class InfoWindow extends React.Component {
     var otherPlayer = false;
     var nothingPlaying = false;
     var uri = this.state.item.uri;
+    
+    if(uri){
+      var splitUri = (this.state.item.uri).split(":");
+      var endUri = splitUri[2];
+    }
+
+    var minutes = Math.floor(this.state.progress_ms / 60000);
+    var seconds = ((this.state.progress_ms % 60000) / 1000).toFixed(0);
+    var time = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 
     if (this.state.token && !this.state.no_data) {
       userPlayer = true;
@@ -144,23 +159,34 @@ class InfoWindow extends React.Component {
                 Login to Spotify
               </a>
             )}
-            {userPlayer && uri &&(
-              <SpotifyPlayer
-                uri={uri}
-                size="compact"
-                view="list"
-                theme="black"
-              />
+            {userPlayer && uri && (
+              <div>
+                <Player
+                  item={this.state.item}
+                  is_playing={this.state.is_playing}
+                  progress_ms={this.state.progress_ms}
+                  is_ad={this.state.is_ad}
+                  is_me={true}
+                  songTime={time}
+                />
+              </div>
             )}
             {otherPlayer && uri && (
-              <SpotifyPlayer
-                uri={uri}
-                size="compact"
-                view="list"
-                theme="black"
-              />
+              <div>
+                <Player
+                  item={this.state.item}
+                  is_playing={this.state.is_playing}
+                  progress_ms={this.state.progress_ms}
+                  is_ad={this.state.is_ad}
+                  is_me={false}
+                  songTime={time}
+                  songUri={endUri}
+                />   
+
+              </div>
+
             )}
-            {nothingPlaying && this.state.token && (
+            {nothingPlaying && (
               <p>
                 {this.props.isUser
                   ? "You need to be playing a song on Spotify, for something to appear here."
