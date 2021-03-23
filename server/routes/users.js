@@ -8,12 +8,14 @@ import {
   updateUser,
   deleteUser,
   loginUser,
+  refreshSpotify,
 } from "../controllers/users.js";
 
 const router = express.Router();
 
 router.get("/", getUsers);
 router.post("/", createUser);
+router.get("/refresh/:id", refreshSpotify);
 router.get("/:id", getUser);
 router.get("/spotify/:id", getUserSpotify);
 router.patch("/:id", updateUser);
