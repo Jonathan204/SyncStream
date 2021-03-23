@@ -86,12 +86,6 @@ class InfoWindow extends React.Component {
     }
     return newState;
   }
-  
-  millisToMinutesAndSeconds(millis) {
-    var minutes = Math.floor(millis / 60000);
-    var seconds = ((millis % 60000) / 1000).toFixed(0);
-    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-  }
 
   async getSong(token) {
     var data;
@@ -123,23 +117,21 @@ class InfoWindow extends React.Component {
     var userPlayer = false;
     var otherPlayer = false;
     var nothingPlaying = false;
-    var uri = this.state.item.uri;
-    
-    if(uri){
-      var splitUri = (this.state.item.uri).split(":");
-      var endUri = splitUri[2];
-    }
-
-    var minutes = Math.floor(this.state.progress_ms / 60000);
-    var seconds = ((this.state.progress_ms % 60000) / 1000).toFixed(0);
-    var time = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-
+    var time = "0:00";
+    var minutes = "";
+    var seconds = "";
     if (this.state.token && !this.state.no_data) {
       userPlayer = true;
+      minutes = Math.floor(this.state.progress_ms / 60000);
+      seconds = ((this.state.progress_ms % 60000) / 1000).toFixed(0);
+      time = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
     } else if (!this.state.token &&
       this.state.item &&
       this.state.progress_ms) {
       otherPlayer = true;
+      minutes = Math.floor(this.state.progress_ms / 60000);
+      seconds = ((this.state.progress_ms % 60000) / 1000).toFixed(0);
+      time = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
     } else {
       nothingPlaying = true;
     }
@@ -159,7 +151,7 @@ class InfoWindow extends React.Component {
                 Login to Spotify
               </a>
             )}
-            {userPlayer && uri && (
+            {userPlayer && this.state.item.uri && (
               <div>
                 <Player
                   item={this.state.item}
@@ -171,7 +163,7 @@ class InfoWindow extends React.Component {
                 />
               </div>
             )}
-            {otherPlayer && uri && (
+            {otherPlayer && this.state.item.uri && (
               <div>
                 <Player
                   item={this.state.item}
@@ -180,7 +172,7 @@ class InfoWindow extends React.Component {
                   is_ad={this.state.is_ad}
                   is_me={false}
                   songTime={time}
-                  songUri={endUri}
+                  songUri={this.state.item.uri}
                 />   
 
               </div>

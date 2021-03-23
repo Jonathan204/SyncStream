@@ -9,10 +9,25 @@ class Player extends React.Component {
     super(props);
     this.state = {
       showPlay: false,
+      song_uri: "",
     };
     // This binding is necessary to make `this` work in the callback
     this.handleClick = this.handleClick.bind(this);
+
   }
+  componentDidMount() {
+    var endUri = "";
+    var uri = this.props.songUri;
+    if(uri){
+      var splitUri = (uri).split(":");
+      endUri = splitUri[2];      
+    }
+
+    this.setState({
+      song_uri: endUri,
+    });
+  }
+
 
   handleClick = () => {
     this.setState((state) => ({
@@ -28,7 +43,7 @@ class Player extends React.Component {
       <Container>
         {this.state.showPlay ? (
           <div>
-            <iframe title="webplayer" src={"https://open.spotify.com/embed/track/"+this.props.songUri} width="300" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <iframe title="webplayer" src={"https://open.spotify.com/embed/track/"+this.state.song_uri} width="300" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
               <button
                 className="stop-listen-btn stop-listen-btn--loginApp-link"
                 onClick={this.handleClick}
@@ -65,9 +80,10 @@ class Player extends React.Component {
                   <div className="now-playing__status">
                     {this.props.is_playing ? "Playing" : "Paused"}
                   </div>
-                  <div>
-                    {this.props.songTime}
-                  </div>
+                  {!this.props.is_ad && (
+                      <div>{this.props.songTime}</div>
+                  )}
+                 
                   <div className="progress">
                     <div className="progress__bar" style={progressBarStyles} />
                   </div>
