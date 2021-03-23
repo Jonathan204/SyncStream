@@ -144,19 +144,19 @@ class InfoWindow extends React.Component {
                 Login to Spotify
               </a>
             )}
-            {userPlayer && (
+            {userPlayer && uri &&(
               <SpotifyPlayer
                 uri={uri}
-                size="large"
-                view="coverart"
+                size="compact"
+                view="list"
                 theme="black"
               />
             )}
-            {otherPlayer && (
+            {otherPlayer && uri && (
               <SpotifyPlayer
                 uri={uri}
-                size="large"
-                view="coverart"
+                size="compact"
+                view="list"
                 theme="black"
               />
             )}
