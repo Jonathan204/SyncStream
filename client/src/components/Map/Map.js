@@ -110,6 +110,7 @@ export class Map extends Component {
           }
           return (
             <MarkerLocation
+              name={user.username}
               key={user.username}
               userName={user.spotifyUserId}
               lat={theLat}
@@ -134,6 +135,7 @@ export class Map extends Component {
           >
             {center && (
               <MarkerLocation
+                name={username}
                 key={username}
                 userName={spotifyUserId}
                 lat={center.lat}
