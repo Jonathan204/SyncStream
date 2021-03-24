@@ -52,7 +52,9 @@ const Register = () => {
               required
               isValid={validated && !errors.email}
               isInvalid={!!errors.email || !!userError}
-              onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+              onChange={(e) =>
+                setUserData({ ...userData, email: e.target.value })
+              }
             />
             <Form.Control.Feedback type="invalid">
               {errors.email}
@@ -98,7 +100,7 @@ const Register = () => {
         <Row className="flex-column">
           <Form.Group controlId="confirmPassword">
             <Form.Control
-              name="password"
+              name="confirmPassword"
               required
               type="password"
               placeholder="Confirm Password"
@@ -121,7 +123,6 @@ const Register = () => {
 
         <Row className="mt-5">
           <LoaderButton
-            id="yoo"
             className="submit-button"
             type="submit"
             loading={loading}

@@ -11,6 +11,7 @@
     "axios": "^0.21.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "bootstrap": "^4.6.0",
+    "cypress": "^6.8.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "google-map-react": "^2.1.9",
