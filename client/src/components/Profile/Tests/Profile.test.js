@@ -20,6 +20,9 @@ describe("<Profile>", () => {
         email: "Joe@testmail.com",
         spotifyUserId: "JoeMusic",
       },
+      user: {
+        spotifyAccess: "fakeToken",
+      },
     };
     state = {
       username: "Joe Testman",
