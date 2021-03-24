@@ -8,6 +8,7 @@ import {
 } from "../../../utils/spotifyUtils";
 import { updateUser, refreshSpotify } from "../../../actions/account";
 import { getUsersSpotify } from "../../../actions/users";
+
 import Player from "../../Player/Player";
 class InfoWindow extends React.Component {
   constructor() {
@@ -116,10 +117,19 @@ class InfoWindow extends React.Component {
     var userPlayer = false;
     var otherPlayer = false;
     var nothingPlaying = false;
+    var time = "0:00";
+    var minutes = "";
+    var seconds = "";
     if (this.state.token && !this.state.no_data) {
       userPlayer = true;
+      minutes = Math.floor(this.state.progress_ms / 60000);
+      seconds = ((this.state.progress_ms % 60000) / 1000).toFixed(0);
+      time = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     } else if (!this.state.token && this.state.item && this.state.progress_ms) {
       otherPlayer = true;
+      minutes = Math.floor(this.state.progress_ms / 60000);
+      seconds = ((this.state.progress_ms % 60000) / 1000).toFixed(0);
+      time = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     } else {
       nothingPlaying = true;
     }
@@ -141,23 +151,30 @@ class InfoWindow extends React.Component {
                 Login to Spotify
               </a>
             )}
-            {userPlayer && (
-              <Player
-                item={this.state.item}
-                is_playing={this.state.is_playing}
-                progress_ms={this.state.progress_ms}
-                is_ad={this.state.is_ad}
-                is_me={true}
-              />
+            {userPlayer && this.state.item.uri && (
+              <div>
+                <Player
+                  item={this.state.item}
+                  is_playing={this.state.is_playing}
+                  progress_ms={this.state.progress_ms}
+                  is_ad={this.state.is_ad}
+                  is_me={true}
+                  songTime={time}
+                />
+              </div>
             )}
-            {otherPlayer && (
-              <Player
-                item={this.state.item}
-                is_playing={this.state.is_playing}
-                progress_ms={this.state.progress_ms}
-                is_ad={this.state.is_ad}
-                is_me={false}
-              />
+            {otherPlayer && this.state.item.uri && (
+              <div>
+                <Player
+                  item={this.state.item}
+                  is_playing={this.state.is_playing}
+                  progress_ms={this.state.progress_ms}
+                  is_ad={this.state.is_ad}
+                  is_me={false}
+                  songTime={time}
+                  songUri={this.state.item.uri}
+                />
+              </div>
             )}
             {nothingPlaying && (
               <p>
