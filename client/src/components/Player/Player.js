@@ -43,7 +43,7 @@ class Player extends React.Component {
       <Container>
         {this.state.showPlay ? (
           <div>
-            <iframe title="webplayer" src={"https://open.spotify.com/embed/track/"+this.state.song_uri} width="300" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <iframe title="webplayer" src={"https://open.spotify.com/embed/track/"+this.state.song_uri} width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
               <button
                 className="stop-listen-btn stop-listen-btn--loginApp-link"
                 onClick={this.handleClick}
