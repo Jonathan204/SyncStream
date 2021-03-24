@@ -4,8 +4,9 @@ import "./styles.css";
 import { connect } from "react-redux";
 import { authorizationUrl } from "../../../utils/spotifyUtils";
 import { getCurrentlyPlaying } from "../../../utils/spotifyUtils";
-import { updateUser} from "../../../actions/account";
-import { getUsersSpotify} from "../../../actions/users";
+import { updateUser } from "../../../actions/account";
+import { getUsersSpotify } from "../../../actions/users";
+
 import Player from "../../Player/Player";
 class InfoWindow extends React.Component {
   constructor() {
@@ -39,7 +40,7 @@ class InfoWindow extends React.Component {
         });
         this.getSong(_token);
       }
-    }else{
+    } else {
       this.getSong(null);
     }
 
@@ -55,7 +56,7 @@ class InfoWindow extends React.Component {
   tick() {
     if (this.props.isUser) {
       this.getSong(this.state.token);
-    }else{
+    } else {
       this.getSong(null);
     }
   }
@@ -92,7 +93,7 @@ class InfoWindow extends React.Component {
       if (this.props.isUser && token) {
         data = await getCurrentlyPlaying(token);
         data = this.getSongInfo(data);
-        
+
         const songInfo = {
           ...data,
           lastPlayed: new Date(), // key to let other users know if this user is active
@@ -101,8 +102,8 @@ class InfoWindow extends React.Component {
       } else {
         await this.props.getUsersSpotify(this.props.userId);
         this.props.users.map((user) => {
-          if(user.spotifyUserId === this.props.userId){         
-            data = this.getSongInfo(user.songInfo); 
+          if (user.spotifyUserId === this.props.userId) {
+            data = this.getSongInfo(user.songInfo);
           }
         });
       }
@@ -116,15 +117,24 @@ class InfoWindow extends React.Component {
     var userPlayer = false;
     var otherPlayer = false;
     var nothingPlaying = false;
-    if(this.state.token && !this.state.no_data){
+    var time = "0:00";
+    var minutes = "";
+    var seconds = "";
+    if (this.state.token && !this.state.no_data) {
       userPlayer = true;
-    }else if(!this.state.token && 
+      minutes = Math.floor(this.state.progress_ms / 60000);
+      seconds = ((this.state.progress_ms % 60000) / 1000).toFixed(0);
+      time = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    } else if (!this.state.token &&
       this.state.item &&
-      this.state.progress_ms){
-        otherPlayer = true;
-    } else{
+      this.state.progress_ms) {
+      otherPlayer = true;
+      minutes = Math.floor(this.state.progress_ms / 60000);
+      seconds = ((this.state.progress_ms % 60000) / 1000).toFixed(0);
+      time = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    } else {
       nothingPlaying = true;
-    }   
+    }
     return (
       <div
         className={
@@ -133,7 +143,7 @@ class InfoWindow extends React.Component {
       >
         <Container>
           <Row className="text-center">
-            {(!this.state.token && this.props.isUser)&&  (
+            {(!this.state.token && this.props.isUser) && (
               <a
                 className="spotify-btn spotify-btn--loginApp-link"
                 href={authorizationUrl}
@@ -141,23 +151,32 @@ class InfoWindow extends React.Component {
                 Login to Spotify
               </a>
             )}
-            {userPlayer && (
-              <Player
-                item={this.state.item}
-                is_playing={this.state.is_playing}
-                progress_ms={this.state.progress_ms}
-                is_ad={this.state.is_ad}
-                is_me={true}
-              />
+            {userPlayer && this.state.item.uri && (
+              <div>
+                <Player
+                  item={this.state.item}
+                  is_playing={this.state.is_playing}
+                  progress_ms={this.state.progress_ms}
+                  is_ad={this.state.is_ad}
+                  is_me={true}
+                  songTime={time}
+                />
+              </div>
             )}
-            {otherPlayer && (
-              <Player
-                item={this.state.item}
-                is_playing={this.state.is_playing}
-                progress_ms={this.state.progress_ms}
-                is_ad={this.state.is_ad}
-                is_me={false}
-              />
+            {otherPlayer && this.state.item.uri && (
+              <div>
+                <Player
+                  item={this.state.item}
+                  is_playing={this.state.is_playing}
+                  progress_ms={this.state.progress_ms}
+                  is_ad={this.state.is_ad}
+                  is_me={false}
+                  songTime={time}
+                  songUri={this.state.item.uri}
+                />   
+
+              </div>
+
             )}
             {nothingPlaying && (
               <p>
