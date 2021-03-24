@@ -20,21 +20,11 @@ class markerLocation extends React.Component {
   }
 
   render() {
+    const { isUser } = this.state;
     return (
       <div>
-        {this.state.isUser ? (
-          <div>
-            <PersonCircle onClick={this.handleClick} color="royalblue" size={50} />
-            {this.state.showInfo && <UserInfo isUser={this.state.isUser} userId={this.props.userName} render></UserInfo>}
-            </div>
-        ) : (
-          <div>
-            <PersonCircle onClick={this.handleClick} color="red" size={50} />
-            {this.state.showInfo && <UserInfo isUser={this.state.isUser} userId={this.props.userName} render></UserInfo>}
-          </div>
-          )
-        }
-
+        <PersonCircle onClick={this.handleClick} color={isUser ? "royalblue" : "red"} size={50} />
+        {this.state.showInfo && <UserInfo isUser={isUser} userId={this.props.userName} render></UserInfo>}
       </div>
     );
   }

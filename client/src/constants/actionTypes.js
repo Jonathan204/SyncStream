@@ -9,4 +9,5 @@ export const LOGIN_ERROR = "USER_ERROR";
 export const LOADING = "LOADING";
 export const GET_USER = "GET_USER";
 export const GET_USER_SPOTIFY = "GET_USER_SPOTIFY";
+export const REFRESH_SPOTIFY = "REFRESH_SPOTIFY";
 export const LOGOUT = "LOGOUT";

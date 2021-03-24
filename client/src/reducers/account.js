@@ -7,6 +7,7 @@ import {
   LOADING,
   GET_USER,
   LOGOUT,
+  REFRESH_SPOTIFY,
 } from "../constants/actionTypes";
 
 const defaultUser = {
@@ -24,6 +25,8 @@ export default function account(user = defaultUser, action) {
     case GET_USER:
       return action.payload;
     case LOGIN:
+      return payload;
+    case REFRESH_SPOTIFY:
       return payload;
     case LOGIN_ERROR:
       return { loginError: payload };

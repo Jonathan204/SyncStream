@@ -1,4 +1,4 @@
-import { FETCH_ALL, UPDATE_ALL, GET_USER_SPOTIFY, } from "../constants/actionTypes";
+import { FETCH_ALL, GET_USER_SPOTIFY, } from "../constants/actionTypes";
 
 export default function user(users = [], action) {
   switch (action.type) {

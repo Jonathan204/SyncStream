@@ -36,6 +36,7 @@ export class Map extends Component {
   };
 
   componentDidMount = async () => {
+    this.props.getUsers();
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         this.currentCoords,
@@ -83,12 +84,10 @@ export class Map extends Component {
       lat: position.coords.latitude,
       lng: position.coords.longitude,
     };
-    this.props.getUsers();
     this.setState({
       center,
       currLocation: true,
       loadComplete: true,
-      users: this.props.users,
     });
     this.props.updateUser(this.props.user.id, center);
   };
@@ -98,37 +97,26 @@ export class Map extends Component {
   };
 
   render() {
-    const { center, loadComplete, users } = this.state;
-    const currUsername = this.props.user.username;
+    const { center, loadComplete } = this.state;
+    const { users } = this.props;
+    const { username, spotifyUserId } = this.props.user;
     let userList;
     if (users) {
       userList = users.map((user) => {
-        if (user.username === currUsername) {
+        if (user.username !== username && user.lat && user.lng) {
+          var theLat = parseFloat(user.lat);
+          if (user.lat === this.props.user.lat) {
+            theLat = (theLat + 0.0007).toString();
+          }
           return (
             <MarkerLocation
               key={user.username}
               userName={user.spotifyUserId}
-              lat={user.lat}
+              lat={theLat}
               lng={user.lng}
-              isUser={true}
+              isUser={false}
             />
           );
-        } else {
-          if (user.lat && user.lng) {
-            var theLat = parseFloat(user.lat);
-            if(user.lat === this.props.user.lat){
-              theLat = (theLat+.0007).toString();
-            }
-            return (
-              <MarkerLocation
-                key={user.username}
-                userName={user.spotifyUserId}
-                lat={theLat}
-                lng={user.lng}
-                isUser={false}
-              />
-            );
-          }
         }
         return null;
       });
@@ -144,6 +132,15 @@ export class Map extends Component {
             defaultZoom={this.props.zoom}
             options={{ styles: mapStyles.map }}
           >
+            {center && (
+              <MarkerLocation
+                key={username}
+                userName={spotifyUserId}
+                lat={center.lat}
+                lng={center.lng}
+                isUser={true}
+              />
+            )}
             {userList}
           </GoogleMapReact>
         ) : (
