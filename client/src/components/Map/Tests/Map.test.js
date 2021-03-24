@@ -17,6 +17,7 @@ describe("<Map>", () => {
       },
       user: {
         username: "Joe Testman",
+        spotifyAccess: "fakeToken",
       },
     };
     state = {
