@@ -171,6 +171,32 @@ export const updateUser = async (req, res) => {
   }
 };
 
+export const refreshSpotify = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await UserSchema.findById(id);
+    if (user.spotifyRefresh) {
+      try {
+        const refreshed = await refreshToken(user.spotifyRefresh);
+        const spotifyAccess = refreshed.access_token;
+        const toReturn = userResponse(user);
+        return res.status(201).json({
+          data: { ...toReturn, spotifyAccess },
+        });
+      } catch (error) {
+        res.status(401).json({ message: "Can't refresh" });
+      }
+    } else
+      res.status(404).json({
+        message: "User isn't connected to Spotify",
+      });
+  } catch (error) {
+    res.status(404).json({
+      message: "Couldn't get user, make sure it exists or try again later",
+    });
+  }
+};
+
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
 
