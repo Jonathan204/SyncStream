@@ -89,12 +89,12 @@ describe("Register Test", () => {
       cy.get("form").find("[name=username]").type("George");
       cy.get("form").find("[name=password]").type("SecurePassword");
       cy.get("button").click();
-      cy.wait("@loginUser").then((response) => {
+      cy.wait("@loginUser").then(() => {
         cy.on("window:alert", () => {
           cy.get("button").contains("Allow").click();
         });
-        cy.wait("@getUsers").then((response) => {
-          cy.wait("@updateUser").then((response) => {
+        cy.wait("@getUsers").then(() => {
+          cy.wait("@updateUser").then(() => {
             cy.wait(1000);
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[id=${username}]`).find("svg").click({ force: true });
@@ -125,12 +125,12 @@ describe("Register Test", () => {
       cy.get("form").find("[name=username]").type("George");
       cy.get("form").find("[name=password]").type("SecurePassword");
       cy.get("button").click();
-      cy.wait("@loginUser").then((response) => {
+      cy.wait("@loginUser").then(() => {
         cy.on("window:alert", () => {
           cy.get("button").contains("Allow").click();
         });
-        cy.wait("@getUsers").then((response) => {
-          cy.wait("@updateUser").then((response) => {
+        cy.wait("@getUsers").then(() => {
+          cy.wait("@updateUser").then(() => {
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[title="Zoom out"]`).click({ force: true });
@@ -165,12 +165,12 @@ describe("Register Test", () => {
       cy.get("form").find("[name=username]").type("George");
       cy.get("form").find("[name=password]").type("SecurePassword");
       cy.get("button").click();
-      cy.wait("@loginUser").then((response) => {
+      cy.wait("@loginUser").then(() => {
         cy.on("window:alert", () => {
           cy.get("button").contains("Allow").click();
         });
-        cy.wait("@getUsers").then((response) => {
-          cy.wait("@updateUser").then((response) => {
+        cy.wait("@getUsers").then(() => {
+          cy.wait("@updateUser").then(() => {
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[title="Zoom out"]`).click({ force: true });
@@ -203,12 +203,12 @@ describe("Register Test", () => {
       cy.get("form").find("[name=username]").type("George");
       cy.get("form").find("[name=password]").type("SecurePassword");
       cy.get("button").click();
-      cy.wait("@loginUser").then((response) => {
+      cy.wait("@loginUser").then(() => {
         cy.on("window:alert", () => {
           cy.get("button").contains("Allow").click();
         });
-        cy.wait("@getUsers").then((response) => {
-          cy.wait("@updateUser").then((response) => {
+        cy.wait("@getUsers").then(() => {
+          cy.wait("@updateUser").then(() => {
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[title="Zoom out"]`).click({ force: true });
@@ -241,12 +241,12 @@ describe("Register Test", () => {
       cy.get("form").find("[name=username]").type("George");
       cy.get("form").find("[name=password]").type("SecurePassword");
       cy.get("button").click();
-      cy.wait("@loginUser").then((response) => {
+      cy.wait("@loginUser").then(() => {
         cy.on("window:alert", () => {
           cy.get("button").contains("Allow").click();
         });
-        cy.wait("@getUsers").then((response) => {
-          cy.wait("@updateUser").then((response) => {
+        cy.wait("@getUsers").then(() => {
+          cy.wait("@updateUser").then(() => {
             cy.get('a[href*="profile"]').click();
             cy.request("DELETE", `/users/${id}`);
           });
@@ -274,12 +274,12 @@ describe("Register Test", () => {
       cy.get("form").find("[name=username]").type("George");
       cy.get("form").find("[name=password]").type("SecurePassword");
       cy.get("button").click();
-      cy.wait("@loginUser").then((response) => {
+      cy.wait("@loginUser").then(() => {
         cy.on("window:alert", () => {
           cy.get("button").contains("Allow").click();
         });
-        cy.wait("@getUsers").then((response) => {
-          cy.wait("@updateUser").then((response) => {
+        cy.wait("@getUsers").then(() => {
+          cy.wait("@updateUser").then(() => {
             cy.get('a[href*="profile"]').click();
             cy.get("button").contains("Logout").click();
             cy.request("DELETE", `/users/${id}`);
