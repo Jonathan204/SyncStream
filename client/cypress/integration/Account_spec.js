@@ -146,6 +146,82 @@ describe("Register Test", () => {
     });
   });
 
+  it("Find what other people are listening to", () => {
+    cy.visit("localhost:3000");
+    cy.intercept("POST", "/users/login").as("loginUser");
+    cy.intercept("POST", "/users").as("createUser");
+    cy.intercept("GET", "/users").as("getUsers");
+
+    cy.contains("Don't have an account? Create one!").click();
+    cy.get("form").find("[name=email]").type("George@google.com");
+    cy.get("form").find("[name=username]").type("George");
+    cy.get("form").find("[placeholder=Password]").type("SecurePassword");
+    cy.get("form").find("[name=confirmPassword]").type("SecurePassword");
+    cy.get("button").click();
+
+    cy.wait("@createUser").then((response) => {
+      const id = response.response.body.data.id;
+      cy.intercept("PATCH", `/users/${id}`).as("updateUser");
+      cy.get("form").find("[name=username]").type("George");
+      cy.get("form").find("[name=password]").type("SecurePassword");
+      cy.get("button").click();
+      cy.wait("@loginUser").then((response) => {
+        cy.on("window:alert", () => {
+          cy.get("button").contains("Allow").click();
+        });
+        cy.wait("@getUsers").then((response) => {
+          cy.wait("@updateUser").then((response) => {
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[id=michael]`).find("svg").click({ force: true });
+            cy.get(".listen-btn").contains("Listen in!");
+            cy.request("DELETE", `/users/${id}`);
+          });
+        });
+      });
+    });
+  });
+
+  it("Listen to someone elses streaming music", () => {
+    cy.visit("localhost:3000");
+    cy.intercept("POST", "/users/login").as("loginUser");
+    cy.intercept("POST", "/users").as("createUser");
+    cy.intercept("GET", "/users").as("getUsers");
+
+    cy.contains("Don't have an account? Create one!").click();
+    cy.get("form").find("[name=email]").type("George@google.com");
+    cy.get("form").find("[name=username]").type("George");
+    cy.get("form").find("[placeholder=Password]").type("SecurePassword");
+    cy.get("form").find("[name=confirmPassword]").type("SecurePassword");
+    cy.get("button").click();
+
+    cy.wait("@createUser").then((response) => {
+      const id = response.response.body.data.id;
+      cy.intercept("PATCH", `/users/${id}`).as("updateUser");
+      cy.get("form").find("[name=username]").type("George");
+      cy.get("form").find("[name=password]").type("SecurePassword");
+      cy.get("button").click();
+      cy.wait("@loginUser").then((response) => {
+        cy.on("window:alert", () => {
+          cy.get("button").contains("Allow").click();
+        });
+        cy.wait("@getUsers").then((response) => {
+          cy.wait("@updateUser").then((response) => {
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[id=michael]`).find("svg").click({ force: true });
+            cy.get(".listen-btn").contains("Listen in!").click({ force: true });
+            cy.request("DELETE", `/users/${id}`);
+          });
+        });
+      });
+    });
+  });
+
   it("View the user profile", () => {
     cy.visit("localhost:3000");
     cy.intercept("POST", "/users/login").as("loginUser");
