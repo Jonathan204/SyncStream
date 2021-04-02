@@ -92,7 +92,7 @@ class InfoWindow extends React.Component {
           lastPlayed: new Date(),
         };
         this.props.updateUser(this.props.user.id, { songInfo });
-      } else {
+      } else if (!this.props.isUser && this.props.userId) {
         await this.props.getUsersSpotify(this.props.userId);
         this.props.users.map((user) => {
           if (user.spotifyUserId === this.props.userId) {
@@ -118,8 +118,11 @@ class InfoWindow extends React.Component {
     var time = "0:00";
     var minutes = "";
     var seconds = "";
-    const { token,  progress_ms } = this.state;
-    if ((token && !this.state.no_data) || (!token && this.state.item && progress_ms)) {
+    const { token, progress_ms } = this.state;
+    if (
+      (token && !this.state.no_data) ||
+      (!token && this.state.item && progress_ms)
+    ) {
       minutes = Math.floor(progress_ms / 60000);
       seconds = ((progress_ms % 60000) / 1000).toFixed(0);
       time = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
