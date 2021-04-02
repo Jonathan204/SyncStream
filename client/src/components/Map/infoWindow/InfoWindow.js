@@ -94,11 +94,10 @@ class InfoWindow extends React.Component {
         this.props.updateUser(this.props.user.id, { songInfo });
       } else if (!this.props.isUser && this.props.userId) {
         await this.props.getUsersSpotify(this.props.userId);
-        this.props.users.map((user) => {
-          if (user.spotifyUserId === this.props.userId) {
-            data = this.getSongInfo(user.songInfo);
-          }
-        });
+        var otherUser = this.props.users.find(
+          (user) => user.spotifyUserId === this.props.userId
+        );
+        data = this.getSongInfo(otherUser.songInfo);
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
