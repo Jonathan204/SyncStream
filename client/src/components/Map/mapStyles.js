@@ -289,4 +289,4 @@ const map = [
   },
 ];
 
-export default { map };
+export default map;

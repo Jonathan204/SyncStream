@@ -8,8 +8,8 @@ import {
 } from "../../../utils/spotifyUtils";
 import { updateUser, refreshSpotify } from "../../../actions/account";
 import { getUsersSpotify } from "../../../actions/users";
-
 import Player from "../../Player/Player";
+
 class InfoWindow extends React.Component {
   constructor() {
     super();
@@ -118,17 +118,16 @@ class InfoWindow extends React.Component {
     var time = "0:00";
     var minutes = "";
     var seconds = "";
-    const { token, progress_ms } = this.state;
-    if (
-      (token && !this.state.no_data) ||
-      (!token && this.state.item && progress_ms)
-    ) {
+    const { token, progress_ms, no_data, item, is_playing, is_ad } = this.state;
+
+    if ((token && !no_data) || (!token && item && progress_ms)) {
       minutes = Math.floor(progress_ms / 60000);
       seconds = ((progress_ms % 60000) / 1000).toFixed(0);
       time = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     } else {
       nothingPlaying = true;
     }
+
     return (
       <div
         className={
@@ -139,7 +138,7 @@ class InfoWindow extends React.Component {
       >
         <Container>
           <Row className="text-center">
-            {!this.state.token && this.props.isUser && (
+            {!token && this.props.isUser && (
               <a
                 className="spotify-btn spotify-btn--loginApp-link"
                 href={authorizationUrl}
@@ -147,16 +146,16 @@ class InfoWindow extends React.Component {
                 Login to Spotify
               </a>
             )}
-            {!nothingPlaying && this.state.item.uri && (
+            {!nothingPlaying && item.uri && (
               <div>
                 <Player
-                  item={this.state.item}
-                  is_playing={this.state.is_playing}
-                  progress_ms={this.state.progress_ms}
-                  is_ad={this.state.is_ad}
+                  item={item}
+                  is_playing={is_playing}
+                  progress_ms={progress_ms}
+                  is_ad={is_ad}
                   is_me={this.props.isUser}
                   songTime={time}
-                  songUri={this.props.isUser ? null : this.state.item.uri}
+                  songUri={this.props.isUser ? null : item.uri}
                 />
               </div>
             )}

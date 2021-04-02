@@ -1,8 +1,8 @@
 import React from "react";
 import { PersonCircle } from "react-bootstrap-icons";
-import UserInfo from "../infoWindow/currLocation.js";
+import UserInfo from "../InfoWindow/InfoWindow.js";
 
-class markerLocation extends React.Component {
+class MarkerLocation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,7 +20,7 @@ class markerLocation extends React.Component {
   };
 
   render() {
-    const { isUser } = this.state;
+    const { isUser, showInfo } = this.state;
     return (
       <div id={this.props.name}>
         <PersonCircle
@@ -28,16 +28,12 @@ class markerLocation extends React.Component {
           color={isUser ? "royalblue" : "red"}
           size={50}
         />
-        {this.state.showInfo && (
-          <UserInfo
-            isUser={isUser}
-            userId={this.props.userName}
-            render
-          ></UserInfo>
+        {showInfo && (
+          <UserInfo isUser={isUser} userId={this.props.userName} render />
         )}
       </div>
     );
   }
 }
 
-export default markerLocation;
+export default MarkerLocation;
