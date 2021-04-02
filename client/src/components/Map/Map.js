@@ -4,7 +4,7 @@ import MarkerLocation from "./markers/markerLocation";
 import { connect } from "react-redux";
 import { authorize } from "../../hash";
 import { getTokens, getUserId } from "../../utils/spotifyUtils";
-import { updateUser } from "../../actions/account";
+import { updateUser, updateSpotifyInfo } from "../../actions/account";
 import { getUsers } from "../../actions/users";
 import { Spinner } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
@@ -171,7 +171,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(updateUser(id, user));
   },
   updateSpotifyInfo: (id, authData) => {
-    dispatch(updateUser(id, authData));
+    dispatch(updateSpotifyInfo(id, authData));
   },
 });
 
