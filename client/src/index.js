@@ -16,7 +16,7 @@ import storage from "redux-persist/lib/storage";
 const persistConfig = {
   key: "root",
   storage: storage,
-  stateReconciler: autoMergeLevel2, // see "Merge Process" section for details.
+  stateReconciler: autoMergeLevel2,
 };
 
 const pReducer = persistReducer(persistConfig, reducers);

@@ -21,7 +21,6 @@ class InfoWindow extends React.Component {
         },
         name: "",
         artists: [{ name: "" }],
-        duration_ms: 0,
       },
       is_playing: "Paused",
       is_ad: false,
@@ -68,8 +67,8 @@ class InfoWindow extends React.Component {
           is_playing: data.is_playing,
           progress_ms: data.progress_ms,
           is_ad: false,
-          no_data: false /* We need to "reset" the boolean, in case the
-                                user does not give F5 and has opened his Spotify. */,
+          no_data: false,
+          // We need to "reset" the boolean, in case the user does not give F5 and has opened their Spotify.
         };
       } else {
         newState = {

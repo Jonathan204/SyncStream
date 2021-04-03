@@ -34,7 +34,7 @@ describe("<Map>", () => {
     };
   });
 
-  test("should change current coordinates", () => {
+  it("should change current coordinates", () => {
     const wrapper = shallow(<Map {...props} />);
     wrapper.setState(state);
     const testPos = {
@@ -50,7 +50,7 @@ describe("<Map>", () => {
     expect(wrapper.state().loadComplete).toBeTruthy();
   });
 
-  test("should dispatch updateUser", () => {
+  it("should dispatch updateUser", () => {
     const wrapper = mount(<Map {...props} />);
     const id = "1";
     const userData = "";
@@ -58,7 +58,7 @@ describe("<Map>", () => {
     expect(props.updateUser).toHaveBeenCalled();
   });
 
-  test("should handle location error", () => {
+  it("should handle location error", () => {
     const wrapper = shallow(<Map {...props} />);
     wrapper.setState(state);
     wrapper.instance().handleLocationError();
