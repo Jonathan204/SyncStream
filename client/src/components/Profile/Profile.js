@@ -7,7 +7,7 @@ import { authorize } from "../../hash";
 import { getTokens, getUserId } from "../../utils/spotifyUtils";
 import { updateUser, logout } from "../../actions/account";
 import { withRouter } from "react-router-dom";
-import InfoWindow from "../Map/InfoWindow/InfoWindow.js";
+import InfoWindow from "../Map/InfoWindow/InfoWindow";
 
 import "./styles.css";
 export class Profile extends Component {

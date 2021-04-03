@@ -1,6 +1,6 @@
 import React from "react";
 import { PersonCircle } from "react-bootstrap-icons";
-import UserInfo from "../InfoWindow/InfoWindow.js";
+import InfoWindow from "../InfoWindow/InfoWindow.js";
 
 class MarkerLocation extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class MarkerLocation extends React.Component {
           size={50}
         />
         {showInfo && (
-          <UserInfo isUser={isUser} userId={this.props.userName} render />
+          <InfoWindow isUser={isUser} userId={this.props.userName} render />
         )}
       </div>
     );
