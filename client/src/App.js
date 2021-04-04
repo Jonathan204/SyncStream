@@ -16,7 +16,7 @@ const App = () => {
   const history = useHistory();
 
   return (
-    <div>
+    <React.Fragment>
       <Router>
         <Switch>
           <Route exact path="/">
@@ -34,7 +34,7 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
-    </div>
+    </React.Fragment>
   );
 };
 

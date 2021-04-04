@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
-import MarkerLocation from "./markers/markerLocation";
+import MarkerLocation from "./MarkerLocation/MarkerLocation";
 import { connect } from "react-redux";
 import { authorize } from "../../hash";
 import { getTokens, getUserId } from "../../utils/spotifyUtils";
@@ -9,7 +9,7 @@ import { getUsers } from "../../actions/users";
 import { Spinner } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
-import mapStyles from "./mapStyles";
+import map from "./mapStyles";
 
 export class Map extends Component {
   constructor() {
@@ -100,6 +100,7 @@ export class Map extends Component {
     const { center, loadComplete } = this.state;
     const { users } = this.props;
     const { username, spotifyUserId } = this.props.user;
+
     let userList;
     if (users) {
       userList = users.map((user) => {
@@ -122,6 +123,7 @@ export class Map extends Component {
         return null;
       });
     }
+
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%" }}>
@@ -131,7 +133,7 @@ export class Map extends Component {
             defaultCenter={this.props.center}
             center={center ? center : this.props.center}
             defaultZoom={this.props.zoom}
-            options={{ styles: mapStyles.map }}
+            options={{ styles: map }}
           >
             {center && (
               <MarkerLocation

@@ -34,20 +34,29 @@ class Player extends React.Component {
 
   render() {
     const { item } = this.props;
+    const { showPlay, song_uri } = this.state;
     const progressBarStyles = {
       width: (this.props.progress_ms * 100) / item.duration_ms + "%",
     };
     return (
       <Container>
-        {this.state.showPlay ? (
+        {showPlay ? (
           <div>
-            <iframe title="webplayer" src={"https://open.spotify.com/embed/track/"+this.state.song_uri} width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-              <button
-                className="stop-listen-btn stop-listen-btn--loginApp-link"
-                onClick={this.handleClick}
-              >
-                Stop Listening!
-              </button>
+            <iframe
+              title="webplayer"
+              src={"https://open.spotify.com/embed/track/" + song_uri}
+              width="300"
+              height="80"
+              frameBorder="0"
+              allowtransparency="true"
+              allow="encrypted-media"
+            />
+            <button
+              className="stop-listen-btn stop-listen-btn--loginApp-link"
+              onClick={this.handleClick}
+            >
+              Stop Listening!
+            </button>
           </div>
         ) : (
           <div>

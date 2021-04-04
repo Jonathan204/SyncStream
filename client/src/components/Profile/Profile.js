@@ -7,7 +7,7 @@ import { authorize } from "../../hash";
 import { getTokens, getUserId } from "../../utils/spotifyUtils";
 import { updateUser, logout } from "../../actions/account";
 import { withRouter } from "react-router-dom";
-import InfoWindow from "../Map/infoWindow/currLocation.js";
+import InfoWindow from "../Map/InfoWindow/InfoWindow";
 
 import "./styles.css";
 export class Profile extends Component {
@@ -94,10 +94,7 @@ export class Profile extends Component {
   };
 
   render() {
-    const username = this.state.username;
-    const email = this.state.email;
-    const spotifyUserId = this.state.spotifyUserId;
-    const editing = this.state.editing;
+    const { username, email, spotifyUserId, editing, isUser } = this.state;
     return (
       <div className="margin-box">
         <Row>
@@ -117,7 +114,7 @@ export class Profile extends Component {
                         type="text"
                         value={username}
                         onChange={this.handleChange}
-                      ></input>
+                      />
                     ) : (
                       <Card.Text>{username}</Card.Text>
                     )}
@@ -131,7 +128,7 @@ export class Profile extends Component {
                         type="text"
                         value={email}
                         onChange={this.handleChange}
-                      ></input>
+                      />
                     ) : (
                       <Card.Text>{email}</Card.Text>
                     )}
@@ -197,10 +194,7 @@ export class Profile extends Component {
                   roundedCircle
                 />
                 <Card.Title>{username}</Card.Title>
-                <InfoWindow
-                  className="profile-info-window"
-                  isUser={this.state.isUser}
-                />
+                <InfoWindow className="profile-info-window" isUser={isUser} />
               </Card.Body>
             </Card>
           </Col>
@@ -233,4 +227,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Profile)
+);
