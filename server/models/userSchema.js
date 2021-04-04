@@ -13,7 +13,6 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
-  profilePic: String,
 });
 
 const UserSchema = mongoose.model("Users", userSchema);

@@ -22,7 +22,6 @@ export class Profile extends Component {
       editing: false,
       isUser: true,
       users: null,
-      profilePic: null,
     };
   }
 
@@ -31,7 +30,6 @@ export class Profile extends Component {
       username: this.props.account.username,
       email: this.props.account.email,
       spotifyUserId: this.props.account.spotifyUserId,
-      profilePic: this.props.account.profilePic,
     });
 
     const { spotifyAccess, spotifyUserId, id } = this.props.user;
@@ -96,14 +94,7 @@ export class Profile extends Component {
   };
 
   render() {
-    const {
-      username,
-      email,
-      spotifyUserId,
-      editing,
-      isUser,
-      profilePic,
-    } = this.state;
+    const { username, email, spotifyUserId, editing, isUser } = this.state;
     return (
       <div className="margin-box">
         <Row>
@@ -194,25 +185,14 @@ export class Profile extends Component {
           <Col md="4">
             <Card className="card-style">
               <Card.Body>
-                {profilePic ? (
-                  <Image
-                    src={profilePic}
-                    width="20%"
-                    height="20%"
-                    alt="logo"
-                    className="d-inline-block align-top"
-                    roundedCircle
-                  />
-                ) : (
-                  <Image
-                    src={profilePicture}
-                    width="20%"
-                    height="20%"
-                    alt="logo"
-                    className="d-inline-block align-top"
-                    roundedCircle
-                  />
-                )}
+                <Image
+                  src={profilePicture}
+                  width="20%"
+                  height="20%"
+                  alt="logo"
+                  className="d-inline-block align-top"
+                  roundedCircle
+                />
                 <Card.Title>{username}</Card.Title>
                 <InfoWindow className="profile-info-window" isUser={isUser} />
               </Card.Body>

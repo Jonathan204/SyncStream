@@ -8,23 +8,13 @@ import UserSchema from "../models/userSchema.js";
 const router = express.Router();
 
 const userResponse = (user, withId = true) => {
-  const {
-    username,
-    email,
-    _id,
-    spotifyUserId,
-    lat,
-    lng,
-    songInfo,
-    profilePic,
-  } = user;
+  const { username, email, _id, spotifyUserId, lat, lng, songInfo } = user;
   var toReturn = {
     username,
     spotifyUserId,
     lat,
     lng,
     songInfo,
-    profilePic,
   };
   if (withId) {
     toReturn.id = _id;
@@ -150,7 +140,6 @@ export const updateUser = async (req, res) => {
     lng,
     spotifyRefresh,
     songInfo,
-    profilePic,
   } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
@@ -165,7 +154,6 @@ export const updateUser = async (req, res) => {
     lng,
     songInfo,
     _id: id,
-    profilePic,
   };
 
   try {

@@ -74,9 +74,7 @@ export class Map extends Component {
       spotifyUserId: data.id,
       lat: this.state.center.lat,
       lng: this.state.center.lng,
-      profilePic: data.images[0].url,
     };
-
     const userId = localStorage.getItem("userId");
     this.props.updateUser(userId, userData);
   }
@@ -101,7 +99,7 @@ export class Map extends Component {
   render() {
     const { center, loadComplete } = this.state;
     const { users } = this.props;
-    const { username, spotifyUserId, profilePic } = this.props.user;
+    const { username, spotifyUserId } = this.props.user;
 
     let userList;
     if (users) {
@@ -119,7 +117,6 @@ export class Map extends Component {
               lat={theLat}
               lng={user.lng}
               isUser={false}
-              profilePic={user.profilePic}
             />
           );
         }
@@ -146,7 +143,6 @@ export class Map extends Component {
                 lat={center.lat}
                 lng={center.lng}
                 isUser={true}
-                profilePic={profilePic}
               />
             )}
             {userList}
