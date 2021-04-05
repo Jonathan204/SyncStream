@@ -6,11 +6,16 @@
   z-index: 1;
 }
 
+.navlink-style:hover {
+  text-decoration: none;
+}
+
 .navbar-colors {
   background-color: #242c37;
 }
 
 .navbar-text {
   font-size: 20px;
+  padding-top: 4px;
   color: #dee3ea !important;
 }
