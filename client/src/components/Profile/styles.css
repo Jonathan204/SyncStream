@@ -44,3 +44,22 @@
   position: relative !important;
   z-index: 0px !important;
 }
+
+.spotifyCardRow1 {
+  margin-bottom: 10px;
+  margin-left: 0%;
+}
+.spotifyCardRow2 {
+  padding: 8px;
+}
+
+.spotifyPicStyle {
+  margin-left: 15%;
+  margin-top: 5%;
+}
+
+.spotifyNameStyle {
+  margin-left: 5%;
+  margin-top: 10%;
+  font-size: 30px;
+}

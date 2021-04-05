@@ -185,16 +185,22 @@ export class Profile extends Component {
           <Col md="4">
             <Card className="card-style">
               <Card.Body>
-                <Image
-                  src={profilePicture}
-                  width="20%"
-                  height="20%"
-                  alt="logo"
-                  className="d-inline-block align-top"
-                  roundedCircle
-                />
-                <Card.Title>{username}</Card.Title>
-                <InfoWindow className="profile-info-window" isUser={isUser} />
+                <Row className="spotifyCardRow1">
+                  <Image
+                    src={profilePicture}
+                    width="20%"
+                    height="20%"
+                    alt="logo"
+                    className="d-inline-block align-top"
+                    roundedCircle
+                  />
+                  <Card.Title className="spotifyNameStyle">
+                    {spotifyUserId}
+                  </Card.Title>
+                </Row>
+                <Row className="spotifyCardRow2">
+                  <InfoWindow className="profile-info-window" isUser={isUser} />
+                </Row>
               </Card.Body>
             </Card>
           </Col>
@@ -227,6 +233,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Profile)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
