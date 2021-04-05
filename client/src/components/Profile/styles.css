@@ -14,7 +14,6 @@
   font-weight: 600;
 }
 .card-style {
-  /*color: black;*/
   border-color: #242c37;
   background-color: #3f4857;
   color: #dee3ea;
@@ -23,22 +22,48 @@
 }
 
 .profile-submit-button {
+  background-color: #e3e8ee;
+  border-color: #e3e8ee;
+  border-radius: 7px;
+  color: black;
+}
+
+.profile-submit-button:hover {
+  background-color: #b2b7be;
+  border-color: #b2b7be;
+  color: black;
+}
+
+.profile-submit-button:focus:hover {
+  background-color: #b2b7be !important;
+  border-color: #b2b7be !important;
+  color: black;
+}
+
+.profile-submit-button:focus {
+  background-color: #e3e8ee !important;
+  border-color: #e3e8ee !important;
+  box-shadow: none !important;
+  color: black;
+}
+
+.profile-logout-button {
   background-color: #fd4d4d;
   border-color: #fd4d4d;
   border-radius: 7px;
 }
 
-.profile-submit-button:hover {
+.profile-logout-button:hover {
   background-color: #fd6868;
   border-color: #fd6868;
 }
 
-.profile-submit-button:focus:hover {
+.profile-logout-button:focus:hover {
   background-color: #fd6868 !important;
   border-color: #fd6868 !important;
 }
 
-.profile-submit-button:focus {
+.profile-logout-button:focus {
   background-color: #fd4d4d !important;
   border-color: #fd4d4d !important;
   box-shadow: none !important;

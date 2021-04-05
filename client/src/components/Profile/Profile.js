@@ -165,7 +165,7 @@ export class Profile extends Component {
                       </Button>
                     )}
                     <Button
-                      className="ml-3 profile-submit-button"
+                      className="ml-3 profile-logout-button"
                       type="submit"
                       onClick={this.handleLogout}
                     >
