@@ -8,11 +8,11 @@ const NavigationBar = () => {
   return (
     <Navbar bg="dark" variant="dark" className="sticky">
       <NavLink to="/home">
-        <Navbar.Text>
+        <Navbar.Text className="navbar-text">
           <Image
             src={logo}
-            width="30"
-            height="30"
+            width="40"
+            height="40"
             alt="logo"
             className="d-inline-block align-top"
           />{" "}
@@ -21,8 +21,8 @@ const NavigationBar = () => {
       </NavLink>
       <Nav className="ml-auto">
         <NavLink to="/profile">
-          <Navbar.Text>
-            <Image src={profilePicture} width="30" height="30" roundedCircle />{" "}
+          <Navbar.Text className="navbar-text">
+            <Image src={profilePicture} width="40" height="40" roundedCircle />{" "}
             Account
           </Navbar.Text>
         </NavLink>
