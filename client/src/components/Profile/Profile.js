@@ -22,6 +22,7 @@ export class Profile extends Component {
       editing: false,
       isUser: true,
       users: null,
+      profilePic: null,
     };
   }
 
@@ -30,6 +31,7 @@ export class Profile extends Component {
       username: this.props.account.username,
       email: this.props.account.email,
       spotifyUserId: this.props.account.spotifyUserId,
+      profilePic: this.props.account.profilePic,
     });
 
     const { spotifyAccess, spotifyUserId, id } = this.props.user;
@@ -94,7 +96,14 @@ export class Profile extends Component {
   };
 
   render() {
-    const { username, email, spotifyUserId, editing, isUser } = this.state;
+    const {
+      username,
+      email,
+      spotifyUserId,
+      editing,
+      isUser,
+      profilePic,
+    } = this.state;
     return (
       <div className="margin-box">
         <Row>
@@ -189,7 +198,7 @@ export class Profile extends Component {
               <Card.Body id="card-body-style">
                 <Row className="spotifyCardRow1">
                   <Image
-                    src={profilePicture}
+                    src={profilePic ? profilePic : profilePicture}
                     width="20%"
                     height="20%"
                     alt="logo"
