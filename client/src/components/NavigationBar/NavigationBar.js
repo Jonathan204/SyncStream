@@ -24,16 +24,14 @@ const NavigationBar = () => {
       <Nav className="ml-auto">
         <NavLink to="/profile">
           <Navbar.Text>
-            {profilePic ? (
-              <Image src={profilePic} width="30" height="30" roundedCircle />
-            ) : (
-              <Image
-                src={profilePicture}
-                width="30"
-                height="30"
-                roundedCircle
-              />
-            )}{" "}
+            <Image
+              src={profilePic ? profilePic : profilePicture}
+              width="30px"
+              height="30px"
+              alt="logo"
+              className="d-inline-block align-top"
+              roundedCircle
+            />{" "}
             Account
           </Navbar.Text>
         </NavLink>

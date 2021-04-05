@@ -194,25 +194,14 @@ export class Profile extends Component {
           <Col md="4">
             <Card className="card-style">
               <Card.Body>
-                {profilePic ? (
-                  <Image
-                    src={profilePic}
-                    width="20%"
-                    height="20%"
-                    alt="logo"
-                    className="d-inline-block align-top"
-                    roundedCircle
-                  />
-                ) : (
-                  <Image
-                    src={profilePicture}
-                    width="20%"
-                    height="20%"
-                    alt="logo"
-                    className="d-inline-block align-top"
-                    roundedCircle
-                  />
-                )}
+                <Image
+                  src={profilePic ? profilePic : profilePicture}
+                  width="20%"
+                  height="20%"
+                  alt="logo"
+                  className="d-inline-block align-top"
+                  roundedCircle
+                />
                 <Card.Title>{username}</Card.Title>
                 <InfoWindow className="profile-info-window" isUser={isUser} />
               </Card.Body>
