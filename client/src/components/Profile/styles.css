@@ -16,6 +16,7 @@
 .card-style {
   /*color: black;*/
   border-color: #242c37;
+  background-color: #3f4857;
   color: #dee3ea;
   border-radius: 10px;
   border-width: thick;
@@ -73,5 +74,6 @@
 }
 #card-body-style {
   /*background-color: white;*/
-  background-color: #151a21;
+  background-color: #3f4857;
+  border-radius: 10px;
 }

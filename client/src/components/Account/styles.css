@@ -22,18 +22,18 @@
   margin-left: 30px;
   margin-right: 30px;
   font-weight: bold;
-  background-color: #242c37;
+  background-color: #3a4658;
   border-color: #242c37;
 }
 
 .submit-button:hover {
-  background-color: #323d4d;
-  border-color: #323d4d;
+  background-color: #4d5d75;
+  border-color: #4d5d75;
 }
 
 .submit-button:focus:hover {
-  background-color: #323d4d !important;
-  border-color: #323d4d !important;
+  background-color: #4d5d75;
+  border-color: #4d5d75;
 }
 
 .submit-button:disabled {
@@ -46,6 +46,9 @@
   border-color: #242c37 !important;
 }
 
+/*
+  background-color: #151a21;
+  */
 .account-window {
   height: 575px;
   width: 350px;
@@ -54,7 +57,7 @@
   align-items: center;
   border-radius: 20px;
   border-color: #151a21 !important;
-  background-color: #151a21;
+  background-color: #252b36;
   color: #dee3ea;
   margin: 0;
   position: absolute;
