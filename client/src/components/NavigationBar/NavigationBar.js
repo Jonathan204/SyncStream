@@ -3,8 +3,10 @@ import logo from "../../images/logo.png";
 import profilePicture from "../../images/default_account.png";
 import "./styles.css";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const NavigationBar = () => {
+  const profilePic = useSelector((state) => state.account.profilePic);
   return (
     <Navbar bg="dark" variant="dark" className="sticky">
       <NavLink to="/home">
@@ -22,7 +24,14 @@ const NavigationBar = () => {
       <Nav className="ml-auto">
         <NavLink to="/profile">
           <Navbar.Text>
-            <Image src={profilePicture} width="30" height="30" roundedCircle />{" "}
+            <Image
+              src={profilePic ? profilePic : profilePicture}
+              width="30px"
+              height="30px"
+              alt="logo"
+              className="d-inline-block align-top"
+              roundedCircle
+            />{" "}
             Account
           </Navbar.Text>
         </NavLink>
