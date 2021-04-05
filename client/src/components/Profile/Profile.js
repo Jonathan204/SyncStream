@@ -100,10 +100,12 @@ export class Profile extends Component {
         <Row>
           <Col md="8">
             <Card className="card-style">
-              <Card.Header>
-                <Card.Title as="h4">User Profile</Card.Title>
+              <Card.Header id="card-title-color">
+                <Card.Title as="h4" id="card-title-color">
+                  User Profile
+                </Card.Title>
               </Card.Header>
-              <Card.Body>
+              <Card.Body id="card-body-style">
                 <Row className="bottom-margin">
                   <Col className="pr-1" md="6">
                     <Card.Title>Username</Card.Title>
@@ -184,7 +186,7 @@ export class Profile extends Component {
           </Col>
           <Col md="4">
             <Card className="card-style">
-              <Card.Body>
+              <Card.Body id="card-body-style">
                 <Row className="spotifyCardRow1">
                   <Image
                     src={profilePicture}

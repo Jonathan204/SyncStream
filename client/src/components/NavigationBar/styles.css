@@ -6,6 +6,11 @@
   z-index: 1;
 }
 
+.navbar-colors {
+  background-color: #242c37;
+}
+
 .navbar-text {
   font-size: 20px;
+  color: #dee3ea !important;
 }

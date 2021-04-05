@@ -1,16 +1,16 @@
 import { Nav, Navbar, Image } from "react-bootstrap";
-import logo from "../../images/logo.png";
+import logoWhite from "../../images/logoWhite.png";
 import profilePicture from "../../images/default_account.png";
 import "./styles.css";
 import { NavLink } from "react-router-dom";
 
 const NavigationBar = () => {
   return (
-    <Navbar bg="dark" variant="dark" className="sticky">
+    <Navbar className="sticky navbar-colors">
       <NavLink to="/home">
         <Navbar.Text className="navbar-text">
           <Image
-            src={logo}
+            src={logoWhite}
             width="40"
             height="40"
             alt="logo"

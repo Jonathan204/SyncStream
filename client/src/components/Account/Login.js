@@ -46,6 +46,7 @@ const Login = () => {
         <Row className="flex-column">
           <Form.Group controlId="username">
             <Form.Control
+              className="form-color"
               name="username"
               required
               type="text"
@@ -64,6 +65,7 @@ const Login = () => {
         <Row className="flex-column">
           <Form.Group controlId="password">
             <Form.Control
+              className="form-color"
               name="password"
               required
               type="password"

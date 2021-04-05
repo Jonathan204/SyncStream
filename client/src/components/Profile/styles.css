@@ -13,36 +13,40 @@
 .bold-title {
   font-weight: 600;
 }
-
 .card-style {
-  box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
+  /*color: black;*/
+  border-color: #242c37;
+  color: #dee3ea;
+  border-radius: 10px;
+  border-width: thick;
 }
 
 .profile-submit-button {
-  background-color: rgb(0, 0, 0);
-  border-color: black;
+  background-color: #fd4d4d;
+  border-color: #fd4d4d;
+  border-radius: 7px;
 }
 
 .profile-submit-button:hover {
-  background-color: rgb(50, 50, 50);
-  border-color: rgb(50, 50, 50);
+  background-color: #fd6868;
+  border-color: #fd6868;
 }
 
 .profile-submit-button:focus:hover {
-  background-color: rgb(50, 50, 50) !important;
-  border-color: rgb(50, 50, 50) !important;
-  box-shadow: 0 2px 7px 1px rgba(5, 5, 5, 0.5) !important;
+  background-color: #fd6868 !important;
+  border-color: #fd6868 !important;
 }
 
 .profile-submit-button:focus {
-  background-color: black !important;
-  border-color: black !important;
+  background-color: #fd4d4d !important;
+  border-color: #fd4d4d !important;
   box-shadow: none !important;
 }
 
 .profile-info-window {
   position: relative !important;
   z-index: 0px !important;
+  color: black !important;
 }
 
 .spotifyCardRow1 {
@@ -62,4 +66,12 @@
   margin-left: 5%;
   margin-top: 6%;
   font-size: 30px;
+}
+
+#card-title-color {
+  background-color: #242c37;
+}
+#card-body-style {
+  /*background-color: white;*/
+  background-color: #151a21;
 }
