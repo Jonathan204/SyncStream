@@ -54,7 +54,7 @@ const Login = () => {
               isValid={validated && !errors.username}
               isInvalid={!!errors.username || !!userError}
               onChange={(e) =>
-                setUserData({ ...userData, username: e.target.value.trim() })
+                setUserData({ ...userData, username: e.target.value })
               }
             />
             <Form.Control.Feedback type="invalid">
@@ -73,7 +73,7 @@ const Login = () => {
               isValid={validated && !errors.password}
               isInvalid={!!errors.password || !!userError}
               onChange={(e) =>
-                setUserData({ ...userData, password: e.target.value.trim() })
+                setUserData({ ...userData, password: e.target.value })
               }
             />
             <Form.Control.Feedback type="invalid">
