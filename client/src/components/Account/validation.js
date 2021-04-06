@@ -7,15 +7,16 @@ function validate(values) {
   if (!values.username) errors.username = "Username cannot be blank";
   else if (values.username.length < 3)
     errors.username = "Please enter a username longer than 3 characters";
+  else if (values.username.length > 16)
+    errors.username = "Please enter a username that's 16 characters or shorter";
   else if (!regUser.test(values.username))
     errors.username = "Please enter a valid username";
 
   if (!values.password) errors.password = "Password cannot be blank";
 
   if (values.email !== undefined) {
-    if (!values.email) {
-      errors.email = "Email cannot be blank";
-    } else if (!regEmail.test(values.email))
+    if (!values.email) errors.email = "Email cannot be blank";
+    else if (!regEmail.test(values.email))
       errors.email = "Please enter a valid email";
   }
 

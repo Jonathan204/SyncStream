@@ -25,6 +25,44 @@ describe("Test login input validation", () => {
     );
   });
 
+  it("should not allow username of more than 16 characters", () => {
+    mockLogin.username = "yoooooooooooooooo"; //17 characters
+    const formErrors = validate(mockLogin);
+    expect(formErrors.username).toBe(
+      "Please enter a username that's 16 characters or shorter"
+    );
+  });
+
+  it("should not allow username of more than a lot of characters", () => {
+    mockLogin.username =
+      "yooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo";
+    const formErrors = validate(mockLogin);
+    expect(formErrors.username).toBe(
+      "Please enter a username that's 16 characters or shorter"
+    );
+  });
+
+  it("should not fail with the minimum number of characters", () => {
+    mockLogin.username = "yoo";
+    mockLogin.password = "sdfsdfsdf";
+    const formErrors = validate(mockLogin);
+    expect(Object.keys(formErrors).length).toBe(0);
+  });
+
+  it("should not fail with the maximum number of characters", () => {
+    mockLogin.username = "yooooooooooooooo"; //20 characters
+    mockLogin.password = "sdfsdfsdf";
+    const formErrors = validate(mockLogin);
+    console.log(formErrors);
+    expect(Object.keys(formErrors).length).toBe(0);
+  });
+
+  it("should not count as 3 characters", () => {
+    mockLogin.username = "y     o";
+    const formErrors = validate(mockLogin);
+    expect(formErrors.username).toBe("Please enter a valid username");
+  });
+
   it("should only allow usernames with valid characters", () => {
     mockLogin.username = "%$#@;;";
     let formErrors = validate(mockLogin);
@@ -72,6 +110,25 @@ describe("Test register input validation", () => {
     expect(formErrors.password).toBe("Password cannot be blank");
     expect(formErrors.email).toBe("Email cannot be blank");
     expect(formErrors.confirmPassword).toBe("Please confirm password");
+  });
+
+  it("should allow long emails", () => {
+    mockRegister.email =
+      "gggggggggg@gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg.com";
+    mockRegister.username = "dfdfd";
+    mockRegister.password = "ggg";
+    mockRegister.confirmPassword = "ggg";
+    let formErrors = validate(mockRegister);
+    expect(Object.keys(formErrors).length).toBe(0);
+  });
+
+  it("should allow minimum length emails", () => {
+    mockRegister.email = "g@g.com";
+    mockRegister.username = "dfdfd";
+    mockRegister.password = "ggg";
+    mockRegister.confirmPassword = "ggg";
+    let formErrors = validate(mockRegister);
+    expect(Object.keys(formErrors).length).toBe(0);
   });
 
   it("should only accept valid emails", () => {
