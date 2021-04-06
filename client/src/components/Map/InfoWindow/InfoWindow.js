@@ -2,10 +2,7 @@ import React from "react";
 import { Container, Row } from "react-bootstrap";
 import "./styles.css";
 import { connect } from "react-redux";
-import {
-  authorizationUrl,
-  getCurrentlyPlaying,
-} from "../../../utils/spotifyUtils";
+import { authorizationUrl, getCurrentlyPlaying } from "../../../utils/spotifyUtils";
 import { updateUser, refreshSpotify } from "../../../actions/account";
 import { getUsersSpotify } from "../../../actions/users";
 import Player from "../../Player/Player";
@@ -129,9 +126,7 @@ class InfoWindow extends React.Component {
     return (
       <div
         className={
-          this.props.render
-            ? "info-window-style-map"
-            : "info-window-style-profile"
+          this.props.render ? "info-window-style-map" : "info-window-style-profile"
         }
       >
         <Container>
@@ -157,11 +152,11 @@ class InfoWindow extends React.Component {
                 />
               </div>
             )}
-            {nothingPlaying && (
-              <p>
+            {nothingPlaying && (!this.props.isUser || token) && (
+              <p id="remove-margin">
                 {this.props.isUser
-                  ? "You need to be playing a song on Spotify, for something to appear here."
-                  : "User isn't playing anything currently"}
+                  ? "You need to be playing a song on Spotify for music to appear here!"
+                  : "This User isn't playing anything"}
               </p>
             )}
           </Row>

@@ -13,34 +13,92 @@
 .bold-title {
   font-weight: 600;
 }
-
 .card-style {
-  box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
+  border-color: #242c37;
+  background-color: #3f4857;
+  color: #dee3ea;
+  border-radius: 10px;
+  border-width: thick;
 }
 
 .profile-submit-button {
-  background-color: rgb(0, 0, 0);
-  border-color: black;
+  background-color: #e3e8ee;
+  border-color: #e3e8ee;
+  border-radius: 7px;
+  color: black;
 }
 
 .profile-submit-button:hover {
-  background-color: rgb(50, 50, 50);
-  border-color: rgb(50, 50, 50);
+  background-color: #b2b7be;
+  border-color: #b2b7be;
+  color: black;
 }
 
 .profile-submit-button:focus:hover {
-  background-color: rgb(50, 50, 50) !important;
-  border-color: rgb(50, 50, 50) !important;
-  box-shadow: 0 2px 7px 1px rgba(5, 5, 5, 0.5) !important;
+  background-color: #b2b7be !important;
+  border-color: #b2b7be !important;
+  color: black;
 }
 
 .profile-submit-button:focus {
-  background-color: black !important;
-  border-color: black !important;
+  background-color: #e3e8ee !important;
+  border-color: #e3e8ee !important;
+  box-shadow: none !important;
+  color: black;
+}
+
+.profile-logout-button {
+  background-color: #fd4d4d;
+  border-color: #fd4d4d;
+  border-radius: 7px;
+}
+
+.profile-logout-button:hover {
+  background-color: #fd6868;
+  border-color: #fd6868;
+}
+
+.profile-logout-button:focus:hover {
+  background-color: #fd6868 !important;
+  border-color: #fd6868 !important;
+}
+
+.profile-logout-button:focus {
+  background-color: #fd4d4d !important;
+  border-color: #fd4d4d !important;
   box-shadow: none !important;
 }
 
 .profile-info-window {
   position: relative !important;
   z-index: 0px !important;
+  color: black !important;
+}
+
+.spotifyCardRow1 {
+  margin-bottom: 10px;
+  margin-left: 0%;
+}
+.spotifyCardRow2 {
+  padding: 8px;
+}
+
+.spotifyPicStyle {
+  margin-left: 15%;
+  margin-top: 5%;
+}
+
+.spotifyNameStyle {
+  margin-left: 5%;
+  margin-top: 6%;
+  font-size: 30px;
+}
+
+#card-title-color {
+  background-color: #242c37;
+}
+#card-body-style {
+  /*background-color: white;*/
+  background-color: #3f4857;
+  border-radius: 10px;
 }

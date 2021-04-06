@@ -109,10 +109,12 @@ export class Profile extends Component {
         <Row>
           <Col md="8">
             <Card className="card-style">
-              <Card.Header>
-                <Card.Title as="h4">User Profile</Card.Title>
+              <Card.Header id="card-title-color">
+                <Card.Title as="h4" id="card-title-color">
+                  User Profile
+                </Card.Title>
               </Card.Header>
-              <Card.Body>
+              <Card.Body id="card-body-style">
                 <Row className="bottom-margin">
                   <Col className="pr-1" md="6">
                     <Card.Title>Username</Card.Title>
@@ -172,7 +174,7 @@ export class Profile extends Component {
                       </Button>
                     )}
                     <Button
-                      className="ml-3 profile-submit-button"
+                      className="ml-3 profile-logout-button"
                       type="submit"
                       onClick={this.handleLogout}
                     >
@@ -193,17 +195,23 @@ export class Profile extends Component {
           </Col>
           <Col md="4">
             <Card className="card-style">
-              <Card.Body>
-                <Image
-                  src={profilePic ? profilePic : profilePicture}
-                  width="20%"
-                  height="20%"
-                  alt="logo"
-                  className="d-inline-block align-top"
-                  roundedCircle
-                />
-                <Card.Title>{username}</Card.Title>
-                <InfoWindow className="profile-info-window" isUser={isUser} />
+              <Card.Body id="card-body-style">
+                <Row className="spotifyCardRow1">
+                  <Image
+                    src={profilePic ? profilePic : profilePicture}
+                    width="20%"
+                    height="20%"
+                    alt="logo"
+                    className="d-inline-block align-top"
+                    roundedCircle
+                  />
+                  <Card.Title className="spotifyNameStyle">
+                    {spotifyUserId}
+                  </Card.Title>
+                </Row>
+                <Row className="spotifyCardRow2">
+                  <InfoWindow className="profile-info-window" isUser={isUser} />
+                </Row>
               </Card.Body>
             </Card>
           </Col>
@@ -236,6 +244,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Profile)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
