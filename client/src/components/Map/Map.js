@@ -99,7 +99,7 @@ export class Map extends Component {
   };
 
   inRange = (coord, target, key) => {
-    const range = 0.7;
+    const range = 0.0007;
     const targetF = parseFloat(target);
     var newCoor = parseFloat(coord);
     if (newCoor > targetF - range && newCoor < targetF + range) {
