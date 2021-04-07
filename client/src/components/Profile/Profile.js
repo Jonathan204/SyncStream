@@ -145,12 +145,6 @@ export class Profile extends Component {
                     )}
                   </Col>
                 </Row>
-                <Row className="bottom-margin">
-                  <Col>
-                    <Card.Title>Password</Card.Title>
-                    <Card.Text>**************</Card.Text>
-                  </Col>
-                </Row>
                 <Row>
                   <Col md="6">
                     <Card.Title>Spotify Information</Card.Title>

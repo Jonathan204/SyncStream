@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const url = "http://localhost:5000/users";
+const server = process.env.REACT_APP_SERVER
+  ? process.env.REACT_APP_SERVER
+  : "http://localhost:5000";
+const url = `${server}/users`;
 const spotifyUrl = `${url}/spotify`;
 
 export const getUser = (id) => axios.get(`${url}/${id}`);

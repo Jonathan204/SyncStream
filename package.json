@@ -1,0 +1,23 @@
+{
+  "name": "syncstream",
+  "version": "1.0.0",
+  "author": "McJ",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "install-client": "cd client && npm install",
+    "start-client": "cd client && npm start",
+    "test-client": "cd client && npm test",
+    "build": "cd client && npm run build",
+    "install-server": "cd server && npm install",
+    "start-server": "cd server && npm start",    
+    "test-server": "cd server && npm test",
+    "heroku-postbuild": "npm run install-server -- --production && npm run install-client -- --production && npm run build"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jonathan204/SyncStream.git"
+  }
+}

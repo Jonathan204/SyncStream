@@ -98,6 +98,19 @@ export class Map extends Component {
     this.setState({ loadComplete: true });
   };
 
+  inRange = (coord, target, key) => {
+    const range = 0.0007;
+    const targetF = parseFloat(target);
+    var newCoor = parseFloat(coord);
+    if (newCoor > targetF - range && newCoor < targetF + range) {
+      newCoor += range * 2;
+      var center = {};
+      center[key] = newCoor;
+      this.props.updateUser(this.props.user.id, center);
+    }
+    return newCoor.toString();
+  };
+
   render() {
     const { center, loadComplete } = this.state;
     const { users } = this.props;
@@ -107,17 +120,15 @@ export class Map extends Component {
     if (users) {
       userList = users.map((user) => {
         if (user.username !== username && user.lat && user.lng) {
-          var theLat = parseFloat(user.lat);
-          if (user.lat === this.props.user.lat) {
-            theLat = (theLat + 0.0007).toString();
-          }
+          const theLat = this.inRange(user.lat, this.props.user.lat, "lat");
+          const theLng = this.inRange(user.lng, this.props.user.lng, "lng");
           return (
             <MarkerLocation
               name={user.username}
               key={user.username}
               userName={user.spotifyUserId}
               lat={theLat}
-              lng={user.lng}
+              lng={theLng}
               isUser={false}
               profilePic={user.profilePic}
             />
@@ -138,6 +149,7 @@ export class Map extends Component {
             defaultZoom={this.props.zoom}
             options={{ styles: map }}
           >
+            {userList}
             {center && (
               <MarkerLocation
                 name={username}
@@ -149,7 +161,6 @@ export class Map extends Component {
                 profilePic={profilePic}
               />
             )}
-            {userList}
           </GoogleMapReact>
         ) : (
           <Spinner
