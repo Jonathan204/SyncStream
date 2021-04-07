@@ -90,7 +90,9 @@ class Player extends React.Component {
                   <div className="now-playing__status">
                     {this.props.is_playing ? "Playing" : "Paused"}
                   </div>
-                  {!this.props.is_ad && <div>{this.props.songTime}</div>}
+                  {!this.props.is_ad && (
+                    <div className="progress-text">{this.props.songTime}</div>
+                  )}
 
                   <div className="progress">
                     <div className="progress__bar" style={progressBarStyles} />
