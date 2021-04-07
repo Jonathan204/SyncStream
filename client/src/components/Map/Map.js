@@ -138,6 +138,7 @@ export class Map extends Component {
             defaultZoom={this.props.zoom}
             options={{ styles: map }}
           >
+            {userList}
             {center && (
               <MarkerLocation
                 name={username}
@@ -149,7 +150,6 @@ export class Map extends Component {
                 profilePic={profilePic}
               />
             )}
-            {userList}
           </GoogleMapReact>
         ) : (
           <Spinner

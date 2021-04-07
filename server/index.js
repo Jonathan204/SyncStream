@@ -15,17 +15,20 @@ app.use(cors());
 if (process.env.NODE_ENV === "production")
   app.use(express.static("../client/build"));
 
-app.use("/api/users", userRoutes); //every route inside of post routes will start with post
+app.use("/users", userRoutes); //every route inside of post routes will start with post
 
 const CONNECTION_URL = process.env.DB_CONNECTION;
 const PORT = process.env.PORT || 5000;
 
 mongoose
-  .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(CONNECTION_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
   .then(() =>
     app.listen(PORT, () => console.log("Server Running on port:" + PORT))
   )
   .catch((error) => console.log(error.message));
 
-mongoose.set("useFindAndModify", false);
 export default app;

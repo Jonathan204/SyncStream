@@ -12,6 +12,7 @@ describe("User Schema Test", () => {
     db = await mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     });
   });
 
