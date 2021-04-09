@@ -1,4 +1,5 @@
 describe("Register Test", () => {
+  //As a user, I want to create an account that stores my information.
   it("Registers an account", () => {
     cy.visit("localhost:3000");
     cy.intercept("POST", "/users").as("createUser");
@@ -15,7 +16,7 @@ describe("Register Test", () => {
       cy.request("DELETE", `/users/${id}`);
     });
   });
-
+  //As a user, I want to login to my SyncStream account.
   it("Logins into account", () => {
     cy.visit("localhost:3000");
     cy.intercept("POST", "/users").as("createUser");
@@ -35,7 +36,7 @@ describe("Register Test", () => {
       cy.request("DELETE", `/users/${id}`);
     });
   });
-
+  //As a user, I want to see myself on a map.
   it("Show user on map", () => {
     cy.visit("localhost:3000");
     cy.intercept("POST", "/users/login").as("loginUser");
@@ -68,7 +69,7 @@ describe("Register Test", () => {
       });
     });
   });
-
+  //As a user, I want to link my Spotify account to my SyncStream account.
   it("Link spotify account", () => {
     cy.visit("localhost:3000");
     cy.intercept("POST", "/users/login").as("loginUser");
@@ -105,7 +106,7 @@ describe("Register Test", () => {
       });
     });
   });
-
+  //As a user, I want to see where other users are on the map.
   it("Find other people in the map", () => {
     cy.visit("localhost:3000");
     cy.intercept("POST", "/users/login").as("loginUser");
@@ -135,9 +136,11 @@ describe("Register Test", () => {
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[title="Zoom out"]`).click({ force: true });
-            cy.get(`[id=test]`).find("svg").click();
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[id=test]`).find("svg").click({ force: true });
             cy.get(".info-window-style-map").contains(
-              "User isn't playing anything currently"
+              "This User isn't playing anything"
             );
             cy.request("DELETE", `/users/${id}`);
           });
@@ -145,7 +148,7 @@ describe("Register Test", () => {
       });
     });
   });
-
+  //As a user, I want to be able to see what other people are listening to.
   it("Find what other people are listening to", () => {
     cy.visit("localhost:3000");
     cy.intercept("POST", "/users/login").as("loginUser");
@@ -175,7 +178,9 @@ describe("Register Test", () => {
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[title="Zoom out"]`).click({ force: true });
-            cy.get(`[id=michael]`).find("svg").click({ force: true });
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[id=michael]`).find("img").click({ force: true });
             cy.get(".listen-btn").contains("Listen in!");
             cy.request("DELETE", `/users/${id}`);
           });
@@ -183,7 +188,7 @@ describe("Register Test", () => {
       });
     });
   });
-
+  //As a user, I want to listen to another user’s current song playing.
   it("Listen to someone elses streaming music", () => {
     cy.visit("localhost:3000");
     cy.intercept("POST", "/users/login").as("loginUser");
@@ -213,7 +218,9 @@ describe("Register Test", () => {
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[title="Zoom out"]`).click({ force: true });
             cy.get(`[title="Zoom out"]`).click({ force: true });
-            cy.get(`[id=michael]`).find("svg").click({ force: true });
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[title="Zoom out"]`).click({ force: true });
+            cy.get(`[id=michael]`).find("img").click({ force: true });
             cy.get(".listen-btn").contains("Listen in!").click({ force: true });
             cy.request("DELETE", `/users/${id}`);
           });
@@ -221,7 +228,7 @@ describe("Register Test", () => {
       });
     });
   });
-
+  //As a user I want to see my account information
   it("View the user profile", () => {
     cy.visit("localhost:3000");
     cy.intercept("POST", "/users/login").as("loginUser");
@@ -254,7 +261,7 @@ describe("Register Test", () => {
       });
     });
   });
-
+  //As a user, I want to be able to logout from SyncStream.
   it("Logout from SyncStream", () => {
     cy.visit("localhost:3000");
     cy.intercept("POST", "/users/login").as("loginUser");
