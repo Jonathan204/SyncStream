@@ -17,6 +17,11 @@ SyncStream is a music sharing system which allows music lovers to find new music
   </tr>
 </table>
 
+Sprint 1 leader: Jonathan  
+Sprint 2 leader: Cole  
+Sprint 3 leader: Chris  
+Sprint 4 leader: Michael  
+
 ## Setup  
 Documentation regarding the setup can be found on this [wiki](https://github.com/Jonathan204/SyncStream/wiki/Setup) page.
 
